@@ -79,64 +79,66 @@ const { hideGlobalPreloader = false } = Astro.props;
     </nav>
     
     <script is:inline>
-      // ── Mobile menu ─────────────────────────────────
-      const toggle = document.getElementById('mobile-menu-toggle');
-      const menu = document.getElementById('mobile-menu');
-      const burgerTop = document.getElementById('burger-top');
-      const burgerBottom = document.getElementById('burger-bottom');
-      let isOpen = false;
+      document.addEventListener('astro:page-load', () => {
+        // ── Mobile menu ─────────────────────────────────
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        const burgerTop = document.getElementById('burger-top');
+        const burgerBottom = document.getElementById('burger-bottom');
+        let isOpen = false;
 
-      if (toggle && menu) {
-        toggle.addEventListener('click', () => {
-          isOpen = !isOpen;
-          if (isOpen) {
-            menu.style.transform = 'translateX(0)';
-            burgerTop.style.transform = 'rotate(45deg) translateY(5px)';
-            burgerBottom.style.transform = 'rotate(-45deg) translateY(-5px) scaleX(1.5)';
-            document.body.style.overflow = 'hidden';
-          } else {
-            menu.style.transform = 'translateX(100%)';
-            burgerTop.style.transform = 'none';
-            burgerBottom.style.transform = 'none';
-            document.body.style.overflow = '';
-          }
-        });
-        menu.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            isOpen = false;
-            menu.style.transform = 'translateX(100%)';
-            burgerTop.style.transform = 'none';
-            burgerBottom.style.transform = 'none';
-            document.body.style.overflow = '';
-          });
-        });
-      }
-
-      // ── Nav link blur-sibling effect ─────────────────
-      const allNavLinks = document.querySelectorAll('.nav-link');
-
-      allNavLinks.forEach(link => {
-        link.addEventListener('mouseenter', () => {
-          allNavLinks.forEach(other => {
-            if (other !== link) {
-              other.classList.add('nav-blurred');
+        if (toggle && menu) {
+          toggle.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+              menu.style.transform = 'translateX(0)';
+              burgerTop.style.transform = 'rotate(45deg) translateY(5px)';
+              burgerBottom.style.transform = 'rotate(-45deg) translateY(-5px) scaleX(1.5)';
+              document.body.style.overflow = 'hidden';
             } else {
-              other.classList.add('nav-focused');
+              menu.style.transform = 'translateX(100%)';
+              burgerTop.style.transform = 'none';
+              burgerBottom.style.transform = 'none';
+              document.body.style.overflow = '';
             }
           });
-        });
-
-        link.addEventListener('mouseleave', () => {
-          allNavLinks.forEach(other => {
-            other.classList.remove('nav-blurred', 'nav-focused');
+          menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              isOpen = false;
+              menu.style.transform = 'translateX(100%)';
+              burgerTop.style.transform = 'none';
+              burgerBottom.style.transform = 'none';
+              document.body.style.overflow = '';
+            });
           });
-        });
-
-        // Keep active page link always highlighted
-        if (link.href === window.location.href ||
-            (link.getAttribute('href') !== '/' && window.location.pathname.startsWith(link.getAttribute('href')))) {
-          link.classList.add('nav-active');
         }
+
+        // ── Nav link blur-sibling effect ─────────────────
+        const allNavLinks = document.querySelectorAll('.nav-link');
+
+        allNavLinks.forEach(link => {
+          link.addEventListener('mouseenter', () => {
+            allNavLinks.forEach(other => {
+              if (other !== link) {
+                other.classList.add('nav-blurred');
+              } else {
+                other.classList.add('nav-focused');
+              }
+            });
+          });
+
+          link.addEventListener('mouseleave', () => {
+            allNavLinks.forEach(other => {
+              other.classList.remove('nav-blurred', 'nav-focused');
+            });
+          });
+
+          // Keep active page link always highlighted
+          if (link.href === window.location.href ||
+              (link.getAttribute('href') !== '/' && window.location.pathname.startsWith(link.getAttribute('href')))) {
+            link.classList.add('nav-active');
+          }
+        });
       });
     </script>
 
