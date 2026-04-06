@@ -1,0 +1,74 @@
+---
+/**
+ * AboutHero.astro
+ * Split layout with rounded image and storytelling text.
+ */
+---
+<section class="relative min-h-[95vh] flex flex-col md:flex-row items-center justify-center px-6 md:px-20 py-32 bg-neutral-50 overflow-hidden">
+  <!-- Left Side: Image -->
+  <div class="hero-image-container w-full md:w-1/2 flex justify-center items-center relative" id="hero-image">
+    <div class="relative overflow-hidden rounded-full aspect-[4/5] w-[80%] md:w-[70%] shadow-2xl" id="hero-img-wrapper">
+      <img src="/candid/WC__6391.jpg" alt="About Parker" class="w-full h-full object-cover" loading="eager" />
+    </div>
+  </div>
+
+  <!-- Right Side: Content -->
+  <div class="hero-content w-full md:w-1/2 mt-12 md:mt-0 flex flex-col items-start space-y-8 z-10" id="hero-text">
+    <div class="space-y-4">
+      <h2 class="text-xs tracking-[0.4em] text-accent font-sans uppercase font-medium translate-x-20 opacity-0 about-reveal">
+        BASED IN NEW YORK
+      </h2>
+      <h1 class="text-6xl md:text-8xl font-serif text-neutral-900 leading-tight translate-x-20 opacity-0 about-reveal">
+        HEY, I’M <span class="italic text-accent">PARKER.</span>
+      </h1>
+    </div>
+    
+    <div class="max-w-md space-y-6 translate-x-20 opacity-0 about-reveal">
+      <p class="text-neutral-900/70 font-sans text-lg leading-relaxed">
+        I’ve always believed that life’s most beautiful stories are often told in silence. A subtle glance, a flicker of light, or the quiet pause before a "yes".
+      </p>
+      <div class="signature font-serif text-3xl text-neutral-900 italic">
+        With love, Wedding Candid.
+      </div>
+    </div>
+
+    <div class="translate-x-20 opacity-0 about-reveal">
+      <button class="px-8 py-4 bg-neutral-900 text-white font-sans text-sm tracking-[0.2em] uppercase hover:bg-neutral-800 transition-all duration-500 hover:scale-110 active:scale-95 group">
+        Work With Me
+        <span class="inline-block transition-transform duration-500 group-hover:translate-x-2">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initAboutHero() {
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.8 } });
+
+    // Ensure state is clean before animating
+    gsap.set(['#hero-img-wrapper', '.about-reveal'], { opacity: 0 });
+    gsap.set('#hero-img-wrapper', { scale: 0.8, rotate: -5 });
+    gsap.set('.about-reveal', { x: 40 });
+
+    ScrollTrigger.refresh(true);
+
+    tl.to('#hero-img-wrapper', {
+      scale: 1,
+      rotate: 0,
+      opacity: 1,
+      duration: 2.2
+    })
+    .to('.about-reveal', {
+      x: 0,
+      opacity: 1,
+      stagger: 0.12
+    }, "-=1.8");
+  }
+
+  // Support View Transitions
+  document.addEventListener('astro:page-load', initAboutHero);
+</script>

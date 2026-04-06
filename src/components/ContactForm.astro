@@ -1,0 +1,180 @@
+---
+/**
+ * ContactForm.astro
+ * Premium, elegant contact form with smooth reveals and validation.
+ */
+---
+<section class="max-w-7xl mx-auto px-6 py-40 flex flex-col items-center">
+  <div class="w-full relative space-y-24" id="booking-form-wrapper">
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center space-y-4">
+      <span class="text-[10px] tracking-[0.6em] text-accent font-sans uppercase font-medium">RESERVE YOUR DATE</span>
+      <h2 class="text-5xl md:text-7xl font-serif text-neutral-900 leading-tight">THE <span class="italic">INQUIRY</span></h2>
+    </div>
+
+    <!-- Main Form Grid -->
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-y-12 gap-x-16" id="booking-form">
+      <!-- Row 1: Names -->
+      <div class="space-y-2 group booking-reveal">
+        <label for="first_name" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">First / Partner's Name *</label>
+        <input type="text" id="first_name" required placeholder="Alexander" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200">
+      </div>
+      <div class="space-y-2 group booking-reveal">
+        <label for="last_name" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Last / Partner's Last Name *</label>
+        <input type="text" id="last_name" required placeholder="Stephens" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200">
+      </div>
+
+      <!-- Row 2: Contact Info -->
+      <div class="space-y-2 group booking-reveal">
+        <label for="email" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Email Address *</label>
+        <input type="email" id="email" required placeholder="hello@example.com" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200">
+      </div>
+      <div class="space-y-2 group booking-reveal">
+        <label for="phone" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Phone Number</label>
+        <input type="tel" id="phone" placeholder="+1 (234) 567 890" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200">
+      </div>
+
+      <!-- Row 3: Meta Info -->
+      <div class="space-y-2 group booking-reveal">
+        <label for="date" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Proposed Date *</label>
+        <input type="date" id="date" required class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 text-neutral-400 focus:text-neutral-900">
+      </div>
+      <div class="space-y-2 group booking-reveal">
+        <label for="location" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Location / Venue</label>
+        <input type="text" id="location" placeholder="Tuscany, Italy" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200">
+      </div>
+
+      <!-- Row 4: Source & Budget -->
+      <div class="space-y-2 group booking-reveal">
+        <label for="referral" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Instagram / Referral</label>
+        <input type="text" id="referral" placeholder="@username or friend" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200">
+      </div>
+      <div class="space-y-2 group booking-reveal">
+        <label for="budget" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Investment Budget</label>
+        <select id="budget" class="w-full bg-transparent border-b border-neutral-200 py-4 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 text-neutral-400 focus:text-neutral-900 appearance-none cursor-pointer">
+          <option value="">Select Range</option>
+          <option value="5k-8k">$5,000 — $8,000</option>
+          <option value="8k-12k">$8,000 — $12,000</option>
+          <option value="12k+">$12,000+</option>
+        </select>
+      </div>
+
+      <!-- Fill column Textareas -->
+      <div class="md:col-span-2 space-y-4 pt-12 booking-reveal">
+        <div class="space-y-2 group">
+          <label for="message" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">The Narrative *</label>
+          <textarea id="message" required rows="4" placeholder="Tell us about your story and vision..." class="w-full bg-transparent border border-neutral-200 p-6 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200 rounded-lg"></textarea>
+        </div>
+      </div>
+
+      <div class="md:col-span-2 space-y-4 booking-reveal">
+        <div class="space-y-2 group">
+          <label for="notes" class="text-[10px] tracking-[0.2em] uppercase font-sans font-normal text-neutral-900 transition-colors">Additional Notes</label>
+          <textarea id="notes" rows="2" placeholder="Any specific details we should know?" class="w-full bg-transparent border border-neutral-200 p-6 font-serif font-light text-xl md:text-2xl outline-none focus:border-accent transition-all duration-700 placeholder:text-neutral-200 rounded-lg"></textarea>
+        </div>
+      </div>
+
+      <!-- Submit Section -->
+      <div class="md:col-span-2 flex flex-col items-center pt-24 booking-reveal">
+        <button type="submit" id="submit-btn" class="group relative px-12 py-5 bg-neutral-900 text-white font-sans text-xs tracking-[0.4em] uppercase transition-all duration-700 flex items-center justify-center gap-4 hover:scale-105 active:scale-95 rounded-full shadow-lg">
+          <span class="relative z-10" id="btn-text">Send Inquiries</span>
+          
+          <!-- Loading Spinner (hidden) -->
+          <svg id="btn-spinner" class="animate-spin h-5 w-5 text-white absolute hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </button>
+
+        <!-- Success Message -->
+        <div id="success-msg" class="hidden mt-8 text-accent font-serif text-2xl italic scale-0 opacity-0 transition-all duration-1000">
+          * Your story has been received beautifully.
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  function initBookingForm() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const reveals = document.querySelectorAll('.booking-reveal');
+    reveals.forEach((reveal, idx) => {
+      gsap.from(reveal, {
+        opacity: 0,
+        y: 40,
+        duration: 2,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: reveal,
+          start: 'top 95%',
+        },
+        delay: idx * 0.05
+      });
+    });
+
+    const form = document.getElementById('booking-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('btn-spinner');
+    const successMsg = document.getElementById('success-msg');
+
+    if (form && submitBtn) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Show loading state
+        btnText.style.opacity = '0';
+        spinner.classList.remove('hidden');
+        submitBtn.style.pointerEvents = 'none';
+
+        // Simulate network request
+        setTimeout(() => {
+          // Fade form out slightly
+          gsap.to('#booking-form', { 
+            opacity: 0.1, 
+            filter: 'blur(10px)', 
+            duration: 1, 
+            pointerEvents: 'none' 
+          });
+
+          // Show success message
+          successMsg.classList.remove('hidden');
+          gsap.to(successMsg, {
+            scale: 1,
+            opacity: 1,
+            duration: 1.5,
+            ease: 'expo.out'
+          });
+
+          // Reset button (visual only)
+          btnText.innerText = 'Sent';
+          btnText.style.opacity = '1';
+          spinner.classList.add('hidden');
+        }, 2500);
+      });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initBookingForm);
+</script>
+
+<style>
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #1a1a1a;
+    -webkit-box-shadow: 0 0 0px 1000px #f8f6f2 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+</style>

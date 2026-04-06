@@ -1,0 +1,51 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactHero from '../components/ContactHero.astro';
+import ContactCard from '../components/ContactCard.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Layout hideGlobalPreloader={true}>
+  <!-- Direct entry container with smooth animation on mount -->
+  <div class="bg-neutral-50 selection:bg-accent selection:text-white page-entrance">
+    <ContactHero />
+    <ContactCard />
+    <ContactForm />
+  </div>
+</Layout>
+
+<style is:global>
+  /* Page specific entrance transition matching About page */
+  .page-entrance {
+    animation: slideInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Font consistent with About page design */
+  :root {
+    --accent: #d1b894;
+    --background: #f8f6f2;
+    --foreground: #1a1a1a;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+</style>
+

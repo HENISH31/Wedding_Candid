@@ -1,0 +1,276 @@
+---
+/**
+ * FeaturedAlbum.astro
+ * A cinematic, full-screen, scroll-driven album section.
+ * Pins on entry and maps scroll progress to image transitions.
+ */
+const album = [
+  { src: '/wc logo-3.png', title: 'Branding', sub: 'Wedding Candid Identity' },
+  { src: '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp', title: 'Aerial Majesty', sub: 'Rajasthan Highlands' },
+  { src: '/gallery/opt/CB8A0325.webp', title: 'Eternal Unions', sub: 'Romantic Escape' },
+  { src: '/gallery/opt/WC__7232.webp', title: 'Mystic Night', sub: 'Golden Hour Story' },
+  { src: '/gallery/opt/MBJ_5953.webp', title: 'Raw Portraits', sub: 'Editorial Session' }
+];
+---
+
+<section class="album-container" id="featured-album">
+  <div class="album-sticky">
+    <div class="album-track" id="album-track">
+      {album.map((item, i) => (
+        <div class="album-clip" data-index={i}>
+          <div class="album-img-wrapper creative-tilt">
+            <img 
+              src={item.src} 
+              alt={item.title} 
+              class="album-img" 
+              loading={i === 0 ? 'eager' : 'lazy'} 
+            />
+            <span class="album-num">PIECE {i + 1} / {album.length}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- UI Enhancements -->
+    <div class="album-progress">
+      <div class="album-bar" id="album-bar"></div>
+    </div>
+    
+    <div class="album-footer">
+      <div class="album-dots">
+        {album.map((_, i) => (
+          <div class="album-dot" data-dot={i}></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .album-container {
+    position: relative;
+    height: 100vh; /* Managed by ScrollTrigger pin spacer */
+    background: #ffffff; /* Pure white as requested */
+    overflow: visible;
+    margin: 8rem 0;
+  }
+
+  /* Sticky and horizontal logic */
+  .album-sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .album-track {
+    display: flex;
+    height: 100%;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .album-clip {
+    position: relative;
+    width: 60vw;
+    height: 100vh;
+    flex-shrink: 0;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10vh 5vw;
+    perspective: 1200px;
+  }
+
+  /* Symmetric grid layout (No staggering) */
+  .album-clip:nth-child(even),
+  .album-clip:nth-child(odd) { 
+    align-items: center; 
+    padding-top: 10vh; 
+    padding-bottom: 10vh; 
+  }
+
+  .album-img-wrapper {
+    position: relative;
+    width: 42vw;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    overflow: visible;
+    background: #fff;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0.4, 1);
+    
+    border: 1px solid rgba(184, 147, 90, 0.2);
+    padding: 15px;
+    box-shadow: 
+      0 30px 60px rgba(0,0,0,0.08),
+      0 0 0 1px rgba(184, 147, 90, 0.05);
+  }
+
+  .album-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: 4/3;
+  }
+
+  .album-num {
+    position: absolute;
+    bottom: -40px;
+    right: 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    color: #999;
+    letter-spacing: 0.3em;
+  }
+
+  /* Progress UI */
+  .album-progress {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.03);
+    z-index: 100;
+  }
+  .album-bar {
+    height: 100%;
+    width: 0%;
+    background: #b8935a;
+  }
+
+  .album-footer {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    z-index: 100;
+  }
+
+  .album-dots {
+    display: flex;
+    gap: 1.2rem;
+  }
+  .album-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+  }
+  .album-dot.active {
+    background: #b8935a;
+    transform: scale(1.6);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initAlbum() {
+    const container = document.getElementById('featured-album');
+    const track = document.getElementById('album-track');
+    const clips = gsap.utils.toArray('.album-clip');
+    const progressBar = document.getElementById('album-bar');
+    const dots = document.querySelectorAll('.album-dot');
+
+    if (!container || !track) return;
+
+    // Timeline for horizontal scroll pinning
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: 'top top',
+        end: () => `+=${track.scrollWidth - window.innerWidth}`,
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (progressBar) progressBar.style.width = `${self.progress * 100}%`;
+          const index = Math.min(Math.round(self.progress * (clips.length - 1)), clips.length - 1);
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        }
+      }
+    });
+
+    // Track movement
+    tl.to(track, {
+      x: () => -(track.scrollWidth - window.innerWidth),
+      ease: 'none'
+    });
+
+    // 3D Tilt Logic
+    const tiltWrappers = document.querySelectorAll('.creative-tilt');
+    tiltWrappers.forEach(wrap => {
+      wrap.addEventListener('mousemove', (e) => {
+        const rect = wrap.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xc = rect.width / 2;
+        const yc = rect.height / 2;
+        const dx = (x - xc) / xc;
+        const dy = (y - yc) / yc;
+
+        wrap.style.setProperty('--rx', `${-dy * 8}deg`);
+        wrap.style.setProperty('--ry', `${dx * 8}deg`);
+      });
+
+      wrap.addEventListener('mouseleave', () => {
+        wrap.style.setProperty('--rx', '0deg');
+        wrap.style.setProperty('--ry', '0deg');
+      });
+    });
+
+    // Individual Image Reveal (Zoom + Color)
+    clips.forEach((clip, i) => {
+      const img = clip.querySelector('.album-img');
+      if (!img) return;
+
+      gsap.fromTo(img, 
+        { 
+          filter: 'grayscale(100%)', 
+          scale: 1.15,
+          opacity: 0.7
+        },
+        { 
+          filter: 'grayscale(0%)', 
+          scale: 1, 
+          opacity: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: clip,
+            containerAnimation: tl,
+            start: 'left right',
+            end: 'center center',
+            scrub: true
+          }
+        }
+      );
+
+      gsap.to(img, {
+        filter: 'grayscale(100%)',
+        scrollTrigger: {
+          trigger: clip,
+          containerAnimation: tl,
+          start: 'center center',
+          end: 'right left',
+          scrub: true
+        }
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initAlbum);
+</script>

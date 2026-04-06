@@ -1,0 +1,56 @@
+---
+/**
+ * StorySection.astro
+ * Scroll-based storytelling with fade-up animations.
+ */
+---
+<section class="story-section px-6 md:px-32 py-32 bg-neutral-50 flex flex-col items-center justify-center text-center">
+  <div class="max-w-3xl space-y-20 relative">
+    <div class="space-y-4">
+      <span class="text-xs tracking-[0.6em] text-accent font-sans uppercase font-medium story-reveal">THE STORY BEHIND</span>
+      <h2 class="text-4xl md:text-5xl font-serif text-neutral-900 leading-tight story-reveal">
+        CAPTURING LIFE'S MOST <span class="italic">AUTHENTIC MOMENTS</span>
+      </h2>
+    </div>
+
+    <div class="space-y-12 text-center">
+      <p class="text-2xl md:text-3xl text-neutral-900/80 font-sans leading-relaxed tracking-tight story-reveal px-4">
+        Based in New York but following the light wherever it leads, I specialize in captures that feel like a soft exhale. To me, photography isn’t about technical perfections—it’s about the raw, unedited heartbeat of the moment.
+      </p>
+      
+      <p class="text-lg md:text-xl text-neutral-900/60 font-sans leading-relaxed max-w-2xl mx-auto story-reveal px-4">
+        When I’m not behind the camera, you’ll find me exploring hidden coastal towns or getting lost in a local bookshop. I’d love to tell your story next.
+      </p>
+    </div>
+
+    <!-- Blur to clear line effect -->
+    <div class="w-px h-32 bg-accent opacity-30 mx-auto story-reveal"></div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  function initStorySection() {
+    gsap.registerPlugin(ScrollTrigger);
+    const elements = document.querySelectorAll('.story-reveal');
+    elements.forEach((el, index) => {
+      gsap.from(el, {
+        y: 40,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 1.5,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+        delay: index * 0.05
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', initStorySection);
+</script>

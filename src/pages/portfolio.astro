@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
+  <section class="section portfolio-section visible">
+    <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+      <h1 style="font-size: 4rem; margin-bottom: 1rem;">Portfolio</h1>
+    </div>
+    <div class="portfolio-grid grid-all">
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
+        <img src="/candid/CB8A0155.jpg" alt="Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>Eternal Unions</h3><p>Wedding Collection</p></div>
+      </div>
+      
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="portrait">
+        <img src="/candid/MBJ_5953.jpg" alt="Portrait" loading="lazy">
+        <div class="portfolio-info"><h3>Raw Portraits</h3><p>Editorial Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
+        <img src="/candid/WC_13299.jpg" alt="Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>The Ceremony</h3><p>Fine Art Wedding</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="prewedding">
+        <img src="/candid/1M4A8828.jpg" alt="Pre-Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>First Looks</h3><p>Pre-Wedding Story</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="events">
+        <img src="/candid/DJI_20241209172706_0093_D_FLYCAPTURE.jpg" alt="Events" loading="lazy">
+        <div class="portfolio-info"><h3>The Venue</h3><p>Events Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
+        <img src="/candid/CB8A0325.jpg" alt="Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>Golden Hour</h3><p>Wedding Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="portrait">
+        <img src="/candid/IMG_4312.jpg" alt="Portrait" loading="lazy">
+        <div class="portfolio-info"><h3>Modern Soul</h3><p>Editorial Work</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="events">
+        <img src="/candid/SSP01330.JPG" alt="Events" loading="lazy">
+        <div class="portfolio-info"><h3>The Celebration</h3><p>Events Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="prewedding">
+        <img src="/candid/WC_17354.JPG" alt="Prep" loading="lazy">
+        <div class="portfolio-info"><h3>The Beginning</h3><p>Bridal Prep Story</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
+        <img src="/candid/WC_17407.JPG" alt="Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>The Altar</h3><p>Wedding Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="events">
+        <img src="/candid/WC_19833.jpg" alt="Events" loading="lazy">
+        <div class="portfolio-info"><h3>Afterparty</h3><p>Events Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
+        <img src="/candid/WC__5748.jpg" alt="Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>Candid Joy</h3><p>Wedding Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="portrait">
+        <img src="/candid/WC__6391.jpg" alt="Portrait" loading="lazy">
+        <div class="portfolio-info"><h3>Quiet Confidence</h3><p>Editorial Work</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
+        <img src="/candid/WC__7232.jpg" alt="Wedding" loading="lazy">
+        <div class="portfolio-info"><h3>The Kiss</h3><p>Wedding Collection</p></div>
+      </div>
+
+      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="prewedding">
+        <img src="/candid/WC__8428.jpg" alt="Prewedding" loading="lazy">
+        <div class="portfolio-info"><h3>The Journey</h3><p>Pre-Wedding Story</p></div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // Read the query parameter immediately for automatic filtering
+    const params = new URLSearchParams(window.location.search);
+    const filter = params.get('filter') || 'all';
+    if (window.setupPortfolioFilters) window.setupPortfolioFilters(filter);
+  });
+</script>

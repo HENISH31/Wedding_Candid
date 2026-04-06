@@ -1,0 +1,113 @@
+---
+/**
+ * DynamicHeroText.astro
+ * An elegant, self-contained component for rotating hero text.
+ * Cycles through words with a cinematic slide-and-blur transition.
+ */
+const words = ['Capturing', 'Creating', 'Preserving'];
+---
+
+<h1 class="hero-text-dynamic">
+  <span class="dynamic-word-outer">
+    <span class="dynamic-word-inner" id="hero-word">{words[0]}</span>
+  </span>
+  <span class="static-text">Moments<br/>That Last Forever</span>
+</h1>
+
+<style>
+  .hero-text-dynamic {
+    font-size: clamp(3rem, 10vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin-bottom: 2.5rem;
+    color: var(--text-charcoal);
+    font-family: var(--font-serif);
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1em;
+    perspective: 1000px;
+  }
+
+  .dynamic-word-outer {
+    display: inline-block;
+    height: 1.1em;
+    overflow: hidden;
+    position: relative;
+    /* Ensure the width doesn't jitter by making it wide enough for the longest word */
+    min-width: 5.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dynamic-word-inner {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.6s ease, 
+                filter 0.6s ease;
+  }
+
+  .static-text {
+    font-size: 0.65em;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+  }
+
+  /* Responsive tuning */
+  @media (max-width: 768px) {
+    .hero-text-dynamic { font-size: 3.5rem; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initDynamicWord() {
+    const wordEl = document.getElementById('hero-word');
+    if (!wordEl) return;
+
+    const words = ['Capturing', 'Creating', 'Preserving'];
+    let idx = 0;
+
+    const cycle = () => {
+      // 1. Slide Up & Blur Out
+      gsap.to(wordEl, {
+        y: -30,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 0.8,
+        ease: 'power4.inOut',
+        onComplete: () => {
+          // 2. Change Text & Snap to Bottom (Hidden)
+          idx = (idx + 1) % words.length;
+          wordEl.textContent = words[idx];
+          gsap.set(wordEl, { y: 30, opacity: 0, filter: 'blur(10px)' });
+
+          // 3. Slide In & Focus
+          gsap.to(wordEl, {
+            y: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            duration: 1,
+            ease: 'expo.out',
+            delay: 0.1
+          });
+        }
+      });
+    };
+
+    // Cycle every 3 seconds
+    const interval = setInterval(cycle, 3000);
+
+    // Cleanup for Astro transitions
+    document.addEventListener('astro:before-preparation', () => {
+      clearInterval(interval);
+    }, { once: true });
+  }
+
+  // Load logic for Astro
+  document.addEventListener('astro:page-load', initDynamicWord);
+</script>

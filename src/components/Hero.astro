@@ -1,0 +1,668 @@
+---
+/**
+ * Hero.astro — Light Theme
+ * Luxury editorial hero with floating image stack + text reveal animations.
+ * No external libraries. All CSS & JS inline.
+ */
+---
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+
+<!-- ══════════════════════════════════════════
+     SPLASH SCREEN  (light cream panels)
+══════════════════════════════════════════ -->
+<div id="splash" aria-hidden="true">
+  <div class="splash-half splash-top"></div>
+  <div class="splash-half splash-bottom"></div>
+
+  <div id="splash-logo">
+    <div id="camera-wrap">
+      <svg id="camera-draw" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="8"  y="28" width="104" height="72" rx="10" ry="10" fill="none" stroke="#1a1814" stroke-width="3"   class="cam-stroke" style="--len:360"/>
+        <rect x="28" y="18" width="16"  height="10" rx="3"  ry="3"  fill="none" stroke="#1a1814" stroke-width="2.5" class="cam-stroke" style="--len:60"/>
+        <rect x="50" y="16" width="10"  height="12" rx="2"  ry="2"  fill="none" stroke="#1a1814" stroke-width="2.5" class="cam-stroke" style="--len:48"/>
+        <circle cx="60" cy="66" r="22" fill="none" stroke="#1a1814" stroke-width="3"   class="cam-stroke" style="--len:138"/>
+        <circle cx="60" cy="66" r="14" fill="none" stroke="#1a1814" stroke-width="2"   class="cam-stroke" style="--len:88"/>
+        <circle cx="100" cy="42" r="4" fill="none" stroke="#1a1814" stroke-width="2"   class="cam-stroke" style="--len:25"/>
+      </svg>
+    </div>
+    <div class="splash-wordmark">
+      <span class="splash-title">WEDDING CANDY</span>
+      <span class="splash-sub">PHOTOGRAPHY</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     HERO SECTION — Light Theme
+══════════════════════════════════════════ -->
+<section id="wc-hero">
+  <!-- 3D Particle Canvas -->
+  <canvas id="hero-particles" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
+
+
+  <!-- ── LEFT: Text Column ── -->
+  <div id="hero-text-col">
+
+    <h1 id="hero-heading">
+      <span class="h-line h-line-1 hero-anim">
+        <em>Preserving</em>
+      </span>
+      <span class="h-line h-line-2 hero-anim">
+        Moments
+      </span>
+      <span class="h-line h-line-3 hero-anim">
+        <span>That Last</span>
+        <em>Forever.</em>
+      </span>
+    </h1>
+
+    <p id="hero-sub" class="hero-anim">
+      We don't just capture photographs — we preserve the quiet glances,
+      stolen laughs, and unscripted love that define your story.
+    </p>
+
+    <div id="hero-actions" class="hero-anim">
+      <a href="/portfolio" class="btn-dark">View Portfolio</a>
+      <a href="/booking"   class="btn-ghost">Book a Session</a>
+    </div>
+
+    <!-- Floating stat pills -->
+
+  </div>
+
+  <!-- ── RIGHT: Floating Image Stack ── -->
+  <div id="hero-img-col">
+
+    <!-- Background decoration circle -->
+    <div id="img-bg-circle"></div>
+
+    <!-- Scattered gold accent dots -->
+    <div class="dot dot-1"></div>
+    <div class="dot dot-2"></div>
+    <div class="dot dot-3"></div>
+
+    <!-- Card stack — 3 photos layered & offset -->
+    <div class="img-card card-back" id="card-back">
+      <img src="/candid/WC__8428.jpg" alt="Wedding moment" loading="eager" />
+    </div>
+    <div class="img-card card-mid" id="card-mid">
+      <img src="/candid/CB8A0325.jpg" alt="Wedding moment" loading="eager" />
+    </div>
+    <div class="img-card card-front" id="card-front">
+      <img src="/candid/WC_17407.JPG" alt="Wedding moment" loading="eager" />
+    </div>
+
+    <!-- Floating label tag -->
+    <div id="img-label">
+      <span class="label-dot"></span>
+      <span>Love Stories, Documented</span>
+    </div>
+
+    <!-- Scroll down nudge -->
+    <div id="scroll-cue">
+      <div class="scroll-track"><div class="scroll-thumb"></div></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════
+     STYLES
+══════════════════════════════════════════ -->
+<style>
+  :root {
+    --cream:   #f8f6f2;
+    --ink:     #1a1814;
+    --gold:    #C9A84C;
+    --muted:   #7a7168;
+    --ease-split: cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── SPLASH ─────────────────────────────── */
+  #splash {
+    position: fixed; inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .splash-half {
+    position: absolute; left: 0;
+    width: 100%; height: 50%;
+    background: #f8f6f2;
+    transition: transform 1.1s var(--ease-split);
+    will-change: transform;
+  }
+  .splash-top    { top: 0; }
+  .splash-bottom { bottom: 0; }
+  #splash.split .splash-top    { transform: translateY(-100%); }
+  #splash.split .splash-bottom { transform: translateY(100%); }
+
+  #splash-logo {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1.4rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+  }
+  #splash-logo.visible  { opacity: 1; }
+  #splash-logo.fade-out { opacity: 0; transition-duration: 0.35s; }
+
+  #camera-wrap {
+    position: relative; width: 110px; height: 110px;
+  }
+  #camera-ghost {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(0) opacity(0.08);
+    opacity: 0;
+    animation: ghostFadeIn 0.6s ease 0.4s forwards;
+  }
+  #camera-draw {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    overflow: visible;
+  }
+  .cam-stroke {
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: var(--len);
+    animation: drawStroke 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .cam-stroke:nth-child(1) { animation-delay: 0.5s;  }
+  .cam-stroke:nth-child(2) { animation-delay: 1.0s;  }
+  .cam-stroke:nth-child(3) { animation-delay: 1.2s;  }
+  .cam-stroke:nth-child(4) { animation-delay: 1.4s;  }
+  .cam-stroke:nth-child(5) { animation-delay: 1.7s;  }
+  .cam-stroke:nth-child(6) { animation-delay: 2.0s;  }
+
+  @keyframes ghostFadeIn { to { opacity: 1; } }
+  @keyframes drawStroke  { to { stroke-dashoffset: 0; } }
+
+  .splash-wordmark {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.25rem;
+  }
+  .splash-title {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300; font-size: 1.05rem;
+    letter-spacing: 0.45em; color: #1a1814;
+  }
+  .splash-sub {
+    font-family: 'Jost', sans-serif;
+    font-weight: 200; font-size: 0.58rem;
+    letter-spacing: 0.55em; color: #b8935a;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO LAYOUT ─────────────────────────── */
+  #wc-hero {
+    min-height: 100vh;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 6vw;
+    gap: 4vw;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── TEXT COLUMN ────────────────────────── */
+  #hero-text-col {
+    padding: 10vh 0 8vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Base animation state */
+  .hero-anim {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  }
+  .hero-anim.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+
+
+  /* Heading */
+  #hero-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+  }
+  .h-line {
+    display: block;
+    overflow: hidden;
+    line-height: 0.95;
+  }
+  .h-line-1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5.5vw, 6rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    transition-delay: 0.15s;
+  }
+  .h-line-2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 7.5vw, 9rem);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    transition-delay: 0.25s;
+  }
+  .h-line-3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 5rem);
+    font-weight: 300;
+    color: var(--ink);
+    display: flex;
+    gap: 0.4em;
+    align-items: baseline;
+    transition-delay: 0.38s;
+  }
+  .h-line-3 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* Sub paragraph */
+  #hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--muted);
+    max-width: 42ch;
+    transition-delay: 0.5s;
+  }
+
+  /* Buttons */
+  #hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    transition-delay: 0.62s;
+  }
+  .btn-dark, .btn-ghost {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 34px;
+    display: inline-block;
+    transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-dark {
+    background: var(--ink);
+    color: var(--cream);
+    border: 1px solid var(--ink);
+  }
+  .btn-dark:hover { background: #2e2a24; transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(26,24,20,0.3);
+  }
+  .btn-ghost:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+
+
+  /* ── IMAGE COLUMN ───────────────────────── */
+  #hero-img-col {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Big soft circle background */
+  #img-bg-circle {
+    position: absolute;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  /* Accent dots */
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .dot-1 { width: 8px; height: 8px; top: 22%; left: 8%;  opacity: 0.5; animation: floatDot 5s ease-in-out infinite; }
+  .dot-2 { width: 5px; height: 5px; bottom: 28%; right: 6%; opacity: 0.35; animation: floatDot 7s ease-in-out 1s infinite; }
+  .dot-3 { width: 3px; height: 3px; top: 55%; left: 3%;  opacity: 0.25; animation: floatDot 6s ease-in-out 2s infinite; }
+
+  @keyframes floatDot {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+
+  /* ── Image cards ─────────────────────── */
+  .img-card {
+    position: absolute;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(26,24,20,0.14), 0 8px 24px rgba(26,24,20,0.08);
+    opacity: 0;
+  }
+  .img-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+  /* Slow Ken Burns drift */
+  .img-card:hover img { transform: scale(1.05); }
+
+  /* Back card — portrait, tilted left */
+  .card-back {
+    width: clamp(180px, 22vw, 280px);
+    height: clamp(240px, 30vw, 380px);
+    bottom: 8%;
+    left: 2%;
+    transform: rotate(-8deg) translate(-30px, 40px);
+    animation: cardRevealBack 1.2s var(--ease-out) 3.3s forwards;
+  }
+
+  /* Mid card — landscape, centered */
+  .card-mid {
+    width: clamp(220px, 30vw, 380px);
+    height: clamp(160px, 22vw, 280px);
+    top: 12%;
+    right: 4%;
+    transform: rotate(5deg) translate(30px, -20px);
+    animation: cardRevealMid 1.2s var(--ease-out) 3.5s forwards;
+  }
+
+  /* Front card — portrait, center-right, raised */
+  .card-front {
+    width: clamp(200px, 26vw, 320px);
+    height: clamp(280px, 36vw, 440px);
+    top: 50%; left: 50%;
+    transform: translate(-40%, -50%) rotate(-2deg) scale(0.85);
+    z-index: 3;
+    animation: cardRevealFront 1.4s var(--ease-out) 3.7s forwards;
+    box-shadow: 0 40px 100px rgba(26,24,20,0.2), 0 10px 30px rgba(26,24,20,0.1);
+  }
+
+  @keyframes cardRevealBack {
+    to { opacity: 1; transform: rotate(-8deg) translate(0, 0); }
+  }
+  @keyframes cardRevealMid {
+    to { opacity: 1; transform: rotate(5deg) translate(0, 0); }
+  }
+  @keyframes cardRevealFront {
+    to { opacity: 1; transform: translate(-40%, -50%) rotate(-2deg) scale(1); }
+  }
+
+  /* Floating label */
+  #img-label {
+    position: absolute;
+    bottom: 14%;
+    right: 2%;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: white;
+    border: 1px solid rgba(26,24,20,0.06);
+    border-radius: 100px;
+    padding: 10px 18px;
+    box-shadow: 0 8px 30px rgba(26,24,20,0.08);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: floatIn 0.8s var(--ease-out) 4.2s forwards;
+    z-index: 5;
+  }
+  .label-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(1.5); }
+  }
+
+  /* Scroll cue */
+  #scroll-cue {
+    position: absolute;
+    left: 4%;
+    bottom: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: floatIn 0.8s var(--ease-out) 4.5s forwards;
+    z-index: 5;
+  }
+  #scroll-cue span {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+  }
+  .scroll-track {
+    width: 1px; height: 60px;
+    background: rgba(26,24,20,0.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .scroll-thumb {
+    position: absolute;
+    top: -100%; left: 0;
+    width: 100%; height: 100%;
+    background: var(--gold);
+    animation: scrollThumb 2s ease-in-out infinite;
+  }
+  @keyframes scrollThumb {
+    0%   { top: -100%; }
+    100% { top: 200%; }
+  }
+
+  @keyframes floatIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media (max-width: 900px) {
+    #wc-hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      padding: 0 6vw 6vw;
+      min-height: auto;
+    }
+    #hero-text-col { padding: 14vh 0 4vh; }
+    #hero-img-col  { height: 60vw; min-height: 320px; }
+    .card-front    { width: clamp(160px, 40vw, 280px); height: clamp(220px, 56vw, 380px); }
+    .card-mid      { width: clamp(140px, 36vw, 240px); height: clamp(100px, 26vw, 180px); }
+    .card-back     { width: clamp(120px, 28vw, 200px); height: clamp(160px, 38vw, 260px); }
+    #hero-actions  { flex-direction: column; align-items: flex-start; }
+    .btn-dark, .btn-ghost { width: 100%; text-align: center; }
+  }
+</style>
+
+<!-- ══════════════════════════════════════════
+     SCRIPT
+══════════════════════════════════════════ -->
+<script>
+  // ── INIT ON PAGE LOAD FOR VIEW TRANSITIONS ────────────
+  function initHero() {
+    // ── SPLASH ────────────────────────────────────────────
+    const splash     = document.getElementById('splash');
+    const splashLogo = document.getElementById('splash-logo');
+
+    if (splashLogo && splash) {
+      setTimeout(() => splashLogo.classList.add('visible'),  300);
+      setTimeout(() => splashLogo.classList.add('fade-out'), 3200);
+      setTimeout(() => splash.classList.add('split'),        3600);
+      setTimeout(() => { splash.style.display = 'none'; }, 4800);
+    } else if (splash) {
+      splash.style.display = 'none';
+    }
+
+    // ── HERO TEXT REVEAL on splash end ────────────────────
+    const ANIM_START = 4100; // ms — just before cards arrive
+
+    function revealHeroText() {
+      const items = document.querySelectorAll('.hero-anim');
+      items.forEach((el, i) => {
+        const delay = parseFloat(getComputedStyle(el).transitionDelay) * 1000 || 0;
+        setTimeout(() => el.classList.add('in'), delay);
+      });
+    }
+    
+    if (document.getElementById('wc-hero')) {
+      setTimeout(revealHeroText, ANIM_START);
+    }
+
+    // ── PARALLAX / CARD MOUSE TILT (desktop only) ─────────
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    if (!isTouch) {
+      const front = document.getElementById('card-front');
+      const mid   = document.getElementById('card-mid');
+      const back  = document.getElementById('card-back');
+      const heroSec = document.getElementById('wc-hero');
+
+      if (heroSec) {
+        heroSec.addEventListener('mousemove', (e) => {
+          const { innerWidth: W, innerHeight: H } = window;
+          const dx = (e.clientX / W - 0.5) * 2;   // -1 → +1
+          const dy = (e.clientY / H - 0.5) * 2;
+
+          if (front) front.style.transform = `translate(-40%, -50%) rotate(-2deg) translate(${dx*10}px, ${dy*6}px)`;
+          if (mid)   mid.style.transform   = `rotate(5deg) translate(${dx*6}px,  ${dy*4}px)`;
+          if (back)  back.style.transform  = `rotate(-8deg) translate(${dx*4}px, ${dy*3}px)`;
+        });
+      }
+    }
+
+    function onScroll() {
+      const nav = document.getElementById('navbar');
+      if (nav) {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ── 3D AMBIENT PARTICLES ──────────────────────────────
+    const canvas = document.getElementById('hero-particles');
+    // Important context tracking for cleanup
+    if (window.heroParticlesFrame) cancelAnimationFrame(window.heroParticlesFrame);
+
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let particles = [];
+
+      function initParticles() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        particles = [];
+        // Greatly increased particle count
+        const numParticles = window.innerWidth < 768 ? 100 : 250;
+        for (let i = 0; i < numParticles; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            z: Math.random() * 100,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            vz: (Math.random() - 0.5) * 0.8,
+            size: Math.random() * 2 + 0.5,
+            angle: Math.random() * Math.PI * 2,
+            turnSpeed: Math.random() * 0.03 + 0.01 // Roaming turn speed
+          });
+        }
+      }
+
+      function drawParticles() {
+        if (!ctx || !document.getElementById('hero-particles')) return;
+        ctx.clearRect(0, 0, width, height);
+        
+        particles.forEach(p => {
+          // Organic roaming behavior
+          p.angle += p.turnSpeed;
+          p.x += p.vx + Math.cos(p.angle) * 0.5;
+          p.y += p.vy + Math.sin(p.angle) * 0.5;
+          p.z += p.vz;
+          
+          // Soft bounce on Z axis for depth
+          if (p.z < 0 || p.z > 100) p.vz *= -1;
+          
+          // Wrap X & Y
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+
+          // Calculate 3D Depth (scale & opacity)
+          const scale = (100 - p.z) / 100;
+          const size = p.size * scale;
+          const alpha = scale * 0.8; // Closer particles are brighter
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, Math.max(0.1, size), 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(201, 168, 76, ${alpha})`; // Luxury gold
+          ctx.shadowBlur = 12 * scale;
+          ctx.shadowColor = 'rgba(201, 168, 76, 0.6)';
+          ctx.fill();
+        });
+
+        window.heroParticlesFrame = requestAnimationFrame(drawParticles);
+      }
+
+      initParticles();
+      drawParticles();
+
+      window.addEventListener('resize', initParticles, { passive: true });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initHero);
+
+</script>

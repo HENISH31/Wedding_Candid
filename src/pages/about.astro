@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AboutHero from '../components/AboutHero.astro';
+import StorySection from '../components/StorySection.astro';
+import ShowcaseSection from '../components/ShowcaseSection.astro';
+import HorizontalGallery from '../components/HorizontalGallery.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+---
+
+<Layout hideGlobalPreloader={true}>
+  <!-- Main Content Structure -->
+  <div class="bg-neutral-50 selection:bg-accent selection:text-white">
+    <AboutHero />
+    <StorySection />
+    <ShowcaseSection />
+    <HorizontalGallery />
+    <QuoteSection />
+  </div>
+</Layout>
+
+<style is:global>
+  /* Global fine-tuning for About page */
+  :root {
+    --accent: #d1b894;
+    --background: #f8f6f2;
+    --foreground: #1a1a1a;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Smooth reveal classes for scroll trigger stuff if needed globally */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .page-transition-content {
+     opacity: 1;
+  }
+</style>
+

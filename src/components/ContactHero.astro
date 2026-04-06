@@ -1,0 +1,61 @@
+---
+/**
+ * ContactHero.astro
+ * Large image banner with zoom-in effect.
+ */
+---
+<section class="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
+  <!-- Hero Image -->
+  <div class="absolute inset-0 w-full h-full" id="contact-hero-container">
+    <img 
+      src="/candid/CB8A0155.jpg" 
+      alt="Wedding Scene" 
+      class="w-full h-full object-cover scale-110 opacity-0" 
+      id="contact-hero-img"
+    />
+    <!-- Overlay for better text readability -->
+    <div class="absolute inset-0 bg-black/20"></div>
+  </div>
+
+  <!-- Hero Content (Optional text overlay) -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none px-6 text-center">
+    <div class="space-y-4 opacity-0 translate-y-10" id="contact-hero-text">
+      <span class="text-xs md:text-sm tracking-[0.6em] text-white/80 font-sans uppercase font-medium">ESTABLISHED 2024</span>
+      <h1 class="text-5xl md:text-8xl font-serif text-white leading-tight">
+        LET'S TELL YOUR <br /> <span class="italic">STORY</span>
+      </h1>
+    </div>
+  </div>
+
+  <!-- Scroll Down indicator -->
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-0" id="contact-scroll-hint">
+    <div class="w-px h-12 bg-white/40"></div>
+    <span class="text-[8px] tracking-[0.4em] text-white/60 uppercase font-sans">SCROLL</span>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initContactHero() {
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 2 } });
+
+    tl.to('#contact-hero-img', {
+      scale: 1,
+      opacity: 1,
+      duration: 3,
+      ease: 'expo.out'
+    })
+    .to('#contact-hero-text', {
+      opacity: 1,
+      y: 0,
+      duration: 2
+    }, "-=2")
+    .to('#contact-scroll-hint', {
+      opacity: 1,
+      duration: 1
+    }, "-=1");
+  }
+
+  document.addEventListener('astro:page-load', initContactHero);
+</script>
