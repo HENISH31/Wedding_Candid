@@ -1661,3 +1661,43 @@ input:focus, select:focus, textarea:focus {
     padding: 2rem 1.5rem;
   }
 }
+
+/* ══════════════════════════════════════════
+   PREMIUM CURTAIN REVEAL MASKS
+══════════════════════════════════════════ */
+.curtain-reveal {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.curtain-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #f8f6f2; /* Default cream curtain */
+  transform-origin: top;
+  transition: transform 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 2;
+  will-change: transform;
+}
+
+/* Dark theme curtain support */
+.dark-section .curtain-reveal::after {
+  background-color: #1a1814;
+}
+
+/* Initial image state */
+.curtain-reveal img, .curtain-reveal video {
+  transform: scale(1.15);
+  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Revealed state triggered by JS IntersectionObserver */
+.curtain-reveal.in::after {
+  transform: scaleY(0);
+}
+.curtain-reveal.in img, .curtain-reveal.in video {
+  transform: scale(1);
+}

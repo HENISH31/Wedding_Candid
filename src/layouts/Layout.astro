@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import Cursor from "../components/Cursor.astro";
 const { hideGlobalPreloader = false } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -139,6 +140,21 @@ const { hideGlobalPreloader = false } = Astro.props;
             link.classList.add('nav-active');
           }
         });
+
+        // ── Global Curtain Reveal Observer ────────────────
+        const curtainObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Add short delay for visual pacing
+              setTimeout(() => entry.target.classList.add('in'), 150);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.curtain-reveal').forEach(el => {
+          curtainObserver.observe(el);
+        });
       });
     </script>
 
@@ -169,6 +185,9 @@ const { hideGlobalPreloader = false } = Astro.props;
         &copy; 2024 WEDDING CANDID. ALL RIGHTS RESERVED.
       </div>
     </footer>
+    
+    <!-- Custom Interactive Cursor -->
+    <Cursor />
   </div>
   <style is:global>
     :root {

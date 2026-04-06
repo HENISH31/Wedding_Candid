@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import FeaturedAlbum from '../components/FeaturedAlbum.astro';
 import DynamicHeroText from '../components/DynamicHeroText.astro';
+import Marquee from '../components/Marquee.astro';
 
 const featuredImages = [
   { src: '/candid/1M4A8828.jpg', alt: 'Pre-Wedding Story', title: 'The Beginning' },
@@ -30,6 +31,9 @@ const featuredImages = [
 
   <FeaturedAlbum />
 
+  <!-- Elegant Marquee Divider -->
+  <Marquee />
+
   <!-- Categories Section -->
   <section id="portfolio-categories" class="section categories-section stagger-reveal">
     <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
@@ -38,27 +42,27 @@ const featuredImages = [
     </div>
     <div class="collections-masonry-grid">
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=prewedding'">
-        <div class="collection-img"><img src="/candid/MBJ_5953.jpg" loading="lazy" alt="Pre-Wedding"></div>
+        <div class="collection-img curtain-reveal"><img src="/candid/MBJ_5953.jpg" loading="lazy" alt="Pre-Wedding"></div>
         <h4>PRE-WEDDING</h4>
       </div>
       
       <div class="collection-item tall stagger-reveal" onclick="window.location.href='/portfolio?filter=wedding'">
-        <div class="collection-img"><img src="/candid/WC_13299.jpg" loading="lazy" alt="Wedding"></div>
+        <div class="collection-img curtain-reveal"><img src="/candid/WC_13299.jpg" loading="lazy" alt="Wedding"></div>
         <h4>WEDDING + ELOPEMENTS</h4>
       </div>
 
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=prewedding'">
-        <div class="collection-img"><img src="/candid/CB8A0155.jpg" loading="lazy" alt="Engagement"></div>
+        <div class="collection-img curtain-reveal"><img src="/candid/CB8A0155.jpg" loading="lazy" alt="Engagement"></div>
         <h4>ENGAGEMENT + COUPLES</h4>
       </div>
 
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=portrait'">
-        <div class="collection-img"><img src="/candid/WC__6391.jpg" loading="lazy" alt="Branding"></div>
+        <div class="collection-img curtain-reveal"><img src="/candid/WC__6391.jpg" loading="lazy" alt="Branding"></div>
         <h4>SMALL BUSINESS + BRANDING</h4>
       </div>
 
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=events'">
-        <div class="collection-img"><img src="/candid/SSP01330.JPG" loading="lazy" alt="Events"></div>
+        <div class="collection-img curtain-reveal"><img src="/candid/SSP01330.JPG" loading="lazy" alt="Events"></div>
         <h4>REHEARSALS + EVENTS</h4>
       </div>
     </div>
