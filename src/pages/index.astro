@@ -6,11 +6,11 @@ import DynamicHeroText from '../components/DynamicHeroText.astro';
 import Marquee from '../components/Marquee.astro';
 
 const featuredImages = [
-  { src: '/candid/1M4A8828.jpg', alt: 'Pre-Wedding Story', title: 'The Beginning' },
-  { src: '/candid/CB8A0155.jpg', alt: 'Wedding Ceremony', title: 'Eternal Unions' },
-  { src: '/candid/WC_13299.jpg', alt: 'Fine Art Portrait', title: 'The Ceremony' },
-  { src: '/candid/IMG_4312.jpg', alt: 'Modern Soul', title: 'Modern Soul' },
-  { src: '/candid/MBJ_5953.jpg', alt: 'Editorial Detail', title: 'Raw Portraits' }
+  { src: '/gallery/opt/1M4A8828.webp', alt: 'Pre-Wedding Story', title: 'The Beginning' },
+  { src: '/gallery/opt/CB8A0155.webp', alt: 'Wedding Ceremony', title: 'Eternal Unions' },
+  { src: '/gallery/opt/WC_13299.webp', alt: 'Fine Art Portrait', title: 'The Ceremony' },
+  { src: '/gallery/opt/IMG_4312.webp', alt: 'Modern Soul', title: 'Modern Soul' },
+  { src: '/gallery/opt/MBJ_5953.webp', alt: 'Editorial Detail', title: 'Raw Portraits' }
 ];
 ---
 
@@ -42,27 +42,27 @@ const featuredImages = [
     </div>
     <div class="collections-masonry-grid">
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=prewedding'">
-        <div class="collection-img curtain-reveal"><img src="/candid/MBJ_5953.jpg" loading="lazy" alt="Pre-Wedding"></div>
+        <div class="collection-img curtain-reveal"><img src="/gallery/opt/MBJ_5953.webp" loading="lazy" alt="Pre-Wedding" width="400" height="500"></div>
         <h4>PRE-WEDDING</h4>
       </div>
       
       <div class="collection-item tall stagger-reveal" onclick="window.location.href='/portfolio?filter=wedding'">
-        <div class="collection-img curtain-reveal"><img src="/candid/WC_13299.jpg" loading="lazy" alt="Wedding"></div>
+        <div class="collection-img curtain-reveal"><img src="/gallery/opt/WC_13299.webp" loading="lazy" alt="Wedding" width="400" height="700"></div>
         <h4>WEDDING + ELOPEMENTS</h4>
       </div>
 
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=prewedding'">
-        <div class="collection-img curtain-reveal"><img src="/candid/CB8A0155.jpg" loading="lazy" alt="Engagement"></div>
+        <div class="collection-img curtain-reveal"><img src="/gallery/opt/CB8A0155.webp" loading="lazy" alt="Engagement" width="400" height="500"></div>
         <h4>ENGAGEMENT + COUPLES</h4>
       </div>
 
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=portrait'">
-        <div class="collection-img curtain-reveal"><img src="/candid/WC__6391.jpg" loading="lazy" alt="Branding"></div>
+        <div class="collection-img curtain-reveal"><img src="/gallery/opt/WC__6391.webp" loading="lazy" alt="Branding" width="400" height="500"></div>
         <h4>SMALL BUSINESS + BRANDING</h4>
       </div>
 
       <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=events'">
-        <div class="collection-img curtain-reveal"><img src="/candid/SSP01330.JPG" loading="lazy" alt="Events"></div>
+        <div class="collection-img curtain-reveal"><img src="/gallery/opt/SSP01330.webp" loading="lazy" alt="Events" width="400" height="500"></div>
         <h4>REHEARSALS + EVENTS</h4>
       </div>
     </div>

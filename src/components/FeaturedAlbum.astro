@@ -4,11 +4,11 @@
  * Ultra-Luxury Editorial Hover Accordion Layout
  */
 const album = [
-  { src: '/candid/CB8A0155.jpg', title: 'The Beginning', sub: 'Wedding Candid Identity' },
-  { src: '/candid/1M4A8828.jpg', title: 'Eternal Unions', sub: 'Romantic Escape' },
-  { src: '/candid/WC_13299.jpg', title: 'The Ceremony', sub: 'Golden Hour Story' },
-  { src: '/candid/IMG_4312.jpg', title: 'Modern Soul', sub: 'Editorial Session' },
-  { src: '/candid/MBJ_5953.jpg', title: 'Raw Portraits', sub: 'Timeless Emotion' }
+  { src: '/gallery/opt/CB8A0155.webp', title: 'The Beginning', sub: 'Wedding Candid Identity' },
+  { src: '/gallery/opt/1M4A8828.webp', title: 'Eternal Unions', sub: 'Romantic Escape' },
+  { src: '/gallery/opt/WC_13299.webp', title: 'The Ceremony', sub: 'Golden Hour Story' },
+  { src: '/gallery/opt/IMG_4312.webp', title: 'Modern Soul', sub: 'Editorial Session' },
+  { src: '/gallery/opt/MBJ_5953.webp', title: 'Raw Portraits', sub: 'Timeless Emotion' }
 ];
 ---
 
@@ -16,7 +16,8 @@ const album = [
   <div class="hover-accordion w-full h-full flex flex-col md:flex-row shadow-2xl">
     {album.map((item, i) => (
       <div 
-        class="accordion-panel group relative h-full flex-1 transition-all duration-[900ms] cubic-bezier-luxury overflow-hidden cursor-pointer" 
+        class="accordion-panel group relative h-full flex-1 transition-all duration-[800ms] cubic-bezier-luxury overflow-hidden cursor-pointer" 
+        style="will-change: flex-grow, transform;"
         data-index={i}
       >
         
@@ -80,21 +81,20 @@ const album = [
 
   /* Mobile Layout - Stacks vertically and expands upon touch/scroll */
   @media (max-width: 767px) {
+    .luxury-accordion-wrapper { height: 75vh; }
     .accordion-panel {
       border-right: none;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      min-height: 12vh;
+      min-height: 80px; /* Fixed minimum to prevent collapse jump */
     }
     .accordion-panel:last-child {
       border-bottom: none;
     }
-    .accordion-panel:hover,
-    .accordion-panel:focus,
-    .accordion-panel:active {
-      flex-grow: 4;
+    .accordion-panel:hover {
+      flex-grow: 12; /* Larger expansion needed for vertical focus */
     }
     .hover-accordion:hover .accordion-panel:not(:hover) {
-      flex-grow: 0.5;
+      flex-grow: 1; /* Keep siblings slightly visible */
       filter: brightness(0.4);
     }
   }

@@ -5,8 +5,8 @@
 ---
 <!-- Cursor Structure -->
 <div id="custom-cursor" class="pointer-events-none fixed top-0 left-0 z-[9999] opacity-0 transition-opacity duration-300 hidden md:block">
-  <div id="glass-lens" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-white/20 shadow-[inset_0_0_10px_rgba(255,255,255,0.1),0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-center font-sans text-[8px] font-medium tracking-widest text-white text-shadow-sm" style="backdrop-filter: blur(4px) brightness(1.1) saturate(1.2); -webkit-backdrop-filter: blur(4px) brightness(1.1) saturate(1.2); will-change: width, height, transform;"></div>
-  <div id="cursor-dot" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white rounded-full transition-opacity duration-300 shadow-[0_0_4px_rgba(255,255,255,0.8)]"></div>
+  <div id="glass-lens" class="absolute left-0 top-0 w-8 h-8 rounded-full border border-white/40 shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex items-center justify-center font-sans text-[8px] font-medium tracking-widest text-white text-shadow-sm" style="will-change: transform; transform: translate3d(var(--x, 0px), var(--y, 0px), 0) translate(-50%, -50%); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;"></div>
+  <div id="cursor-dot" class="absolute left-0 top-0 w-1 h-1 bg-white rounded-full transition-opacity duration-300 shadow-[0_0_4px_rgba(255,255,255,0.8)]" style="will-change: transform; transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0) translate(-50%, -50%);"></div>
 </div>
 
 <style>
@@ -35,32 +35,35 @@
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    // Faster snapping for the dot, smoother trailing for the heavy glass lens
+
     let lensX = mouseX;
     let lensY = mouseY;
     let dotX = mouseX;
     let dotY = mouseY;
 
-    window.addEventListener('mousemove', (e) => {
+    const onMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-    });
+    };
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
 
     const render = () => {
-      // The lens has an incredibly smooth, heavy liquid drag feel
-      lensX += (mouseX - lensX) * 0.12;
-      lensY += (mouseY - lensY) * 0.12;
+      // Faster, snappier multipliers (0.12 -> 0.22 for lens, 0.4 -> 0.6 for dot)
+      lensX += (mouseX - lensX) * 0.22;
+      lensY += (mouseY - lensY) * 0.22;
       
-      // The dot is extremely snapping and responsive
-      dotX += (mouseX - dotX) * 0.4;
-      dotY += (mouseY - dotY) * 0.4;
+      dotX += (mouseX - dotX) * 0.6;
+      dotY += (mouseY - dotY) * 0.6;
       
-      lens.style.transform = `translate(-50%, -50%) translate(${lensX}px, ${lensY}px)`;
-      dot.style.transform = `translate(-50%, -50%) translate(${dotX}px, ${dotY}px)`;
+      // Using CSS Variables for GPU-accelerated updates without direct DOM manipulation thrash
+      lens.style.setProperty('--x', `${lensX}px`);
+      lens.style.setProperty('--y', `${lensY}px`);
+      dot.style.setProperty('--dx', `${dotX}px`);
+      dot.style.setProperty('--dy', `${dotY}px`);
       
       requestAnimationFrame(render);
     };
-    render();
+    requestAnimationFrame(render);
 
     // Hover logic for links and buttons
     const attachHoverEvents = () => {
@@ -74,11 +77,11 @@
           
           lens.style.width = '72px';
           lens.style.height = '72px';
-          // Deepen the refraction and blur drastically on hover
-          lens.style.backdropFilter = 'blur(10px) brightness(1.15) saturate(1.4)';
-          lens.style.webkitBackdropFilter = 'blur(10px) brightness(1.15) saturate(1.4)';
-          lens.style.borderColor = 'rgba(255,255,255,0.4)';
-          lens.style.background = 'rgba(255,255,255,0.08)';
+          lens.style.width = '72px';
+          lens.style.height = '72px';
+          // Keep it fully transparent on hover, just glow the border
+          lens.style.borderColor = 'rgba(255,255,255,0.6)';
+          lens.style.background = 'transparent';
           
           // Determine label based on element context
           if (el.classList.contains('curtain-reveal')) {
@@ -98,10 +101,10 @@
           
           lens.style.width = '32px';
           lens.style.height = '32px';
-          // Return to subtle idle glass
-          lens.style.backdropFilter = 'blur(4px) brightness(1.1) saturate(1.2)';
-          lens.style.webkitBackdropFilter = 'blur(4px) brightness(1.1) saturate(1.2)';
-          lens.style.borderColor = 'rgba(255,255,255,0.2)';
+          lens.style.width = '32px';
+          lens.style.height = '32px';
+          // Ensure it stays transparent
+          lens.style.borderColor = 'rgba(255,255,255,0.3)';
           lens.style.background = 'transparent';
           lens.innerHTML = '';
         });
@@ -118,12 +121,9 @@
         });
         dragViewport.addEventListener('mousedown', () => {
           lens.style.transform = `translate(-50%, -50%) translate(${lensX}px, ${lensY}px) scale(0.85)`;
-          lens.style.backdropFilter = 'blur(16px) brightness(1.1) saturate(1.5)';
-          lens.style.webkitBackdropFilter = 'blur(16px) brightness(1.1) saturate(1.5)';
         });
         window.addEventListener('mouseup', () => {
-          lens.style.backdropFilter = 'blur(4px) brightness(1.1) saturate(1.2)';
-          lens.style.webkitBackdropFilter = 'blur(4px) brightness(1.1) saturate(1.2)';
+          // No blur needed
         });
       }
     };

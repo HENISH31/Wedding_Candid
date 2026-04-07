@@ -1,5 +1,5 @@
 ---
-// gallery3d.astro — The Infinite Drag Canvas (Moodboard)
+// gallery3d.astro — Bidirectional Curtain + Magnetic Tilt Gallery (Optimised)
 const IMAGES = [
   '/gallery/opt/198A1445.webp',
   '/gallery/opt/1M4A8828.webp',
@@ -26,407 +26,362 @@ const CAPTIONS = [
   'Night Portrait','Couple Portrait','Mystic Night','Golden Hour',
 ];
 
-const ROWS = 40;
-const COLS = 40;
-
-// Generate a massive, perfectly interlocking editorial masonry grid
-const cells = [];
-for (let r = 0; r < ROWS; r++) {
-  for (let c = 0; c < COLS; c++) {
-    const index = r * COLS + c;
-    
-    // Strict, beautifully calculated geometric patterns instead of random chaos
-    const isPortrait = (index % 3 === 0);
-    const isLandscape = (index % 3 === 1);
-    
-    const w = isPortrait ? 380 : (isLandscape ? 550 : 450);
-    const h = isPortrait ? 550 : (isLandscape ? 380 : 450);
-    
-    // Perfectly crisp alignment gaps
-    const xBase = (c - COLS / 2) * 580;
-    const xOffset = (r % 2 !== 0) ? 290 : 0;
-    
-    const yBase = (r - ROWS / 2) * 580;
-
-    cells.push({
-      src: IMAGES[index % IMAGES.length],
-      caption: CAPTIONS[index % CAPTIONS.length],
-      num: index + 1,
-      x: xBase + xOffset,
-      y: yBase,
-      width: w,
-      height: h,
-    });
-  }
-}
+// Repeat images 3x for a long, lush scroll
+const BASE = IMAGES.map((src, i) => ({
+  src,
+  caption: CAPTIONS[i % CAPTIONS.length],
+  orientation: (i % 3 === 0) ? 'portrait' : (i % 3 === 1) ? 'landscape' : 'square',
+}));
+const galleryItems = [...BASE, ...BASE, ...BASE];
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moodboard | Wedding Candid</title>
-
-  {IMAGES.slice(0, 5).map(src => (
-    <link rel="preload" as="image" href={src} />
-  ))}
+  <title>Gallery | Wedding Candid</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html, body { 
-      width: 100vw; 
-      height: 100vh; 
-      overflow: hidden; 
-      background: #f4f2ec; /* Artist canvas color */
-      color: #1a1814;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink:     #2c241a;
+      --paper:   #fdfbf9;
+      --gold:    #b68b40;
+      --curtain: #ede5db;
+      --sh:      rgba(44, 36, 26, 0.12);
     }
 
-    /* ── NAV ── */
-    .gal-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 3rem;
-      pointer-events: none; /* Let clicks pass through when near top */
+    body {
+      background: var(--paper);
+      font-family: 'Outfit', sans-serif;
+      color: var(--ink);
+      overflow-x: hidden;
     }
-    .gal-nav > * { pointer-events: auto; }
-    
+
+    /* Nav */
+    .gal-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(253,251,249,0.88);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
     .gal-nav-logo {
-      font-family: 'Bodoni Moda', serif;
-      font-style: italic;
-      font-size: 1.5rem;
-      color: #1a1814;
-      text-decoration: none;
-      filter: drop-shadow(0 2px 10px rgba(244,242,236,0.8));
+      font-family: 'Bodoni Moda', serif; font-style: italic;
+      font-size: 1.4rem; font-weight: 500;
+      color: var(--ink); text-decoration: none;
     }
     .gal-nav-back {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: #c9a84c;
-      text-decoration: none;
-      transition: opacity 0.2s;
+      font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none; transition: opacity 0.2s;
     }
-    .gal-nav-back:hover { opacity: 0.5; }
+    .gal-nav-back:hover { opacity: 0.6; }
 
-    /* Instructions helper */
-    .instruction-tooltip {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #7a7168;
-      background: rgba(244,242,236,0.9);
-      padding: 0.8rem 1.5rem;
-      border-radius: 100px;
-      backdrop-filter: blur(10px);
-      z-index: 100;
-      pointer-events: none;
-      animation: fadeOutTooltip 4s forwards 2s;
+    /* Intro */
+    .intro {
+      height: 72vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
     }
-    @keyframes fadeOutTooltip {
-      to { opacity: 0; visibility: hidden; }
+    .intro h1 {
+      font-family: 'Bodoni Moda', serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 400; line-height: 1.1;
+    }
+    .intro p {
+      font-size: 0.74rem; letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--gold); margin-top: 0.75rem;
     }
 
-    /* ── INFINITE CANVAS ── */
-    #drag-viewport {
-      width: 100vw;
-      height: 100vh;
-      cursor: grab;
-      position: relative;
-      perspective: 2000px;
+    /* Masonry */
+    .gallery-grid {
+      max-width: 1400px; margin: 0 auto;
+      padding: 2rem 2rem 8rem;
+      column-count: 3; column-gap: 1.8rem;
+      contain: layout style;
     }
-    #drag-viewport:active {
-      cursor: grabbing;
-    }
+    @media (max-width: 1024px) { .gallery-grid { column-count: 2; } }
+    @media (max-width: 640px)  { .gallery-grid { column-count: 1; } }
 
-    #canvas-plane {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      /* Will transform translate from JS */
-      transform-origin: center;
-      will-change: transform;
+    /* Item */
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 1.8rem;
+      border-radius: 20px; overflow: hidden;
+      position: relative; cursor: pointer;
+      background: var(--curtain);
       transform-style: preserve-3d;
+      transform: translateZ(0);
+      will-change: transform;
+      box-shadow: 0 2px 4px var(--sh), 0 10px 26px -8px var(--sh);
+      transition: box-shadow 0.35s ease;
+      contain: layout paint;
+    }
+    .gallery-item:hover {
+      box-shadow: 0 4px 8px var(--sh), 0 28px 50px -14px rgba(44,36,26,0.22);
     }
 
-    /* Studio Spotlight Effect Setup */
-    #canvas-plane:hover .canvas-item {
-      opacity: 0.4;
-      filter: grayscale(80%) contrast(1.1);
+    /* Image */
+    .gallery-item img {
+      width: 100%; display: block;
+      will-change: transform; transform-origin: center center;
+      transition: transform 0.4s ease, filter 0.4s ease;
     }
+    .gallery-item.portrait  img { aspect-ratio: 3/4; object-fit: cover; }
+    .gallery-item.landscape img { aspect-ratio: 4/3; object-fit: cover; }
+    .gallery-item.square    img { aspect-ratio: 1/1; object-fit: cover; }
 
-    .canvas-item {
-      position: absolute;
-      /* Removed padding & background for a pure borderless look */
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, filter 0.6s ease, opacity 0.6s ease, z-index 0s;
-      cursor: pointer;
-      /* Center origin translation */
-      transform: translate(-50%, -50%) scale(1);
-      background: #000;
-    }
-    
-    .canvas-item:hover {
-      opacity: 1 !important;
-      filter: grayscale(0%) contrast(1.05) !important;
-      transform: translate(-50%, -50%) scale(1.06);
-      z-index: 50 !important;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.4);
-    }
-
-    .canvas-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      pointer-events: none; /* Prevents ghost dragging */
-    }
-
-    /* ── LIGHTBOX ── */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(26,24,20,0.98);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      place-items: center;
-      cursor: zoom-out;
-    }
-    .lightbox.open { display: grid; animation: lbWrap .3s ease both; }
-    @keyframes lbWrap { from { opacity: 0; } to { opacity: 1; } }
-    .lightbox img {
-      max-width: 90vw;
-      max-height: 85vh;
-      object-fit: contain;
-      border-radius: 4px;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-      animation: lbIn .35s cubic-bezier(0.2, 1, 0.3, 1) both;
-    }
-    @keyframes lbIn {
-      from { opacity: 0; transform: scale(0.9) translateY(20px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .lb-header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 3rem;
+    /* Curtain — GSAP scrubs this translateY from 0% to -101% on scroll down,
+       and back to 0% on scroll up. The gold edge is the "lifting tape" detail. */
+    .curtain {
+      position: absolute; inset: 0; z-index: 5;
       pointer-events: none;
+      transform: translateY(0%);
+      will-change: transform;
+      background:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E"),
+        linear-gradient(160deg, #ede5db 0%, #e3d7ca 100%);
     }
-    .lb-caption-text {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #f4f2ec;
-      opacity: 0.6;
+    /* gold shimmer at the curtain's leading edge */
+    .curtain::after {
+      content: '';
+      position: absolute; bottom: 0; left: 8%; right: 8%; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold) 50%, transparent);
+      opacity: 0.65;
     }
-    .lb-close {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #f4f2ec;
-      cursor: pointer;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-      user-select: none;
-      pointer-events: all;
+    /* middle column curtain drops DOWN — gold edge flips to top */
+    .curtain.drops-down::after {
+      bottom: auto;
+      top: 0;
     }
-    .lb-close:hover { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(253,251,249,0.97);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      place-items: center; cursor: zoom-out;
+    }
+    .lightbox.open { display: grid; animation: lbIn 0.28s ease forwards; }
+    @keyframes lbIn { from { opacity: 0; } to { opacity: 1; } }
+    .lightbox img {
+      max-width: 86vw; max-height: 82vh; object-fit: contain;
+      border-radius: 16px; box-shadow: 0 40px 70px rgba(0,0,0,0.14);
+      animation: lbUp 0.36s cubic-bezier(0.2, 0.9, 0.4, 1.05) forwards;
+    }
+    @keyframes lbUp { from { transform: scale(0.93); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .lb-header {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 2.5rem;
+    }
+    .lb-caption { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: #7a6e5d; }
+    .lb-close   { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; color: var(--gold); transition: opacity 0.2s; }
+    .lb-close:hover { opacity: 0.6; }
+
+    footer { text-align: center; padding: 4rem 2rem; color: var(--gold); font-size: 0.7rem; letter-spacing: 0.25em; }
   </style>
 </head>
-
 <body>
 
-  <nav class="gal-nav">
-    <a href="/" class="gal-nav-logo">Wedding Candid</a>
-    <a href="/" class="gal-nav-back">← Back</a>
-  </nav>
+<nav class="gal-nav">
+  <a href="/" class="gal-nav-logo">Wedding Candid</a>
+  <a href="/" class="gal-nav-back">← Back</a>
+</nav>
 
-  <div class="instruction-tooltip">
-    Click & Drag to Explore
-  </div>
+<div class="intro">
+  <h1>Scroll Stories</h1>
+  <p>Each image reveals as you move</p>
+</div>
 
-  <div id="drag-viewport">
-    <div id="canvas-plane">
-      {cells.map((c, i) => (
-        <div 
-          class="canvas-item"
-          style={`left: ${c.x}px; top: ${c.y}px; width: ${c.width}px; height: ${c.height}px; z-index: ${i};`}
-          data-src={c.src}
-          data-caption={c.caption}
-        >
-          <img src={c.src} alt={c.caption} loading="lazy" decoding="async" draggable="false" />
-        </div>
-      ))}
+<div class="gallery-grid" id="galleryGrid">
+  {galleryItems.map((item, idx) => (
+    <div
+      class={`gallery-item ${item.orientation}`}
+      data-src={item.src}
+      data-caption={item.caption}
+    >
+      <img
+        src={item.src}
+        alt={item.caption}
+        loading={idx < 6 ? 'eager' : 'lazy'}
+        decoding={idx < 6 ? 'sync' : 'async'}
+        fetchpriority={idx === 0 ? 'high' : 'auto'}
+      />
+      <div class="curtain"></div>
     </div>
+  ))}
+</div>
+
+<footer>— Timeless moments in motion —</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-header">
+    <span class="lb-caption" id="lbCaption"></span>
+    <span class="lb-close"   id="lbClose">Close ✕</span>
   </div>
+  <img id="lbImage" src="" alt="" />
+</div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <div class="lb-header">
-      <span class="lb-caption-text" id="lb-caption"></span>
-      <span class="lb-close" id="lb-close">Close ✕</span>
-    </div>
-    <img id="lb-img" src="" alt="" />
-  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-  <script is:inline>
-    (function () {
-      const viewport = document.getElementById('drag-viewport');
-      const plane = document.getElementById('canvas-plane');
-      
-      let isDragging = false;
-      let hasDragged = false; // to prevent click opening lightbox right after drag
-      let startX, startY;
-      let currentX = 0, currentY = 0;
-      let translateX = 0, translateY = 0;
-      // Target values for inertia smoothing
-      let targetX = 0, targetY = 0;
-      let dragStartX = 0, dragStartY = 0;
+<script>
+window.addEventListener('load', function () {
 
-      // Inertia render loop
-      function render() {
-        // Calculate instantaneous velocity difference
-        let vx = 0;
-        let vy = 0;
-        
-        if (!isDragging) {
-          // Soft deceleration map when letting go
-          vx = (targetX - currentX) * 0.08;
-          vy = (targetY - currentY) * 0.08;
-          currentX += vx;
-          currentY += vy;
-        } else {
-          // Direct sync while dragging, keeping track of delta for effects
-          vx = (targetX - currentX) * 0.4;
-          vy = (targetY - currentY) * 0.4;
-          currentX += vx;
-          currentY += vy;
-        }
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
 
-        // Kinetic Spatial Distortion (The Awwwards Effect)
-        // When scrolling fast (vx/vy is high), the grid leans and warps into the drag physically!
-        const rotateY = Math.max(-15, Math.min(15, vx * 0.5)); // 3D tilt horizontally
-        const rotateX = Math.max(-15, Math.min(15, -vy * 0.5)); // 3D tilt vertically
-        // Dynamic push-back scale when moving rapidly
-        const scale = Math.max(0.9, 1 - (Math.abs(vx) + Math.abs(vy)) * 0.001);
+  const items = document.querySelectorAll('.gallery-item');
+  if (!items.length) return;
 
-        plane.style.transform = `translate(${currentX}px, ${currentY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-        requestAnimationFrame(render);
+  /* ───────────────────────────────────────────────────
+     1. BIDIRECTIONAL CURTAIN WIPE  (scrub-based)
+
+     scrub: 1.4 ties the curtain's Y position directly
+     to scroll progress. Scroll down = curtain lifts.
+     Scroll back up = curtain descends. Fully reversible.
+
+     Column offset (startBias) staggers the 3 masonry
+     columns so they don't fire in perfect unison.
+  ─────────────────────────────────────────────────── */
+  items.forEach((item, i) => {
+    const curtain = item.querySelector('.curtain');
+    if (!curtain) return;
+
+    const colIndex  = i % 3;
+    const startBias = colIndex * 4;   // 0 / 4 / 8 px stagger per column
+
+    // Middle column (index 1) drops DOWN; left & right columns lift UP
+    const isMiddle  = colIndex === 1;
+    const targetY   = isMiddle ? '101%' : '-101%';
+
+    // Mark middle curtains so CSS flips the gold edge to the top
+    if (isMiddle) curtain.classList.add('drops-down');
+
+    gsap.fromTo(curtain,
+      { y: '0%' },
+      {
+        y: targetY,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: item,
+          start: `top ${90 - startBias}%`,
+          end:   `top ${30 - startBias}%`,
+          scrub: 1.4,
+          invalidateOnRefresh: true,
+        },
       }
-      render();
+    );
+  });
 
-      function onPointerDown(e) {
-        if (e.target.closest('.lightbox') || e.target.closest('nav')) return;
-        
-        isDragging = true;
-        hasDragged = false;
-        
-        // Use clientX / touches
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  /* ───────────────────────────────────────────────────
+     2. MAGNETIC HOVER + 3D TILT
 
-        startX = clientX;
-        startY = clientY;
-        dragStartX = targetX;
-        dragStartY = targetY;
-      }
+     rAF-throttled mousemove — computes once per frame.
+     Card tilts toward cursor; inner image counter-shifts
+     the opposite direction for a parallax depth effect.
+     Elastic spring-back on mouseleave feels physical.
+  ─────────────────────────────────────────────────── */
+  items.forEach((item) => {
+    const img = item.querySelector('img');
+    let rafId = null;
+    let isHovered = false;
 
-      // Hard limits to prevent scrolling into the void
-      const MAX_PAN = 6800; // Keeps them safely inside the 1,600 image grid
+    item.addEventListener('mouseenter', () => { isHovered = true; });
 
-      function onPointerMove(e) {
-        if (!isDragging) return;
-        
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    item.addEventListener('mousemove', (e) => {
+      if (rafId) return;
 
-        const dx = clientX - startX;
-        const dy = clientY - startY;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        if (!isHovered) return;
 
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-          hasDragged = true; // User actually moved, flag as dragging
-        }
+        const rect = item.getBoundingClientRect();
+        const nx = ((e.clientX - rect.left)  / rect.width  - 0.5) * 2;
+        const ny = ((e.clientY - rect.top)   / rect.height - 0.5) * 2;
 
-        targetX = Math.max(-MAX_PAN, Math.min(MAX_PAN, dragStartX + dx));
-        targetY = Math.max(-MAX_PAN, Math.min(MAX_PAN, dragStartY + dy));
-      }
+        gsap.to(item, {
+          rotateY: nx * 9, rotateX: -ny * 6,
+          x: nx * 10, y: ny * 7,
+          transformPerspective: 900,
+          transformOrigin: 'center center',
+          duration: 0.4, ease: 'power2.out', overwrite: 'auto',
+        });
 
-      function onPointerUp() {
-        isDragging = false;
-      }
-
-      // Mouse Events
-      viewport.addEventListener('mousedown', onPointerDown);
-      window.addEventListener('mousemove', onPointerMove);
-      window.addEventListener('mouseup', onPointerUp);
-
-      // Touch Events for Mobile
-      viewport.addEventListener('touchstart', onPointerDown, {passive: true});
-      window.addEventListener('touchmove', onPointerMove, {passive: true});
-      window.addEventListener('touchend', onPointerUp);
-
-      // Mouse Wheel Panning (Extra Navigation method)
-      window.addEventListener('wheel', (e) => {
-        // Slowing down the mouse wheel speed for a more luxurious, heavy feel
-        targetX -= e.deltaX * 0.55;
-        targetY -= e.deltaY * 0.55;
-        
-        // Clamp bounds for wheel too
-        targetX = Math.max(-MAX_PAN, Math.min(MAX_PAN, targetX));
-        targetY = Math.max(-MAX_PAN, Math.min(MAX_PAN, targetY));
-      }, { passive: true });
-
-      // Lightbox Logic
-      const lightbox = document.getElementById('lightbox');
-      const lbImg = document.getElementById('lb-img');
-      const lbCap = document.getElementById('lb-caption');
-      const lbClose = document.getElementById('lb-close');
-
-      viewport.addEventListener('click', (e) => {
-        if (hasDragged) return; // Prevent clicking open if we were just dragging
-        
-        const cell = e.target.closest('.canvas-item');
-        if (!cell) return;
-        
-        lbImg.src = cell.dataset.src;
-        lbImg.alt = cell.dataset.caption || '';
-        lbCap.textContent = cell.dataset.caption || '';
-        lightbox.classList.add('open');
+        gsap.to(img, {
+          x: -nx * 7, y: -ny * 5, scale: 1.06,
+          duration: 0.4, ease: 'power2.out', overwrite: 'auto',
+        });
       });
+    });
 
-      function closeLightbox() {
-        lightbox.classList.remove('open');
-        setTimeout(() => { lbImg.src = ''; }, 300);
-      }
+    item.addEventListener('mouseleave', () => {
+      isHovered = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
 
-      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-      lbClose.addEventListener('click', closeLightbox);
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+      gsap.to(item, {
+        rotateY: 0, rotateX: 0, x: 0, y: 0,
+        duration: 0.75, ease: 'elastic.out(1, 0.5)', overwrite: 'auto',
+      });
+      gsap.to(img, {
+        x: 0, y: 0, scale: 1,
+        duration: 0.65, ease: 'power3.out', overwrite: 'auto',
+      });
+    });
+  });
 
-    })();
-  </script>
+  /* ───────────────────────────────────────────────────
+     3. LIGHTBOX
+  ─────────────────────────────────────────────────── */
+  const lightbox  = document.getElementById('lightbox');
+  const lbImage   = document.getElementById('lbImage');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbClose   = document.getElementById('lbClose');
 
+  function openLightbox(src, caption) {
+    lbImage.src = src;
+    lbCaption.textContent = caption || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      if (!lightbox.classList.contains('open')) lbImage.src = '';
+    }, 380);
+  }
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      const { src, caption } = item.dataset;
+      if (src) openLightbox(src, caption);
+    });
+  });
+
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  lbClose.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+
+  /* ───────────────────────────────────────────────────
+     4. RESIZE — debounced (avoids ScrollTrigger thrash)
+  ─────────────────────────────────────────────────── */
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 180);
+  });
+
+});
+</script>
 </body>
 </html>

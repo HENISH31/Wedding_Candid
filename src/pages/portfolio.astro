@@ -1,95 +1,467 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+// Using high-quality optimized WEBP images from public/gallery/opt
+const WEDDING_IMAGES = [
+  '/gallery/opt/198A1445.webp',
+  '/gallery/opt/1M4A8828.webp',
+  '/gallery/opt/CB8A0155.webp',
+  '/gallery/opt/CB8A0325.webp',
+  '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
+  '/gallery/opt/WC_13299.webp',
+];
+
+const PREWEDDING_IMAGES = [
+  '/gallery/opt/IMG_4312.webp',
+  '/gallery/opt/WC__6391.webp',
+  '/gallery/opt/WC_19833.webp',
+  '/gallery/opt/MBJ_5953.webp',
+  '/gallery/opt/1M4A8828.webp',
+  '/gallery/opt/SSP01330.webp',
+];
+
+const TRAVEL_IMAGES = [
+  '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
+  '/gallery/opt/WC_13299.webp',
+  '/gallery/opt/198A1445.webp',
+  '/gallery/opt/CB8A0155.webp',
+  '/gallery/opt/WC_17407.webp',
+  '/gallery/opt/WC__8428.webp',
+];
 ---
-<Layout>
-  <section class="section portfolio-section visible">
-    <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
-      <h1 style="font-size: 4rem; margin-bottom: 1rem;">Portfolio</h1>
+
+<Layout hideGlobalPreloader={true}>
+  <div class="portfolio-page">
+    
+    <!-- Cinematic Hero Section -->
+    <header class="portfolio-hero">
+      <div class="hero-bg-slider">
+        <div class="hero-slide active" style="background-image: url('/gallery/opt/WC__8428.webp')"></div>
+        <div class="hero-slide" style="background-image: url('/gallery/opt/1M4A8828.webp')"></div>
+        <div class="hero-slide" style="background-image: url('/gallery/opt/WC_17354.webp')"></div>
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-title">OUR WORK</h1>
+        <div class="hero-description">
+          <p>For a moment, time stands still—</p>
+          <p>a memory is captured, a look is immortalized,</p>
+          <p>and pure magic happens.</p>
+        </div>
+        <div class="hero-signature">
+          <svg width="60" height="30" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 25C15 25 20 5 30 5C40 5 45 25 55 25" stroke="#e0d1b1" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="scroll-down">
+        <span>EXPLORE</span>
+        <div class="scroll-line"></div>
+      </div>
+    </header>
+
+    <!-- WEDDING SECTION -->
+    <section class="gallery-section dark-charcoal">
+      <div class="section-header">
+        <span class="eyebrow">PHOTO GALLERY</span>
+        <h2 class="section-title">WEDDINGS & ENGAGEMENTS</h2>
+      </div>
+
+      <div class="gallery-grid interactive-grid symmetric">
+        {WEDDING_IMAGES.map((src, i) => (
+          <div class="gallery-item-tile" data-src={src}>
+            <div class="image-wrapper">
+              <img src={src} alt="Wedding Photo" loading="lazy" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- PRE-WEDDING SECTION -->
+    <section class="gallery-section neutral-sand">
+      <div class="section-header">
+        <span class="eyebrow">FEATURED STORIES</span>
+        <h2 class="section-title">PRE-WEDDINGS & EDITORIAL</h2>
+      </div>
+
+      <div class="gallery-grid interactive-grid symmetric">
+        {PREWEDDING_IMAGES.map((src, i) => (
+          <div class="gallery-item-tile" data-src={src}>
+            <div class="image-wrapper">
+              <img src={src} alt="Pre-wedding Photo" loading="lazy" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- TRAVEL SECTION -->
+    <section class="gallery-section pure-white">
+      <div class="section-header">
+        <span class="eyebrow">WANDERLUST</span>
+        <h2 class="section-title">TRAVEL</h2>
+      </div>
+
+      <div class="gallery-grid interactive-grid masonry-like">
+        {TRAVEL_IMAGES.map((src, i) => (
+          <div class="gallery-item-tile" data-src={src}>
+            <div class="image-wrapper">
+              <img src={src} alt="Travel Photo" loading="lazy" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- INQUIRY CTA SECTION (As per reference) -->
+    <section class="cta-inquiry">
+      <div class="cta-bg">
+        <img src="/gallery/opt/IMG_4312.webp" alt="Inquiry Background" />
+        <div class="cta-overlay"></div>
+      </div>
+      <div class="cta-content">
+        <h2 class="cta-title">ONE-OF-A-KIND IMAGES,<br/>CAPTURED <i>with</i> SOUL.</h2>
+        <p class="cta-text">We'd love to hear more about your upcoming adventure. Let's create something beautiful together.</p>
+        <a href="/booking" class="cta-button">INQUIRE</a>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="portfolio-lightbox">
+      <div class="lb-nav">
+        <span class="lb-title">WEDDING CANDID</span>
+        <button class="lb-close" id="lb-close">CLOSE ✕</button>
+      </div>
+      <div class="lb-main">
+        <img id="lb-image" src="" alt="" />
+      </div>
     </div>
-    <div class="portfolio-grid grid-all">
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
-        <img src="/candid/CB8A0155.jpg" alt="Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>Eternal Unions</h3><p>Wedding Collection</p></div>
-      </div>
-      
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="portrait">
-        <img src="/candid/MBJ_5953.jpg" alt="Portrait" loading="lazy">
-        <div class="portfolio-info"><h3>Raw Portraits</h3><p>Editorial Collection</p></div>
-      </div>
 
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
-        <img src="/candid/WC_13299.jpg" alt="Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>The Ceremony</h3><p>Fine Art Wedding</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="prewedding">
-        <img src="/candid/1M4A8828.jpg" alt="Pre-Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>First Looks</h3><p>Pre-Wedding Story</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="events">
-        <img src="/candid/DJI_20241209172706_0093_D_FLYCAPTURE.jpg" alt="Events" loading="lazy">
-        <div class="portfolio-info"><h3>The Venue</h3><p>Events Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
-        <img src="/candid/CB8A0325.jpg" alt="Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>Golden Hour</h3><p>Wedding Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="portrait">
-        <img src="/candid/IMG_4312.jpg" alt="Portrait" loading="lazy">
-        <div class="portfolio-info"><h3>Modern Soul</h3><p>Editorial Work</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="events">
-        <img src="/candid/SSP01330.JPG" alt="Events" loading="lazy">
-        <div class="portfolio-info"><h3>The Celebration</h3><p>Events Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="prewedding">
-        <img src="/candid/WC_17354.JPG" alt="Prep" loading="lazy">
-        <div class="portfolio-info"><h3>The Beginning</h3><p>Bridal Prep Story</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
-        <img src="/candid/WC_17407.JPG" alt="Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>The Altar</h3><p>Wedding Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="events">
-        <img src="/candid/WC_19833.jpg" alt="Events" loading="lazy">
-        <div class="portfolio-info"><h3>Afterparty</h3><p>Events Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
-        <img src="/candid/WC__5748.jpg" alt="Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>Candid Joy</h3><p>Wedding Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="portrait">
-        <img src="/candid/WC__6391.jpg" alt="Portrait" loading="lazy">
-        <div class="portfolio-info"><h3>Quiet Confidence</h3><p>Editorial Work</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="wedding">
-        <img src="/candid/WC__7232.jpg" alt="Wedding" loading="lazy">
-        <div class="portfolio-info"><h3>The Kiss</h3><p>Wedding Collection</p></div>
-      </div>
-
-      <div class="portfolio-item stagger-reveal lightbox-trigger" data-category="prewedding">
-        <img src="/candid/WC__8428.jpg" alt="Prewedding" loading="lazy">
-        <div class="portfolio-info"><h3>The Journey</h3><p>Pre-Wedding Story</p></div>
-      </div>
-    </div>
-  </section>
+  </div>
 </Layout>
 
+<style>
+  /* --- Base --- */
+  .portfolio-page {
+    background: #1a1814;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* --- Sections --- */
+  .gallery-section {
+    padding: 10vw 5vw;
+  }
+  .dark-charcoal { background: #23221f; }
+  .neutral-sand { background: #fdfaf5; color: #1a1814; }
+  .neutral-sand .section-title { color: #1a1814; }
+  .pure-white { background: #fff; color: #1a1814; }
+  .pure-white .section-title { color: #1a1814; }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 6vw;
+  }
+  .eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: #c9a84c;
+    display: block;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #f4f2ec;
+  }
+
+  /* Shared Grid Logic */
+  .gallery-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    gap: 3.5rem 2.5rem;
+  }
+  .symmetric { grid-template-columns: repeat(3, 1fr); }
+
+  /* TRAVEL MASONRY (Asymmetric 2-column with offset) */
+  .masonry-like {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px; /* Slimmer for that high-end editorial feel */
+  }
+  .masonry-like .gallery-item-tile:nth-child(even) {
+    transform: translateY(100px); /* Creates the staggered effect from your reference */
+    margin-bottom: 100px;
+  }
+
+  .interactive-grid:hover .gallery-item-tile:not(:hover) {
+    opacity: 0.4;
+    filter: blur(1.5px) grayscale(60%);
+  }
+
+  .gallery-item-tile {
+    cursor: pointer;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .image-wrapper {
+    aspect-ratio: 3.2 / 4; 
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  }
+  .gallery-item-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .gallery-item-tile:hover img {
+    transform: scale(1.08);
+  }
+
+  /* --- Hero Slider --- */
+  .portfolio-hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    color: #e0d1b1;
+  }
+  .hero-bg-slider {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out, transform 8s linear;
+    transform: scale(1.1); /* Slow zoom effect base */
+  }
+  .hero-slide.active {
+    opacity: 1;
+    transform: scale(1); /* Zooms out slowly while active */
+    z-index: 2;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 3;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    padding: 0 1.5rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    line-height: 1;
+    margin-bottom: 2rem;
+    color: #e0d1b1;
+  }
+  .hero-description {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    line-height: 1.8;
+    color: #e0d1b1;
+    opacity: 0.9;
+  }
+  .scroll-down {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: #e0d1b1;
+  }
+  .scroll-line { width: 1px; height: 60px; background: linear-gradient(#e0d1b1, transparent); }
+
+  /* --- Lightbox --- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,10,0.99);
+    z-index: 5000;
+    display: none;
+    place-items: center;
+    backdrop-filter: blur(20px);
+  }
+  .lightbox.active { display: grid; }
+  .lb-nav {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+  }
+  .lb-title { font-size: 0.75rem; letter-spacing: 0.3em; opacity: 0.6; }
+  .lb-close { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.8rem; letter-spacing: 0.2em; }
+  .lb-main { width: 90vw; height: 80vh; display: flex; align-items: center; justify-content: center; }
+  .lb-main img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    animation: lbReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes lbReveal {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* --- CTA Section --- */
+  .cta-inquiry {
+    position: relative;
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    color: #fff;
+  }
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .cta-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.65) contrast(1.1);
+  }
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.3) 100%);
+  }
+  .cta-content {
+    position: relative;
+    z-index: 5;
+    padding: 0 1.5rem;
+    max-width: 900px;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .cta-title i {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .cta-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+  .cta-button {
+    display: inline-block;
+    padding: 1.2rem 3.5rem;
+    background: #f4f2ec;
+    color: #1a1814;
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    font-weight: 500;
+    transition: all 0.4s ease;
+    border: 1px solid transparent;
+  }
+  .cta-button:hover {
+    background: transparent;
+    border-color: #f4f2ec;
+    color: #f4f2ec;
+    backdrop-filter: blur(10px);
+    transform: translateY(-5px);
+  }
+
+  @media (max-width: 900px) {
+    .symmetric { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+    .masonry-like { grid-template-columns: 1fr; }
+    .masonry-like .gallery-item-tile:nth-child(even) { transform: none; margin-bottom: 0; }
+    .cta-title { font-size: 2.5rem; }
+    .cta-inquiry { height: 60vh; }
+  }
+</style>
+
 <script>
-  document.addEventListener('astro:page-load', () => {
-    // Read the query parameter immediately for automatic filtering
-    const params = new URLSearchParams(window.location.search);
-    const filter = params.get('filter') || 'all';
-    if (window.setupPortfolioFilters) window.setupPortfolioFilters(filter);
-  });
+  function initPortfolioGallery() {
+    // ── Hero Background Slider ───────────────────────
+    const slides = document.querySelectorAll('.hero-slide');
+    if (slides.length > 0) {
+      let currentSlide = 0;
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 5000);
+    }
+
+    const grids = document.querySelectorAll('.interactive-grid');
+    const lightbox = document.getElementById('portfolio-lightbox');
+    const lbImg = document.getElementById('lb-image');
+    const lbClose = document.getElementById('lb-close');
+
+    if (!grids || !lightbox) return;
+
+    grids.forEach(grid => {
+      grid.addEventListener('click', (e) => {
+        const item = e.target.closest('.gallery-item-tile');
+        if (!item) return;
+        const src = item.dataset.src;
+        lbImg.src = src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeLB = () => {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => { if (!lightbox.classList.contains('active')) lbImg.src = ''; }, 400);
+    };
+
+    lbClose.addEventListener('click', closeLB);
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLB(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLB(); });
+  }
+
+  document.addEventListener('astro:page-load', initPortfolioGallery);
 </script>
