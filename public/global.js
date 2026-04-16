@@ -59,9 +59,9 @@ window.initDynamicGallery = function() {
   if (!container) return;
 
   const sets = [
-    ['1M4A8828.jpg', 'CB8A0155.jpg', 'WC__7232.jpg', 'DJI_20241209172706_0093_D_FLYCAPTURE.jpg', 'IMG_4312.jpg', 'WC__8428.jpg'],
+    ['1M4A8828.jpg', 'DJI_0639.jpg', 'WC__7232.jpg', 'DJI_20241209172706_0093_D_FLYCAPTURE.jpg', 'WC_11751.JPG', 'WC__8428.jpg'],
     ['MBJ_5953.jpg', 'SSP01330.JPG', 'WC_13299.jpg', 'WC_17354.JPG', 'WC_17407.JPG', 'WC_19833.jpg'],
-    ['1M4A8828.jpg', 'CB8A0155.jpg', 'CB8A0325.jpg', 'WC__5748.jpg', 'WC__6391.jpg', 'IMG_4312.jpg']
+    ['1M4A8828.jpg', 'DJI_0639.jpg', 'CB8A0325.jpg', 'WC__5748.jpg', 'WC__6391.jpg', 'WC_11751.JPG']
   ];
 
   const layouts = ['layout-1', 'layout-2', 'layout-3'];
@@ -176,9 +176,9 @@ window.init3DGallery = function() {
   document.body.style.overflow = 'hidden';
 
   const images = [
-    '/candid/1M4A8828.jpg',   '/candid/CB8A0155.jpg',
+    '/candid/1M4A8828.jpg',   '/homepage/DJI_0639.jpg',
     '/candid/WC__7232.jpg',   '/candid/DJI_20241209172706_0093_D_FLYCAPTURE.jpg',
-    '/candid/IMG_4312.jpg',   '/candid/WC__8428.jpg',
+    '/homepage/WC_11751.JPG',   '/candid/WC__8428.jpg',
     '/candid/MBJ_5953.jpg',   '/candid/SSP01330.JPG',
     '/candid/WC_13299.jpg',   '/candid/WC_17354.JPG',
     '/candid/WC_17407.JPG',   '/candid/WC_19833.jpg',

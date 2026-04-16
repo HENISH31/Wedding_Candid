@@ -4,10 +4,10 @@ import Layout from '../layouts/Layout.astro';
 const IMAGES = [
   '/gallery/opt/198A1445.webp',
   '/gallery/opt/1M4A8828.webp',
-  '/gallery/opt/CB8A0155.webp',
+  '/homepage/DJI_0639.jpg',
   '/gallery/opt/CB8A0325.webp',
   '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
-  '/gallery/opt/IMG_4312.webp',
+  '/homepage/WC_11751.JPG',
   '/gallery/opt/MBJ_5953.webp',
   '/gallery/opt/SSP01330.webp',
   '/gallery/opt/WC_13299.webp',
@@ -105,15 +105,33 @@ const IMAGES = [
   .portfolio-title em { font-style: italic; color: var(--gold); }
 
   /* ── Masonry Grid ── */
-  .story-gallery-sec { padding: 0 2vw 6rem; }
-  .masonry-grid { column-count: 5; column-gap: 0.8vw; margin-top: 1rem; }
+  .story-gallery-sec { 
+    --grid-gap: 0.8vw;
+    padding: 0 2vw 6rem; 
+  }
+  .masonry-grid { 
+    column-count: 5; 
+    column-gap: var(--grid-gap); 
+    margin-top: 1rem; 
+  }
+  
   @media (max-width: 1400px) { .masonry-grid { column-count: 4; } }
-  @media (max-width: 1024px) { .masonry-grid { column-count: 3; } }
-  @media (max-width: 768px)  { .masonry-grid { column-count: 2; column-gap: 1.5vw; } }
+  @media (max-width: 1024px) { 
+    .masonry-grid { column-count: 3; } 
+    .story-gallery-sec { --grid-gap: 1.5vw; }
+  }
+  @media (max-width: 768px)  { 
+    .masonry-grid { column-count: 2; } 
+    .story-gallery-sec { --grid-gap: 2vw; padding: 0 4vw 4rem; }
+  }
+  @media (max-width: 480px)  { 
+    .masonry-grid { column-count: 1; }  /* Single column for very small screens for better photo visibility */
+    .story-gallery-sec { --grid-gap: 4vw; padding: 0 5vw 3rem; }
+  }
 
   .gallery-item {
     break-inside: avoid;
-    margin-bottom: 0.8vw;
+    margin-bottom: var(--grid-gap);
     overflow: hidden;
     background: #e8e4de;
     cursor: zoom-in;
