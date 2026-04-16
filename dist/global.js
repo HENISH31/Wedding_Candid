@@ -26,21 +26,30 @@ window.initDynamicWord = function() {
   const words = ['Capturing', 'Creating', 'Preserving'];
   let idx = 0;
 
+  // Initial state logic removed as CSS handles first state
+  
   window.dynamicWordInterval = setInterval(() => {
-    wordEl.classList.add('fade-out');
+    // Phase 1: Slide Up & Fade Out
+    wordEl.style.opacity = '0';
+    wordEl.style.transform = 'translateY(-15px) scale(0.95)';
+    wordEl.style.filter = 'blur(4px)';
+    
     setTimeout(() => {
+      // Phase 2: Teleport to Bottom
       idx = (idx + 1) % words.length;
       wordEl.textContent = words[idx];
-      wordEl.classList.remove('fade-out');
-      wordEl.classList.add('fade-in-process');
-
+      wordEl.style.transition = 'none';
+      wordEl.style.transform = 'translateY(15px) scale(0.95)';
+      
+      // Phase 3: Slide In & Fade In
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          wordEl.classList.remove('fade-in-process');
-        });
+        wordEl.style.transition = 'var(--transition-smooth)';
+        wordEl.style.opacity = '1';
+        wordEl.style.transform = 'translateY(0) scale(1)';
+        wordEl.style.filter = 'blur(0px)';
       });
-    }, 600);
-  }, 3500);
+    }, 700); // Wait for fade out to complete
+  }, 2800); // 2.8s total cycle
 };
 
 window.initDynamicGallery = function() {
@@ -329,7 +338,7 @@ function initGlobalListeners() {
 
   window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY;
-    const navbar = document.getElementById('navbar');
+    const navbar = document.getElementById('wc-navbar');
     if (navbar) {
        if (scrollPos > 50) navbar.classList.add('scrolled');
        else navbar.classList.remove('scrolled');
@@ -396,3 +405,6 @@ document.addEventListener('astro:page-load', handlePageLoad);
 
 // Execute deterministically on first script evaluation lock.
 handlePageLoad();
+
+/* Smooth scroll removed in favor of Lenis engine in Layout.astro */
+

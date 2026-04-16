@@ -1,18 +1,18 @@
 ---
 /**
- * Hero.astro — Light Theme
- * Luxury editorial hero with floating image stack + text reveal animations.
- * No external libraries. All CSS & JS inline.
+ * Hero.astro — Premium Cinematic Hero
+ * Synchronized background and text transitions.
+ * Keeps the original splash screen.
  */
 ---
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
 
 <!-- ══════════════════════════════════════════
-     SPLASH SCREEN  (light cream panels)
+     SPLASH SCREEN  (Preserved from original)
 ══════════════════════════════════════════ -->
 <div id="splash" aria-hidden="true">
   <div class="splash-half splash-top"></div>
@@ -37,77 +37,38 @@
 </div>
 
 <!-- ══════════════════════════════════════════
-     HERO SECTION — Light Theme
+     PREMIUM CINEMATIC HERO
 ══════════════════════════════════════════ -->
-<section id="wc-hero">
-  <!-- 3D Particle Canvas -->
-  <canvas id="hero-particles" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></canvas>
-
-
-  <!-- ── LEFT: Text Column ── -->
-  <div id="hero-text-col">
-
-    <h1 id="hero-heading">
-      <span class="h-line h-line-1 hero-anim">
-        <em>Preserving</em>
-      </span>
-      <span class="h-line h-line-2 hero-anim">
-        Moments
-      </span>
-      <span class="h-line h-line-3 hero-anim">
-        <span>That Last</span>
-        <em>Forever.</em>
-      </span>
-    </h1>
-
-    <p id="hero-sub" class="hero-anim">
-      We don't just capture photographs — we preserve the quiet glances,
-      stolen laughs, and unscripted love that define your story.
-    </p>
-
-    <div id="hero-actions" class="hero-anim">
-      <a href="/booking"   class="btn-dark">Book a Session</a>
-    </div>
-
-    <!-- Floating stat pills -->
-
+<section id="premium-hero">
+  <!-- Background Slider -->
+  <div class="hero-bg-container">
+    <div class="hero-slide active" style="background-image: url('/homepage/WC_11751.JPG');"></div>
+    <div class="hero-slide" style="background-image: url('/homepage/DJI_20241209172706_0093_D_FLYCAPTURE%202.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('/homepage/DJI_0639.jpg');"></div>
   </div>
 
-  <!-- ── RIGHT: Floating Image Stack ── -->
-  <div id="hero-img-col">
+  <!-- Soft Overlay -->
+  <div class="hero-overlay"></div>
 
-    <!-- Background decoration circle -->
-    <div id="img-bg-circle"></div>
-
-    <!-- Scattered gold accent dots -->
-    <div class="dot dot-1"></div>
-    <div class="dot dot-2"></div>
-    <div class="dot dot-3"></div>
-
-    <!-- Card stack — 3 photos layered & offset -->
-    <div class="img-card card-back" id="card-back">
-      <img src="/candid/WC__8428.jpg" alt="Wedding moment" loading="eager" />
-    </div>
-    <div class="img-card card-mid" id="card-mid">
-      <img src="/candid/CB8A0325.jpg" alt="Wedding moment" loading="eager" />
-    </div>
-    <div class="img-card card-front" id="card-front">
-      <img src="/candid/WC_17407.JPG" alt="Wedding moment" loading="eager" />
-    </div>
-
-    <!-- Floating label tag -->
-    <div id="img-label">
-      <span class="label-dot"></span>
-      <span>Love Stories, Documented</span>
-    </div>
-
-    <!-- Scroll down nudge -->
-    <div id="scroll-cue">
-      <div class="scroll-track"><div class="scroll-thumb"></div></div>
-      <span>Scroll</span>
+  <!-- Content -->
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-heading dark-text">
+        <span class="static-line">CAPTURING</span>
+        <span class="dynamic-wrap">
+          <span id="hero-word">HONEST STORIES</span>
+        </span>
+      </h1>
+      <p class="hero-tagline">Legacy in motion</p>
+      <div class="hero-line"></div>
     </div>
   </div>
 
+  <!-- Scroll Nudge -->
+  <div class="scroll-indicator">
+    <span class="scroll-text">Explore</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════════
@@ -115,20 +76,19 @@
 ══════════════════════════════════════════ -->
 <style>
   :root {
-    --cream:   #f8f6f2;
-    --ink:     #1a1814;
-    --gold:    #C9A84C;
-    --muted:   #7a7168;
-    --ease-split: cubic-bezier(0.76, 0, 0.24, 1);
-    --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
+    --cream: #f8f6f2;
+    --gold: #C9A84C;
+    --ink: #1a1814;
+    --serif: 'Cormorant Garamond', serif;
+    --sans: 'Jost', sans-serif;
+    --ease-ultra: cubic-bezier(0.23, 1, 0.32, 1);
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* ── SPLASH ─────────────────────────────── */
+  /* ── SPLASH (Preserved) ────────────────── */
   #splash {
     position: fixed; inset: 0;
-    z-index: 9999;
-    background: #f8f6f2;
+    z-index: 10000;
+    background: var(--cream);
     clip-path: circle(150% at 50% 50%);
     transition: clip-path 1.6s cubic-bezier(0.76, 0, 0.24, 1), filter 1.6s ease;
     will-change: clip-path, filter;
@@ -138,7 +98,6 @@
     filter: blur(30px);
     pointer-events: none;
   }
-
   #splash-logo {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
@@ -148,563 +107,320 @@
     transition: opacity 0.5s ease;
     z-index: 2;
   }
-  #splash-logo.visible  { opacity: 1; }
+  #splash-logo.visible { opacity: 1; }
   #splash-logo.fade-out { opacity: 0; transition-duration: 0.35s; }
+  #camera-wrap { position: relative; width: 110px; height: 110px; }
+  #camera-draw { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .cam-stroke { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: drawStroke 2.2s cubic-bezier(0.4,0,0.2,1) forwards; }
+  @keyframes drawStroke { to { stroke-dashoffset: 0; } }
+  .splash-wordmark { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+  .splash-title { font-family: var(--sans); font-weight: 300; font-size: 1.05rem; letter-spacing: 0.45em; color: var(--ink); }
+  .splash-sub { font-family: var(--sans); font-weight: 200; font-size: 0.58rem; letter-spacing: 0.55em; color: var(--gold); text-transform: uppercase; }
 
-  #camera-wrap {
-    position: relative; width: 110px; height: 110px;
-  }
-  #camera-ghost {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: contain;
-    filter: brightness(0) invert(0) opacity(0.08);
-    opacity: 0;
-    animation: ghostFadeIn 0.6s ease 0.4s forwards;
-  }
-  #camera-draw {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    overflow: visible;
-  }
-  .cam-stroke {
-    stroke-dasharray: var(--len);
-    stroke-dashoffset: var(--len);
-    animation: drawStroke 2.2s cubic-bezier(0.4,0,0.2,1) forwards;
-  }
-  .cam-stroke:nth-child(1) { animation-delay: 0.5s;  }
-  .cam-stroke:nth-child(2) { animation-delay: 1.0s;  }
-  .cam-stroke:nth-child(3) { animation-delay: 1.2s;  }
-  .cam-stroke:nth-child(4) { animation-delay: 1.4s;  }
-  .cam-stroke:nth-child(5) { animation-delay: 1.7s;  }
-  .cam-stroke:nth-child(6) { animation-delay: 2.0s;  }
-
-  @keyframes ghostFadeIn { to { opacity: 1; } }
-  @keyframes drawStroke  { to { stroke-dashoffset: 0; } }
-
-  .splash-wordmark {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 0.25rem;
-  }
-  .splash-title {
-    font-family: 'Jost', sans-serif;
-    font-weight: 300; font-size: 1.05rem;
-    letter-spacing: 0.45em; color: #1a1814;
-  }
-  .splash-sub {
-    font-family: 'Jost', sans-serif;
-    font-weight: 200; font-size: 0.58rem;
-    letter-spacing: 0.55em; color: #b8935a;
-    text-transform: uppercase;
-  }
-
-  /* ── HERO LAYOUT ─────────────────────────── */
-  #wc-hero {
-    min-height: 100vh;
-    background: var(--cream);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 0 6vw;
-    gap: 4vw;
-    overflow: hidden;
+  /* ── PREMIUM HERO ─────────────────────── */
+  #premium-hero {
     position: relative;
-    /* The Cinematic Breath In */
-    animation: heroBreathIn 2.4s cubic-bezier(0.16, 1, 0.3, 1) 3.5s backwards;
-  }
-
-  @keyframes heroBreathIn {
-    0% { transform: scale(1.08) translateY(10vh); filter: blur(15px); opacity: 0; }
-    30% { opacity: 1; }
-    100% { transform: scale(1) translateY(0); filter: blur(0px); opacity: 1; }
-  }
-
-  /* ── TEXT COLUMN ────────────────────────── */
-  #hero-text-col {
-    padding: 10vh 0 8vh;
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Base animation state */
-  .hero-anim {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
-  }
-  .hero-anim.in {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-
-
-  /* Heading */
-  #hero-heading {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    overflow: hidden;
-  }
-  .h-line {
-    display: block;
-    overflow: hidden;
-    line-height: 0.95;
-  }
-  .h-line-1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.8rem, 5.5vw, 6rem);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--muted);
-    transition-delay: 0.15s;
-  }
-  .h-line-2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(4rem, 7.5vw, 9rem);
-    font-weight: 600;
-    color: var(--ink);
-    letter-spacing: -0.02em;
-    transition-delay: 0.25s;
-  }
-  .h-line-3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 4vw, 5rem);
-    font-weight: 300;
-    color: var(--ink);
-    display: flex;
-    gap: 0.4em;
-    align-items: baseline;
-    transition-delay: 0.38s;
-  }
-  .h-line-3 em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  /* Sub paragraph */
-  #hero-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 1.3vw, 1.25rem);
-    font-weight: 300;
-    line-height: 1.85;
-    color: var(--muted);
-    max-width: 42ch;
-    transition-delay: 0.5s;
-  }
-
-  /* Buttons */
-  #hero-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    transition-delay: 0.62s;
-  }
-  .btn-dark, .btn-ghost {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 300;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 15px 34px;
-    display: inline-block;
-    transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-dark {
-    background: var(--ink);
-    color: var(--cream);
-    border: 1px solid var(--ink);
-  }
-  .btn-dark:hover { background: #2e2a24; transform: translateY(-2px); }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid rgba(26,24,20,0.3);
-  }
-  .btn-ghost:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    transform: translateY(-2px);
-  }
-
-
-
-  /* ── IMAGE COLUMN ───────────────────────── */
-  #hero-img-col {
-    position: relative;
+    width: 100%;
     height: 100vh;
+    background: #000;
+    overflow: hidden;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  /* Big soft circle background */
-  #img-bg-circle {
+  .hero-bg-container {
     position: absolute;
-    width: 70%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
+    inset: 0;
+    z-index: 1;
   }
 
-  /* Accent dots */
-  .dot {
+  .hero-slide {
     position: absolute;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-  .dot-1 { width: 8px; height: 8px; top: 22%; left: 8%;  opacity: 0.5; animation: floatDot 5s ease-in-out infinite; }
-  .dot-2 { width: 5px; height: 5px; bottom: 28%; right: 6%; opacity: 0.35; animation: floatDot 7s ease-in-out 1s infinite; }
-  .dot-3 { width: 3px; height: 3px; top: 55%; left: 3%;  opacity: 0.25; animation: floatDot 6s ease-in-out 2s infinite; }
-
-  @keyframes floatDot {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-12px); }
-  }
-
-  /* ── Image cards ─────────────────────── */
-  .img-card {
-    position: absolute;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 30px 80px rgba(26,24,20,0.14), 0 8px 24px rgba(26,24,20,0.08);
+    inset: 0;
+    background-size: cover;
+    background-position: center;
     opacity: 0;
-  }
-  .img-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 8s ease;
-  }
-  /* Slow Ken Burns drift */
-  .img-card:hover img { transform: scale(1.05); }
-
-  /* Back card — portrait, tilted left */
-  .card-back {
-    width: clamp(180px, 22vw, 280px);
-    height: clamp(240px, 30vw, 380px);
-    bottom: 8%;
-    left: 2%;
-    transform: rotate(0deg) scale(1.4) translateY(100px);
-    transform-origin: center bottom;
-    animation: dealCardBack 1.4s cubic-bezier(0.25, 1, 0.3, 1) 4.2s forwards;
+    transition: opacity 0.6s var(--ease-ultra);
+    transform: scale(1.05);
     will-change: transform, opacity;
   }
 
-  /* Mid card — landscape, centered */
-  .card-mid {
-    width: clamp(220px, 30vw, 380px);
-    height: clamp(160px, 22vw, 280px);
-    top: 12%;
-    right: 4%;
-    transform: rotate(0deg) scale(1.4) translateY(100px);
-    transform-origin: center right;
-    animation: dealCardMid 1.5s cubic-bezier(0.25, 1, 0.3, 1) 4.3s forwards;
-    will-change: transform, opacity;
+  .hero-slide.active {
+    opacity: 1;
+    z-index: 2;
+    animation: kenBurns 10s linear infinite alternate;
   }
 
-  /* Front card — portrait, center-right, raised */
-  .card-front {
-    width: clamp(200px, 26vw, 320px);
-    height: clamp(280px, 36vw, 440px);
-    top: 50%; left: 50%;
-    transform: translate(-40%, -20%) scale(1.6);
+  @keyframes kenBurns {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.05); }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.28) 100%);
     z-index: 3;
-    animation: dealCardFront 1.8s cubic-bezier(0.25, 1, 0.3, 1) 4.5s forwards;
-    box-shadow: 0 40px 100px rgba(26,24,20,0.2), 0 10px 30px rgba(26,24,20,0.1);
-    will-change: transform, opacity;
   }
 
-  @keyframes dealCardBack {
-    0%   { opacity: 0; transform: rotate(0deg) scale(1.4) translate(-10px, 100px); }
-    10%  { opacity: 1; }
-    100% { opacity: 1; transform: rotate(-10deg) scale(1) translate(0, 0); }
-  }
-  @keyframes dealCardMid {
-    0%   { opacity: 0; transform: rotate(0deg) scale(1.4) translate(10px, 100px); }
-    10%  { opacity: 1; }
-    100% { opacity: 1; transform: rotate(8deg) scale(1) translate(0, 0); }
-  }
-  @keyframes dealCardFront {
-    0%   { opacity: 0; transform: translate(-40%, -20%) scale(1.6); }
-    10%  { opacity: 1; }
-    100% { opacity: 1; transform: translate(-40%, -50%) rotate(-3deg) scale(1.05); }
-  }
-
-  /* Floating label */
-  #img-label {
-    position: absolute;
-    bottom: 14%;
-    right: 2%;
+  .hero-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.6rem;
-    background: white;
-    border: 1px solid rgba(26,24,20,0.06);
-    border-radius: 100px;
-    padding: 10px 18px;
-    box-shadow: 0 8px 30px rgba(26,24,20,0.08);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.62rem;
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    color: var(--ink);
-    text-transform: uppercase;
-    opacity: 0;
-    transform: translateY(16px);
-    animation: floatIn 0.8s var(--ease-out) 4.2s forwards;
-    z-index: 5;
-  }
-  .label-dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--gold);
-    animation: pulseDot 2s ease-in-out infinite;
-  }
-  @keyframes pulseDot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.5; transform: scale(1.5); }
   }
 
-  /* Scroll cue */
-  #scroll-cue {
-    position: absolute;
-    left: 4%;
-    bottom: 8%;
+  .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    text-align: center;
     opacity: 0;
-    animation: floatIn 0.8s var(--ease-out) 4.5s forwards;
-    z-index: 5;
+    transform: translateY(20px);
+    transition: all 1.2s var(--ease-ultra);
   }
-  #scroll-cue span {
-    font-family: 'Jost', sans-serif;
-    font-size: 0.55rem;
+
+  #premium-hero.in .hero-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-heading {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 8.5vw, 8.5rem);
     font-weight: 300;
-    letter-spacing: 0.3em;
+    line-height: 0.85;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: var(--muted);
-    writing-mode: vertical-rl;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    transition: color 0.6s ease;
   }
-  .scroll-track {
-    width: 1px; height: 60px;
-    background: rgba(26,24,20,0.12);
+
+  .hero-heading.dark-text {
+    color: var(--ink);
+  }
+
+  .static-line {
+    display: block;
+    opacity: 1;
+  }
+
+  .dynamic-wrap {
+    display: block;
+    height: 1.1em;
+    overflow: hidden;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .hero-tagline {
+    font-family: var(--serif);
+    font-size: clamp(0.9rem, 1.5vw, 1.25rem);
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.3em;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 1s ease 4.2s;
+  }
+
+  #premium-hero.in .hero-tagline {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #hero-word {
+    display: block;
+    white-space: nowrap;
+    transition: transform 0.8s var(--ease-ultra), opacity 0.8s ease;
+  }
+
+  .hero-line {
+    display: none;
+  }
+
+
+  /* Scroll Indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 1s ease 1s;
+  }
+
+  #premium-hero.in .scroll-indicator {
+    opacity: 1;
+  }
+
+  .scroll-text {
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.2);
     position: relative;
     overflow: hidden;
   }
-  .scroll-thumb {
+
+  .scroll-line::after {
+    content: '';
     position: absolute;
-    top: -100%; left: 0;
-    width: 100%; height: 100%;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: var(--gold);
-    animation: scrollThumb 2s ease-in-out infinite;
-  }
-  @keyframes scrollThumb {
-    0%   { top: -100%; }
-    100% { top: 200%; }
+    animation: scrollLineMove 2.5s infinite var(--ease-ultra);
   }
 
-  @keyframes floatIn {
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes scrollLineMove {
+    0% { top: -100%; }
+    100% { top: 100%; }
   }
 
-  /* ── RESPONSIVE ─────────────────────────── */
-  @media (max-width: 900px) {
-    #wc-hero {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-      padding: 0 6vw 6vw;
-      min-height: auto;
-    }
-    #hero-text-col { padding: 14vh 0 4vh; }
-    #hero-img-col  { height: 60vw; min-height: 320px; }
-    .card-front    { width: clamp(160px, 40vw, 280px); height: clamp(220px, 56vw, 380px); }
-    .card-mid      { width: clamp(140px, 36vw, 240px); height: clamp(100px, 26vw, 180px); }
-    .card-back     { width: clamp(120px, 28vw, 200px); height: clamp(160px, 38vw, 260px); }
-    #hero-actions  { flex-direction: column; align-items: flex-start; }
-    .btn-dark, .btn-ghost { width: 100%; text-align: center; }
+  @media (max-width: 768px) {
+    .hero-heading { font-size: 3rem; }
   }
 </style>
 
 <!-- ══════════════════════════════════════════
-     SCRIPT
+     SCRIPTS
 ══════════════════════════════════════════ -->
 <script>
-  // ── INIT ON PAGE LOAD FOR VIEW TRANSITIONS ────────────
-  function initHero() {
-    // ── SPLASH ────────────────────────────────────────────
-    const splash     = document.getElementById('splash');
-    const splashLogo = document.getElementById('splash-logo');
+  import { gsap } from 'gsap';
 
-    if (splashLogo && splash) {
-      setTimeout(() => splashLogo.classList.add('visible'),  300);
-      setTimeout(() => splashLogo.classList.add('fade-out'), 3200);
-      setTimeout(() => splash.classList.add('split'),        3600);
-      setTimeout(() => { splash.style.display = 'none'; }, 4800);
-    } else if (splash) {
-      splash.style.display = 'none';
-    }
+  // Advanced tracking for Astro internal + external navigations
+  let sessionSplashExecuted = false;
 
-    // ── HERO TEXT REVEAL on splash end ────────────────────
-    const ANIM_START = 4100; // ms — just before cards arrive
-
-    function revealHeroText() {
-      const items = document.querySelectorAll('.hero-anim');
-      items.forEach((el, i) => {
-        const delay = parseFloat(getComputedStyle(el).transitionDelay) * 1000 || 0;
-        setTimeout(() => el.classList.add('in'), delay);
-      });
-    }
+  function shouldShowSplash() {
+    if (sessionSplashExecuted) return false;
     
-    if (document.getElementById('wc-hero')) {
-      setTimeout(revealHeroText, ANIM_START);
-    }
-
-    // ── PARALLAX / CARD MOUSE TILT (desktop only) ─────────
-    const isTouch = window.matchMedia('(hover: none)').matches;
-
-    if (!isTouch) {
-      const front = document.getElementById('card-front');
-      const mid   = document.getElementById('card-mid');
-      const back  = document.getElementById('card-back');
-      const heroSec = document.getElementById('wc-hero');
-
-      if (heroSec) {
-        heroSec.addEventListener('mousemove', (e) => {
-          const { innerWidth: W, innerHeight: H } = window;
-          const dx = (e.clientX / W - 0.5) * 2;   // -1 → +1
-          const dy = (e.clientY / H - 0.5) * 2;
-
-          if (front) front.style.transform = `translate(-40%, -50%) rotate(-2deg) translate(${dx*10}px, ${dy*6}px)`;
-          if (mid)   mid.style.transform   = `rotate(5deg) translate(${dx*6}px,  ${dy*4}px)`;
-          if (back)  back.style.transform  = `rotate(-8deg) translate(${dx*4}px, ${dy*3}px)`;
-        });
+    try {
+      const navEntries = performance.getEntriesByType('navigation');
+      if (navEntries.length > 0 && navEntries[0].type === 'reload') {
+        return true;
       }
-    }
+    } catch(e) {}
 
-    function onScroll() {
-      const scrollY = window.scrollY;
-      
-      // Navbar sticky state
-      const nav = document.getElementById('navbar');
-      if (nav) {
-        nav.classList.toggle('scrolled', scrollY > 60);
-      }
+    if (!sessionStorage.getItem('wc_hero_splash_played')) return true;
 
-      // Parallax text scrolling
-      const heroText = document.getElementById('hero-text-col');
-      if (heroText) {
-        heroText.style.transform = `translateY(${scrollY * 0.25}px)`;
-        heroText.style.opacity = Math.max(0, 1 - scrollY / 600).toString();
-      }
-
-      // Dynamic Card Scattering
-      const front = document.getElementById('card-front');
-      const mid   = document.getElementById('card-mid');
-      const back  = document.getElementById('card-back');
-
-      // Add massive peel-away effect if user is past initial animation
-      // The scroll scatter pushes cards outwards
-      if (front && scrollY > 0) {
-        front.style.transform = `translate(calc(-40% + ${scrollY * 0.05}px), calc(-50% - ${scrollY * 0.15}px)) rotate(calc(-3deg - ${scrollY * 0.02}deg)) scale(calc(1.05 - ${scrollY * 0.0003}))`;
-      }
-      if (mid && scrollY > 0) {
-        mid.style.transform = `translate(${scrollY * 0.2}px, ${-scrollY * 0.1}px) rotate(calc(8deg + ${scrollY * 0.03}deg))`;
-      }
-      if (back && scrollY > 0) {
-        back.style.transform = `translate(${-scrollY * 0.15}px, ${scrollY * 0.1}px) rotate(calc(-10deg - ${scrollY * 0.03}deg))`;
-      }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // ── 3D AMBIENT PARTICLES ──────────────────────────────
-    const canvas = document.getElementById('hero-particles');
-    // Important context tracking for cleanup
-    if (window.heroParticlesFrame) cancelAnimationFrame(window.heroParticlesFrame);
-
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      let width, height;
-      let particles = [];
-
-      function initParticles() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        particles = [];
-        // Greatly increased particle count
-        const numParticles = window.innerWidth < 768 ? 100 : 250;
-        for (let i = 0; i < numParticles; i++) {
-          particles.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            z: Math.random() * 100,
-            vx: (Math.random() - 0.5) * 0.4,
-            vy: (Math.random() - 0.5) * 0.4,
-            vz: (Math.random() - 0.5) * 0.8,
-            size: Math.random() * 2 + 0.5,
-            angle: Math.random() * Math.PI * 2,
-            turnSpeed: Math.random() * 0.03 + 0.01 // Roaming turn speed
-          });
-        }
-      }
-
-      function drawParticles() {
-        if (!ctx || !document.getElementById('hero-particles')) return;
-        ctx.clearRect(0, 0, width, height);
-        
-        particles.forEach(p => {
-          // Organic roaming behavior
-          p.angle += p.turnSpeed;
-          p.x += p.vx + Math.cos(p.angle) * 0.5;
-          p.y += p.vy + Math.sin(p.angle) * 0.5;
-          p.z += p.vz;
-          
-          // Soft bounce on Z axis for depth
-          if (p.z < 0 || p.z > 100) p.vz *= -1;
-          
-          // Wrap X & Y
-          if (p.x < 0) p.x = width;
-          if (p.x > width) p.x = 0;
-          if (p.y < 0) p.y = height;
-          if (p.y > height) p.y = 0;
-
-          // Calculate 3D Depth (scale & opacity)
-          const scale = (100 - p.z) / 100;
-          const size = p.size * scale;
-          const alpha = scale * 0.8; // Closer particles are brighter
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(0.1, size), 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(201, 168, 76, ${alpha})`; // Luxury gold
-          ctx.shadowBlur = 12 * scale;
-          ctx.shadowColor = 'rgba(201, 168, 76, 0.6)';
-          ctx.fill();
-        });
-
-        window.heroParticlesFrame = requestAnimationFrame(drawParticles);
-      }
-
-      initParticles();
-      drawParticles();
-
-      window.addEventListener('resize', initParticles, { passive: true });
-    }
+    return false;
   }
 
-  document.addEventListener('astro:page-load', initHero);
+  function initPremiumHero() {
+    const hero = document.getElementById('premium-hero');
+    const splash = document.getElementById('splash');
+    const splashLogo = document.getElementById('splash-logo');
+    const wordEl = document.getElementById('hero-word');
+    const slides = document.querySelectorAll('.hero-slide');
+    
+    if (!hero) return;
 
+    // ── Preload Images ──────────────────────────
+    const images = [
+      '/homepage/WC_11751.JPG',
+      '/homepage/DJI_20241209172706_0093_D_FLYCAPTURE%202.jpg',
+      '/homepage/DJI_0639.jpg'
+    ];
+    images.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    // ── Splash Screen Logic ─────────────────────
+    const isFirstLoad = shouldShowSplash();
+
+    if (splash && splashLogo && isFirstLoad) {
+      sessionSplashExecuted = true;
+      sessionStorage.setItem('wc_hero_splash_played', 'true');
+      setTimeout(() => splashLogo.classList.add('visible'),  300);
+      setTimeout(() => splashLogo.classList.add('fade-out'), 3200);
+      setTimeout(() => {
+        splash.classList.add('split');
+        hero.classList.add('in'); // REVEAL HERO IMMEDIATELY AS SPLASH SPLITS
+      }, 3600);
+      setTimeout(() => { 
+        splash.style.display = 'none'; 
+      }, 4800);
+    } else {
+      // Skip splash completely on internal navigation
+      if (splash) splash.style.display = 'none';
+      hero.classList.add('in');
+    }
+
+    // ── Rotation Logic ──────────────────────────
+    const phrases = ['HONEST STORIES', 'CINEMATIC MOMENTS', 'PURE EMOTIONS'];
+    let currentIdx = 0;
+
+    const changeSlide = () => {
+      const nextIdx = (currentIdx + 1) % phrases.length;
+
+      // 1. Transition Word out
+      gsap.to(wordEl, {
+        y: -30,
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power3.in',
+        onComplete: () => {
+          // Word comes in
+          wordEl.textContent = phrases[nextIdx];
+          gsap.fromTo(wordEl, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' });
+
+          // 2. Transition Background at the exact same time
+          slides[currentIdx].classList.remove('active');
+          slides[nextIdx].classList.add('active');
+
+          // 3. Toggle Dark Text for Specific Slide simultaneously
+          const heading = document.querySelector('.hero-heading');
+          if (heading) {
+            if (nextIdx === 0) {
+              heading.classList.add('dark-text');
+            } else {
+              heading.classList.remove('dark-text');
+            }
+          }
+
+          currentIdx = nextIdx;
+        }
+      });
+    };
+
+    // Start interval after splash
+    let interval;
+    const intervalDelay = isFirstLoad ? 5000 : 1000;
+    
+    setTimeout(() => {
+      interval = setInterval(changeSlide, 3000); 
+    }, intervalDelay);
+
+    // Cleanup
+    document.addEventListener('astro:before-preparation', () => {
+      clearInterval(interval);
+    }, { once: true });
+  }
+
+  document.addEventListener('astro:page-load', initPremiumHero);
 </script>

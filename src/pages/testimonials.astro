@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const testimonials = [
+  {
+    name: 'Aashvi & Tej',
+    quote: "Also Deep, we wanted to thank you for all the hardwork that you and your team did for us throughout the wedding. Our memories are going to be created through you guys. Thanks for being so easy going and enjoying it with us. You and your team were amazing and keep up with this work.",
+    location: 'Wedding Celebration'
+  },
+  {
+    name: 'Mayur & Shivani',
+    quote: "Best decision we made in terms of selecting your team out of many others we scouted in Vadodara. Team was friendly and captured our best moments as we needed. Our family loved all the candid videos and photos. Thanks for all your hardwork making our wedding memorable.",
+    location: 'Vadodara Wedding'
+  },
+  {
+    name: 'Mansi & Prit',
+    quote: "Just wanted to say a huge thank you to you and your incredible team! We're absolutely in love with the photos and videos. I honestly don't have words to express how much I loved it. Every moment, every emotion, every tiny detail was captured so beautifully.",
+    location: 'Main Exhibition'
+  },
+  {
+    name: 'Dhwani & Parth',
+    quote: "Hi @Wedding Candid (Deep Mistry) This is absolutely amazing! We loved it - thank you so much to you and your team for all your hard work and for capturing such beautiful and memorable moments. Truly, this is wonderful. Thanks again!",
+    location: 'Event Day'
+  },
+  {
+    name: 'Vishwa & Vishu',
+    quote: "We are incredibly grateful to you and you team for capturing our wedding day so beautifully. Your artistry, precision, and dedication went far beyond our expectations. Every frame reflects not only your technical excellence but also your genuine passion.",
+    location: 'Grand Wedding'
+  }
+];
+---
+
+<Layout title="Voices of Love | Testimonials" hideGlobalPreloader={true} navTheme="light">
+  <div class="test-experience-fixed">
+    
+
+
+    <!-- Scrolling Content Layer -->
+    <div class="scrolling-content">
+      
+      <!-- Hero -->
+      <header class="test-hero-cinematic">
+        <div class="hero-inner-candid">
+          <span class="eyebrow-luxe">THE VOICES OF LOVE</span>
+          <h1 class="title-luxe">Stories <em>Held</em> in Time</h1>
+          <p class="sub-luxe">Client memories scrolling through our lens</p>
+          <div class="hero-scroll-indicator">
+            <span class="line"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Testimonials Rail -->
+      <main class="testimonial-rail">
+        {testimonials.map((t, i) => (
+          <div class="testimonial-gate">
+            <div 
+              class={`testimonial-float-card ${i % 2 === 0 ? 'pull-left' : 'pull-right'}`}
+              data-scroll-reveal
+            >
+              <div class="quote-mark">“</div>
+              <blockquote class="quote-text">
+                {t.quote}
+              </blockquote>
+              <div class="author-block">
+                <div class="gold-line"></div>
+                <h3 class="author-name">{t.name}</h3>
+                <p class="author-loc">{t.location}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </main>
+
+      <!-- Stats Intermission -->
+      <section class="test-stats-grid">
+         <div class="stat-box">
+           <span class="stat-val">300+</span>
+           <span class="stat-key">HEARTS CAPTURED</span>
+         </div>
+         <div class="stat-box">
+           <span class="stat-val">5.0</span>
+           <span class="stat-key">CLIENT TRUST</span>
+         </div>
+      </section>
+
+      <!-- Final Act -->
+      <footer class="test-footer-cta">
+        <h2 class="footer-title">YOUR STORY, <em>OUR LENS</em></h2>
+        <a href="/booking" class="booking-cta-btn">BEGIN YOUR JOURNEY →</a>
+      </footer>
+
+    </div>
+  </div>
+</Layout>
+
+<style>
+  :root {
+    --gold: #b68b40;
+    --paper: #f5f0e8;
+    --ink: #0e0c0a;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Stationary Background */
+  .test-experience-fixed { position: relative; width: 100%; min-height: 100vh; background: var(--paper); clip-path: inset(0); }
+
+  .fixed-parallax-bg { position: fixed; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+  .bg-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); }
+  .bg-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.45); }
+
+  /* Scrolling Layer */
+  .scrolling-content { position: relative; z-index: 5; }
+
+  /* Hero */
+  .test-hero-cinematic { height: 65vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .eyebrow-luxe { display: block; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.5em; margin-bottom: 2rem; }
+  .title-luxe { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; color: var(--ink); line-height: 1.1; margin: 0; }
+  .title-luxe em { font-style: italic; color: var(--gold); }
+  .sub-luxe { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: rgba(0,0,0,0.4); letter-spacing: 0.25em; margin-top: 2rem; text-transform: uppercase; }
+  .hero-scroll-indicator { margin-top: 2rem; display: flex; justify-content: center; }
+  .hero-scroll-indicator .line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent); }
+
+  /* Testimonials */
+  .testimonial-rail { padding: 0 5vw 4vh; }
+  .testimonial-gate { min-height: 30vh; display: flex; align-items: center; justify-content: center; padding: 1rem 0; }
+  
+  .testimonial-float-card { 
+    max-width: 650px; padding: 4rem; 
+    background: transparent;
+    opacity: 0; transform: translateY(60px); transition: all 1.2s var(--ease);
+  }
+  .testimonial-float-card.visible { opacity: 1; transform: translateY(0); }
+  .pull-left { margin-right: auto; margin-left: 5vw; }
+  .pull-right { margin-left: auto; margin-right: 5vw; }
+
+  .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: var(--gold); opacity: 0.2; line-height: 1; margin-bottom: -1.5rem; }
+  .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.7; font-style: italic; color: var(--ink); font-weight: 300; margin-bottom: 3rem; }
+  .author-block { border-left: 1px solid var(--gold); padding-left: 1.5rem; }
+  .author-name { font-family: 'Outfit', sans-serif; font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.5rem; }
+  .author-loc { font-family: 'Outfit', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; color: rgba(0,0,0,0.5); text-transform: uppercase; }
+
+  /* Stats */
+  .test-stats-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); padding: 5rem 0; margin: 5vh 5vw; }
+  .stat-box { text-align: center; }
+  .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--gold); display: block; }
+  .stat-key { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: rgba(0,0,0,0.4); letter-spacing: 0.4em; }
+
+  /* Footer */
+  .test-footer-cta { padding: 8vh 5vw; text-align: center; background: rgba(0,0,0,0.02); }
+  .footer-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--ink); margin-bottom: 4rem; letter-spacing: 0.05em; font-weight: 300; }
+  .footer-title em { font-style: italic; color: var(--gold); }
+  .booking-cta-btn { display: inline-block; padding: 18px 45px; border: 1px solid var(--gold); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-decoration: none; transition: 0.4s; }
+  .booking-cta-btn:hover { background: var(--gold); color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .testimonial-float-card { padding: 2.5rem; margin: 0 auto; width: 90%; }
+    .pull-left, .pull-right { margin: 0 auto; }
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const reveals = document.querySelectorAll('[data-scroll-reveal]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => observer.observe(el));
+  });
+</script>

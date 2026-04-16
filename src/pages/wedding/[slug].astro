@@ -1,0 +1,510 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const WEDDINGS = [
+    {
+      slug: 'aashvi-tej',
+      name1: 'Aashvi',
+      name2: 'Tej',
+      subtitle: 'Moments in Light',
+      cover: '/gallery/opt/CB8A0325.webp',
+      quote: "Where the sea meets the shore and two hearts meet forever — that is where their story begins.",
+      next: { slug: 'mayur-shivani', names: 'Mayur & Shivani' },
+      images: [
+        '/gallery/opt/198A1445.webp', '/gallery/opt/1M4A8828.webp', '/gallery/opt/CB8A0155.webp', '/gallery/opt/WC_13299.webp',
+        '/gallery/opt/WC_17354.webp', '/gallery/opt/SSP01330.webp', '/gallery/opt/WC_19833.webp', '/gallery/opt/WC__8428.webp',
+        '/gallery/opt/CB8A0325.webp', '/gallery/opt/MBJ_5953.webp', '/gallery/opt/WC_17407.webp', '/gallery/opt/IMG_4312.webp'
+      ]
+    },
+    {
+      slug: 'mayur-shivani',
+      name1: 'Mayur',
+      name2: 'Shivani',
+      subtitle: 'Written in Gold',
+      cover: '/gallery/opt/WC_19833.webp',
+      quote: "He was her calm. She was his light. Together, they became the whole sky.",
+      next: { slug: 'mansi-prit', names: 'Mansi & Prit' },
+      images: [
+        '/gallery/opt/SSP01330.webp', '/gallery/opt/WC_17354.webp', '/gallery/opt/CB8A0155.webp', '/gallery/opt/WC__8428.webp',
+        '/gallery/opt/CB8A0325.webp', '/gallery/opt/198A1445.webp', '/gallery/opt/WC_19833.webp', '/gallery/opt/WC_13299.webp'
+      ]
+    },
+    {
+      slug: 'mansi-prit',
+      name1: 'Mansi',
+      name2: 'Prit',
+      subtitle: 'A Quiet Forever',
+      cover: '/gallery/opt/MBJ_5953.webp',
+      quote: "Love, they decided, was not something you find. It was something you build — one quiet moment at a time.",
+      next: { slug: 'dhwani-parth', names: 'Dhwani & Parth' },
+      images: [
+        '/gallery/opt/WC_17407.webp', '/gallery/opt/WC__6391.webp', '/gallery/opt/IMG_4312.webp', '/gallery/opt/WC_13299.webp',
+        '/gallery/opt/198A1445.webp', '/gallery/opt/1M4A8828.webp', '/gallery/opt/CB8A0155.webp', '/gallery/opt/WC_19833.webp'
+      ]
+    },
+    {
+      slug: 'dhwani-parth',
+      name1: 'Dhwani',
+      name2: 'Parth',
+      subtitle: 'Two Names, One Story',
+      cover: '/gallery/opt/WC_13299.webp',
+      quote: "Two souls fluent in the same silence. Two names the universe kept whispering to itself.",
+      next: { slug: 'vishwa-vishu', names: 'Vishwa & Vishu' },
+      images: [
+        '/gallery/opt/CB8A0325.webp', '/gallery/opt/WC_17354.webp', '/gallery/opt/WC_19833.webp', '/gallery/opt/SSP01330.webp',
+        '/gallery/opt/WC__8428.webp', '/gallery/opt/WC_13299.webp', '/gallery/opt/CB8A0155.webp', '/gallery/opt/1M4A8828.webp'
+      ]
+    },
+    {
+      slug: 'vishwa-vishu',
+      name1: 'Vishwa',
+      name2: 'Vishu',
+      subtitle: 'Rising Together',
+      cover: '/gallery/opt/SSP01330.webp',
+      quote: "They did not fall in love. They rose into it — slowly, surely, like morning finding the hills.",
+      next: { slug: 'aashvi-tej', names: 'Aashvi & Tej' },
+      images: [
+        '/gallery/opt/WC__8428.webp', '/gallery/opt/WC_13299.webp', '/gallery/opt/CB8A0155.webp', '/gallery/opt/WC__7232.webp',
+        '/gallery/opt/CB8A0155.webp', '/gallery/opt/1M4A8828.webp', '/gallery/opt/198A1445.webp', '/gallery/opt/CB8A0325.webp'
+      ]
+    }
+  ];
+
+  return WEDDINGS.map(wedding => ({
+    params: { slug: wedding.slug },
+    props: { wedding }
+  }));
+}
+
+const { wedding } = Astro.props;
+---
+
+<Layout title={`${wedding.name1} & ${wedding.name2} | Wedding Story`} hideGlobalPreloader={true}>
+  <div class="story-page" id="storyPage">
+    <div id="entrancePeel" class="entrance-peel"></div>
+
+    <!-- Section 1 — Full-Bleed Hero -->
+    <section class="story-hero">
+      <div class="hero-bg-wrap">
+        <img src={wedding.cover} alt="Cover" class="hero-cover-img" />
+        <div class="hero-bg-overlay"></div>
+      </div>
+      <div class="hero-content-overlay">
+        <p class="story-of-tag">THE STORY OF</p>
+        <h1 class="couple-display-title">
+          {wedding.name1} <span class="amp">&</span> {wedding.name2}
+        </h1>
+        <p class="story-subtitle">{wedding.subtitle}</p>
+      </div>
+      <div class="hero-scroll-hint">
+        <span class="scroll-hint-line"></span>
+        <span class="scroll-hint-text">SCROLL</span>
+      </div>
+    </section>
+
+    <!-- Section 2 — Quote -->
+    <section class="story-quote-block">
+      <div class="quote-container">
+        <div class="gold-rule animate-on-scroll"></div>
+        <div class="quote-inner">
+          <blockquote class="soul-manifesto animate-on-scroll">
+            {wedding.quote}
+          </blockquote>
+          <p class="quote-author-sig animate-on-scroll">{wedding.name1} & {wedding.name2}</p>
+        </div>
+        <div class="gold-rule animate-on-scroll"></div>
+      </div>
+    </section>
+
+    <!-- Section 3 — Gallery -->
+    <section class="story-gallery-sec">
+      <div class="gallery-heading">
+        <span class="heading-label">THE WEDDING</span>
+        <div class="heading-rule animate-on-scroll"></div>
+      </div>
+
+      <div class="masonry-grid">
+        {wedding.images.map((src, i) => {
+          let ratio = '3/4'; 
+          if (i % 3 === 1) ratio = '4/3'; 
+          if (i % 3 === 2) ratio = '1/1'; 
+          return (
+            <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
+              <div class="gallery-item-inner">
+                <img src={src} alt="Shot" loading={i < 4 ? "eager" : "lazy"} />
+                <div class="grain-overlay"></div>
+                <div class="item-hover-info">
+                  <span class="item-names">{wedding.name1} & {wedding.name2}</span>
+                  <span class="item-index">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Footer Space -->
+    <div class="next-story-nav">
+        <a href={`/wedding/${wedding.next.slug}`} class="next-story-link">
+          <span class="next-label">NEXT STORY</span>
+          <span class="next-couple">{wedding.next.names}</span>
+          <div class="next-nav-line"></div>
+        </a>
+    </div>
+
+    <!-- UI Elements -->
+    <div id="scrollProgress" class="fixed-progress">
+      <span id="currIdx">01</span> / <span id="totalIdx">{wedding.images.length}</span>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="premium-lightbox" hidden>
+      <div class="lb-header">
+        <div class="lb-counter"></div>
+        <button class="lb-close">✕</button>
+      </div>
+      <div class="lb-stage">
+        <button class="lb-arrow prev">←</button>
+        <div class="lb-img-wrap"><img id="lbImg" src="" alt="View" /></div>
+        <button class="lb-arrow next">→</button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  :root {
+    --paper: #f5f2ed;
+    --ink: #1a1410;
+    --gold: #b68b40;
+    --muted: #8a7e72;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .story-page { background: var(--paper); color: var(--ink); overflow-x: hidden; }
+  .entrance-peel { position: fixed; inset: 0; background: var(--paper); z-index: 9999; transform-origin: top; }
+
+  /* ── Full-Bleed Hero ── */
+  .story-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  /* Image fills entire hero */
+  .hero-bg-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .hero-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    animation: heroScale 14s ease-in-out infinite alternate;
+  }
+  @keyframes heroScale {
+    from { transform: scale(1); }
+    to   { transform: scale(1.06); }
+  }
+  /* Soft vignette overlay — darkens edges, keeps centre clear */
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(10, 8, 5, 0.15) 0%,
+      rgba(10, 8, 5, 0.55) 100%
+    );
+  }
+
+  /* Text overlay — centred */
+  .hero-content-overlay {
+    position: relative;
+    z-index: 10;
+    max-width: 85vw;
+    text-align: center;
+  }
+  .story-of-tag {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: rgba(182,139,64,0.9);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    display: block;
+  }
+  .couple-display-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 8.5vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    margin: 0 0 1.2rem;
+    color: #fdf8f2;
+    opacity: 0;
+    transform: translateY(24px);
+    letter-spacing: 0.01em;
+  }
+  .amp { font-style: italic; color: var(--gold); margin: 0 0.6rem; }
+  .story-subtitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    opacity: 0;
+  }
+
+  /* Scroll nudge — bottom-centre */
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    opacity: 0;
+  }
+  .scroll-hint-text {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.4);
+  }
+  .scroll-hint-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.35; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.12); }
+  }
+
+  @media (max-width: 768px) {
+    .story-hero { padding: 0 0 8vh 5vw; }
+    .couple-display-title { font-size: clamp(2.8rem, 11vw, 4.5rem); }
+  }
+
+  /* Quote — Horizontal layout */
+  .story-quote-block { padding: 6rem 5vw; }
+  .quote-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+  /* Vertical gold bars */
+  .gold-rule {
+    width: 1px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  /* Center column */
+  .quote-inner {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .soul-manifesto {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-style: italic;
+    color: #1a1410;
+    line-height: 1.7;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .quote-author-sig {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0;
+  }
+  @media (max-width: 640px) {
+    .quote-container { flex-direction: column; gap: 2rem; }
+    .gold-rule { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  }
+
+  /* Gallery - Sharp Borders */
+  .story-gallery-sec { padding: 4rem 5vw 6rem; }
+  .heading-label { font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.4em; color: var(--gold); }
+  .heading-rule { width: 0; height: 1px; background: var(--gold); margin-top: 1rem; }
+
+  .masonry-grid { column-count: 3; column-gap: 1.5rem; margin-top: 3rem; }
+  @media (max-width: 1024px) { .masonry-grid { column-count: 2; } }
+  @media (max-width: 640px) { .masonry-grid { column-count: 1; } }
+
+  .gallery-item { break-inside: avoid; margin-bottom: 1.5rem; border-radius: 0; overflow: hidden; background: #000; }
+  .gallery-item-inner { position: relative; width: 100%; height: 100%; cursor: zoom-in; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; transition: transform 0.8s var(--ease); }
+  .grain-overlay { position: absolute; inset: 0; pointer-events: none; opacity: 0.5; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stichTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E"); }
+  .item-hover-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); color: white; display: flex; justify-content: space-between; opacity: 0; transition: 0.4s; }
+  .gallery-item:hover .item-hover-info { opacity: 1; }
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  /* Navigation Footer */
+  .next-story-nav { text-align: center; padding: 8rem 2rem; border-top: 1px solid rgba(0,0,0,0.05); }
+  .next-story-link { text-decoration: none; color: var(--gold); display: inline-block; }
+  .next-label { font-family: 'Outfit', sans-serif; font-size: 0.6rem; letter-spacing: 0.4em; opacity: 0.5; display: block; margin-bottom: 1rem; }
+  .next-couple { font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 300; display: block; text-transform: uppercase; }
+  .next-nav-line { width: 0; height: 1px; background: var(--gold); margin: 1rem auto; transition: 0.6s var(--ease); }
+  .next-story-link:hover .next-nav-line { width: 100%; }
+
+  /* Lightbox */
+  .fixed-progress { position: fixed; bottom: 30px; right: 30px; z-index: 1000; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; opacity: 0; transition: 0.4s; }
+  .premium-lightbox { position: fixed; inset: 0; z-index: 100000; background: rgba(245, 242, 237, 0.97); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: 0.4s var(--ease); }
+  .premium-lightbox.open { opacity: 1; visibility: visible; }
+  
+  .lb-header { height: 64px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .lb-counter { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.3em; }
+  .lb-close { background: none; border: none; color: var(--ink); font-size: 1.5rem; cursor: pointer; line-height: 1; opacity: 0.5; transition: opacity 0.2s; padding: 0.3rem; }
+  .lb-close:hover { opacity: 1; }
+  
+  .lb-stage { flex: 1; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; gap: 1rem; min-height: 0; }
+  .lb-img-wrap { flex: 1; display: flex; align-items: center; justify-content: center; height: 100%; min-width: 0; transform: scale(0.92); transition: 0.55s var(--ease); }
+  .premium-lightbox.open .lb-img-wrap { transform: scale(1); }
+  .lb-img-wrap img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 2px; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+  
+  .lb-arrow {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.12);
+    color: var(--ink);
+    font-size: 1.3rem;
+    cursor: pointer;
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .lb-arrow:hover { background: var(--gold); border-color: var(--gold); color: white; transform: scale(1.08); }
+  @media (max-width: 640px) { .lb-arrow { width: 40px; height: 40px; font-size: 1rem; } .lb-stage { padding: 15px; } .lb-header { padding: 0 20px; } }
+
+  @media (max-width: 900px) {
+    .story-hero { flex-direction: column; height: auto; }
+    .hero-left, .hero-right { width: 100%; height: 50vh; flex: none; }
+    .couple-display-title { font-size: 2.5rem; }
+  }
+</style>
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to('#entrancePeel', { scaleY: 0, duration: 1.2, ease: "power4.inOut" });
+
+    // Full-bleed hero entrance sequence
+    gsap.to('.story-of-tag',        { opacity: 1,   duration: 0.8, delay: 0.5, ease: "power2.out" });
+    gsap.to('.couple-display-title',{ opacity: 1, y: 0, duration: 1.2, delay: 0.7, ease: "power3.out" });
+    gsap.to('.story-subtitle',      { opacity: 1,   duration: 0.8, delay: 1.1, ease: "power2.out" });
+    gsap.to('.hero-scroll-hint',    { opacity: 1,   duration: 0.8, delay: 1.5, ease: "power2.out" });
+
+    // Quote Animation - Reliable
+    ScrollTrigger.batch(".animate-on-scroll", {
+      onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power2.out" }),
+      start: "top 85%"
+    });
+
+
+    // ── Gallery items
+    const items = document.querySelectorAll('.gallery-item');
+
+    // ── Scroll progress counter
+    const progressText = document.getElementById('scrollProgress');
+    const currIdxSpan  = document.getElementById('currIdx');
+    ScrollTrigger.create({
+      trigger: '.story-gallery-sec', start: 'top 50%', end: 'bottom 50%',
+      onEnter:     () => gsap.to(progressText, { opacity: 1 }),
+      onLeave:     () => gsap.to(progressText, { opacity: 0 }),
+      onEnterBack: () => gsap.to(progressText, { opacity: 1 }),
+      onLeaveBack: () => gsap.to(progressText, { opacity: 0 })
+    });
+    const visObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) currIdxSpan.textContent = String(e.target.dataset.index).padStart(2, '0'); });
+    }, { threshold: 0.6 });
+    items.forEach(item => visObs.observe(item));
+
+    // ── Lightbox
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lbImg');
+    const lbCounter = lightbox.querySelector('.lb-counter');
+    const closeLb   = lightbox.querySelector('.lb-close');
+    const prevBtn   = lightbox.querySelector('.lb-arrow.prev');
+    const nextBtn   = lightbox.querySelector('.lb-arrow.next');
+    const allImgs   = Array.from(items).map(it => it.querySelector('img').src);
+    const total     = allImgs.length;
+    let cIdx = 0;
+
+    function updateLb() {
+      lbImg.src = allImgs[cIdx];
+      lbCounter.textContent = String(cIdx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    }
+    function openLb(i) {
+      cIdx = i;
+      updateLb();
+      lightbox.removeAttribute('hidden');
+      requestAnimationFrame(() => lightbox.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLbFn() {
+      lightbox.classList.remove('open');
+      setTimeout(() => { lightbox.setAttribute('hidden', ''); document.body.style.overflow = ''; }, 420);
+    }
+    function navigate(dir) {
+      cIdx = (cIdx + dir + total) % total;
+      // Briefly scale down image for transition feel
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = 'scale(0.94)';
+      setTimeout(() => {
+        updateLb();
+        lbImg.style.opacity = '1';
+        lbImg.style.transform = 'scale(1)';
+      }, 180);
+    }
+    lbImg.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+
+    // Wire click on each gallery item
+    items.forEach((item, i) => item.querySelector('.gallery-item-inner').addEventListener('click', () => openLb(i)));
+    closeLb.addEventListener('click', closeLbFn);
+    prevBtn.addEventListener('click', () => navigate(-1));
+    nextBtn.addEventListener('click', () => navigate(1));
+
+    // Click backdrop to close
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLbFn(); });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'Escape')     closeLbFn();
+    });
+  });
+</script>

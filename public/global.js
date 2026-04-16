@@ -338,7 +338,7 @@ function initGlobalListeners() {
 
   window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY;
-    const navbar = document.getElementById('navbar');
+    const navbar = document.getElementById('wc-navbar');
     if (navbar) {
        if (scrollPos > 50) navbar.classList.add('scrolled');
        else navbar.classList.remove('scrolled');

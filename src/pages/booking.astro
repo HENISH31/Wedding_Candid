@@ -1,51 +1,340 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ContactHero from '../components/ContactHero.astro';
-import ContactCard from '../components/ContactCard.astro';
-import ContactForm from '../components/ContactForm.astro';
+
+/**
+ * booking.astro — The Enquiry Portal
+ * Fully integrated with the client's form requirements and high-end aesthetic.
+ */
 ---
 
 <Layout hideGlobalPreloader={true}>
-  <!-- Direct entry container with smooth animation on mount -->
-  <div class="bg-neutral-50 selection:bg-accent selection:text-white page-entrance">
-    <ContactHero />
-    <ContactCard />
-    <ContactForm />
+  <div class="booking-experience">
+    <!-- Instruction Header -->
+    <div class="booking-intro">
+      <p class="instruction-text">Please fill in the details below to help us create your accurate quote.</p>
+    </div>
+
+    <!-- Form Section -->
+    <main class="booking-section">
+      <div class="form-container">
+        <form class="enquiry-form" id="enquiryForm">
+          
+          <!-- Basic Info Grid -->
+          <div class="input-grid">
+            <div class="input-group">
+              <label for="bride-name">Bride Name</label>
+              <input type="text" id="bride-name" name="bride_name" placeholder="Enter name" required />
+            </div>
+            <div class="input-group">
+              <label for="groom-name">Groom Name</label>
+              <input type="text" id="groom-name" name="groom_name" placeholder="Enter name" required />
+            </div>
+            <div class="input-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 ..." required />
+            </div>
+            <div class="input-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="example@gmail.com" required />
+            </div>
+            <div class="input-group">
+              <label for="date">Wedding Date</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+            <div class="input-group">
+              <label for="city">Wedding City</label>
+              <input type="text" id="city" name="city" placeholder="Location" required />
+            </div>
+          </div>
+
+          <!-- Services Choice -->
+          <div class="service-section">
+            <p class="service-label">What services are you looking for?</p>
+            <div class="service-grid">
+              {['Wedding', 'Pre Wedding', 'Engagement', 'Family Function', 'Event', 'Product Shoot'].map(service => (
+                <label class="service-item">
+                  <input type="checkbox" name="services" value={service} />
+                  <span class="service-box">
+                    <span class="box-inner"></span>
+                    {service}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Narrative Details -->
+          <div class="narrative-section">
+            <div class="input-group full">
+              <label for="details">Event Details</label>
+              <span class="input-hint">Tell us about your wedding - event flow, venues & estimated guest count.</span>
+              <textarea id="details" name="details" rows="4" placeholder="Share your vision..."></textarea>
+            </div>
+            <div class="input-group full">
+              <label for="story">Your Story</label>
+              <span class="input-hint">We love a good story. How did you two meet?</span>
+              <textarea id="story" name="story" rows="4" placeholder="Tell us about your journey..."></textarea>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-footer">
+            <button type="submit" class="submit-btn">
+              <span class="btn-bg"></span>
+              <span class="btn-text">Submit Enquiry</span>
+            </button>
+            <p class="spam-note">
+              <strong>Note:</strong> If you don't receive a response within 2-3 business days, please check your spam folder. In some cases, our reply has ended up there.
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </main>
+
+    <!-- Success Message Overlay -->
+    <div id="success-overlay" class="success-overlay" hidden>
+      <div class="success-card">
+        <h2 class="success-title">Message <em>Sent</em></h2>
+        <p class="success-p">Thank you for sharing your story. Deep and the team will be in touch shortly.</p>
+        <button onclick="window.location.href='/'" class="back-link">Return Home</button>
+      </div>
+    </div>
   </div>
 </Layout>
 
-<style is:global>
-  /* Page specific entrance transition matching About page */
-  .page-entrance {
-    animation: slideInUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes slideInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Font consistent with About page design */
+<style>
   :root {
-    --accent: #d1b894;
-    --background: #f8f6f2;
-    --foreground: #1a1a1a;
+    --gold: #b68b40;
+    --ink: #1a1814;
+    --cream: #fdfaf7;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: 'Inter', sans-serif;
+  .booking-experience {
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding-top: 80px;
   }
 
-  h1, h2, h3, h4, .font-serif {
+  .booking-intro {
+    padding: 6rem 2rem 2rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .instruction-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+
+  /* 
+     ── FORM ── 
+  */
+  .booking-section {
+    padding: 0 4vw 8rem;
+  }
+  .form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 5rem 4rem;
+    border-radius: 4px;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.03);
+  }
+
+  .enquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* Grid */
+  .input-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .input-group.full { grid-column: span 1; }
+
+  label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .input-hint {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    opacity: 0.4;
+    margin-top: -0.4rem;
+  }
+
+  input, textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 0.8rem 0;
     font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    transition: border-color 0.3s ease;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  /* Service Grid */
+  .service-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .service-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+  }
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .service-item {
+    cursor: pointer;
+  }
+  .service-item input { display: none; }
+  .service-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(0,0,0,0.5);
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+  }
+  .box-inner {
+    width: 14px; height: 14px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+    position: relative;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .service-item input:checked + .service-box .box-inner {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .service-item input:checked + .service-box { color: var(--ink); }
+
+  /* Submit */
+  .form-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 2rem;
+  }
+  .submit-btn {
+    position: relative;
+    background: var(--ink);
+    color: #fff;
+    padding: 1rem 3.5rem;
+    border: none;
+    border-radius: 100px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease);
+  }
+  .submit-btn:hover { transform: translateY(-4px); }
+  
+  .spam-note {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(0,0,0,0.5);
+    max-width: 50ch;
+    text-align: center;
+  }
+  .spam-note strong { color: var(--gold); }
+
+  /* Success Overlay */
+  .success-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .success-overlay[hidden] { display: none; }
+  .success-card {
+    text-align: center;
+    max-width: 500px;
+  }
+  .success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .success-title em { font-style: italic; color: var(--gold); }
+  .success-p { font-family: 'Outfit', sans-serif; margin-bottom: 3rem; opacity: 0.6; }
+  .back-link {
+    display: inline-block;
+    padding: 1rem 3rem;
+    border: 1px solid var(--ink);
+    background: transparent;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .input-grid { grid-template-columns: 1fr; }
+    .input-group.full { grid-column: span 1; }
+    .service-grid { grid-template-columns: 1fr 1fr; }
+    .form-container { padding: 3rem 2rem; }
   }
 </style>
 
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('enquiryForm');
+    const success = document.getElementById('success-overlay');
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you would normally handle the fetch request to your backend.
+        // For now, we show the high-end success state.
+        success.removeAttribute('hidden');
+      });
+    }
+  });
+</script>

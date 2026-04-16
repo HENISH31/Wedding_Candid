@@ -1,35 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import FeaturedAlbum from '../components/FeaturedAlbum.astro';
 import DynamicHeroText from '../components/DynamicHeroText.astro';
 import Marquee from '../components/Marquee.astro';
 
-const featuredImages = [
-  { src: '/gallery/opt/1M4A8828.webp', alt: 'Pre-Wedding Story', title: 'The Beginning' },
-  { src: '/gallery/opt/CB8A0155.webp', alt: 'Wedding Ceremony', title: 'Eternal Unions' },
-  { src: '/gallery/opt/WC_13299.webp', alt: 'Fine Art Portrait', title: 'The Ceremony' },
-  { src: '/gallery/opt/IMG_4312.webp', alt: 'Modern Soul', title: 'Modern Soul' },
-  { src: '/gallery/opt/MBJ_5953.webp', alt: 'Editorial Detail', title: 'Raw Portraits' }
-];
+
 ---
 
 <Layout hideGlobalPreloader={true}>
   <Hero />
 
 
-  <section id="album-intro" class="album-intro stagger-reveal" style="padding: 15vh 2rem 10vh; background: #ffffff; text-align: center;">
-    <div class="intro-container" style="max-width: 800px; margin: 0 auto;">
-      <p class="intro-eyebrow" style="letter-spacing: 0.5rem; color: #b8935a; font-size: 0.72rem; margin-bottom: 2rem; text-transform: uppercase; font-family: 'Outfit', sans-serif;">Curated Exhibition</p>
-      <h2 class="intro-title" style="font-family: 'Bodoni Moda', serif; font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2.5rem; color: #2a2118; font-weight: 400; letter-spacing: 0.05em;">Featured Work</h2>
-      <p class="intro-para" style="font-family: 'Outfit', sans-serif; line-height: 2; color: #666; font-size: 1.15rem; font-weight: 300; letter-spacing: 0.02em;">
-        A handpicked selection of our most poignant stories. From the quiet morning whispers to the grandeur of the celebration, these moments define the 'Wedding Candid' philosophy of minimalist luxury and authentic emotion.
-      </p>
-      <div style="width: 1px; height: 120px; background: linear-gradient(to bottom, #b8935a, transparent); margin: 4rem auto 0;"></div>
-    </div>
-  </section>
 
-  <FeaturedAlbum />
 
   <!-- Elegant Marquee Divider -->
   <Marquee />
@@ -41,27 +23,27 @@ const featuredImages = [
       <h2 style="font-size: 3.5rem;">Portfolio Collections</h2>
     </div>
     <div class="collections-masonry-grid">
-      <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=prewedding'">
+      <div class="collection-item stagger-reveal" onclick="window.location.href='/photography?filter=prewedding'">
         <div class="collection-img curtain-reveal"><img src="/gallery/opt/MBJ_5953.webp" loading="lazy" alt="Pre-Wedding" width="400" height="500"></div>
         <h4>PRE-WEDDING</h4>
       </div>
       
-      <div class="collection-item tall stagger-reveal" onclick="window.location.href='/portfolio?filter=wedding'">
+      <div class="collection-item tall stagger-reveal" onclick="window.location.href='/photography?filter=wedding'">
         <div class="collection-img curtain-reveal"><img src="/gallery/opt/WC_13299.webp" loading="lazy" alt="Wedding" width="400" height="700"></div>
         <h4>WEDDING + ELOPEMENTS</h4>
       </div>
 
-      <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=prewedding'">
+      <div class="collection-item stagger-reveal" onclick="window.location.href='/photography?filter=prewedding'">
         <div class="collection-img curtain-reveal"><img src="/gallery/opt/CB8A0155.webp" loading="lazy" alt="Engagement" width="400" height="500"></div>
         <h4>ENGAGEMENT + COUPLES</h4>
       </div>
 
-      <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=portrait'">
+      <div class="collection-item stagger-reveal" onclick="window.location.href='/photography?filter=portrait'">
         <div class="collection-img curtain-reveal"><img src="/gallery/opt/WC__6391.webp" loading="lazy" alt="Branding" width="400" height="500"></div>
         <h4>SMALL BUSINESS + BRANDING</h4>
       </div>
 
-      <div class="collection-item stagger-reveal" onclick="window.location.href='/portfolio?filter=events'">
+      <div class="collection-item stagger-reveal" onclick="window.location.href='/photography?filter=events'">
         <div class="collection-img curtain-reveal"><img src="/gallery/opt/SSP01330.webp" loading="lazy" alt="Events" width="400" height="500"></div>
         <h4>REHEARSALS + EVENTS</h4>
       </div>
@@ -72,13 +54,13 @@ const featuredImages = [
     <div id="testimonial-slider" class="testimonial-container">
       <div class="testimonial-slide active">
         <div class="client-img"><img src="/avatar_1.png" alt="Client"></div>
-        <p class="client-quote">"Working with Parker was a dream. They didn't just take photos; they captured the invisible connection between us. Every frame feels like a memory tucked in silk."</p>
-        <p class="client-name">— ELEANOR & JAMES</p>
+        <p class="client-quote">"Also Deep, we wanted to thank you for all the hardwork that you and your team did for us throughout the wedding. Our memories are going to be created through you guys. Thanks for being so easy going and enjoying it with us. You and your team were amazing and keep up with this work."</p>
+        <p class="client-name">— AASHVI & TEJ</p>
       </div>
       <div class="testimonial-slide">
         <div class="client-img"><img src="/avatar_2.png" alt="Client"></div>
-        <p class="client-quote">"The level of professionalism and artistic vision is unmatched. Our wedding gallery felt like a scene from a classic film. Simply breathtaking."</p>
-        <p class="client-name">— MARCUS & SOPHIA</p>
+        <p class="client-quote">"Best decision we made in terms of selecting your team out of many others we scouted in Vadodara. Team was friendly and captured our best moments as we needed. Our family loved all the candid videos and photos. Thanks for all your hardwork making our wedding memorable."</p>
+        <p class="client-name">— MAYUR & SHIVANI</p>
       </div>
     </div>
     <div class="slider-dots">

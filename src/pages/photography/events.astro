@@ -1,0 +1,498 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+/**
+ * photography/events.astro — The Event Exhibition
+ * Concept: "The Room Where It Happened"
+ */
+
+const EVENT_TYPES = [
+  {
+    id: 'corporate',
+    label: 'Corporate',
+    tagline: 'Where business becomes memory',
+    images: [
+      { src: '/gallery/opt/WC_17354.webp', cap: 'Corporate Gala' },
+      { src: '/gallery/opt/CB8A0325.webp', cap: 'The Toast' },
+      { src: '/gallery/opt/WC_13299.webp', cap: 'Stage Moment' },
+      { src: '/gallery/opt/MBJ_5953.webp', cap: 'Networking Glow' }
+    ]
+  },
+  {
+    id: 'gala',
+    label: 'Gala',
+    tagline: 'An evening dressed in gold',
+    images: [
+      { src: '/gallery/opt/1M4A8828.webp', cap: 'Golden Details' },
+      { src: '/gallery/opt/SSP01330.webp', cap: 'The Grand Hall' },
+      { src: '/gallery/opt/WC__8428.webp', cap: 'Candid Joy' },
+      { src: '/gallery/opt/198A1445.webp', cap: 'Celebration' }
+    ]
+  },
+  {
+    id: 'cocktail',
+    label: 'Cocktail',
+    tagline: 'Laughter between the glasses',
+    images: [
+      { src: '/gallery/opt/CB8A0155.webp', cap: 'Cocktail Hour' },
+      { src: '/gallery/opt/WC__7232.webp', cap: 'Bar Scene' }
+    ]
+  }
+];
+
+const ALL_IMAGES = EVENT_TYPES.flatMap(et => et.images.map(img => ({...img, type: et.id})));
+const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', 'D'];
+---
+
+<Layout title="Events | The Room Where It Happened" hideGlobalPreloader={true}>
+  <div class="events-page">
+    
+    <!-- Hero / Entry -->
+    <section class="events-hero">
+      <svg class="bg-noise" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.04;pointer-events:none">
+        <filter id="noiseFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch">
+            <animate attributeName="seed" from="0" to="100" dur="8s" repeatCount="indefinite"/>
+          </feTurbulence>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+      </svg>
+
+      <div class="hero-center">
+        <h1 class="events-stagger-title">
+          {"EVENTS".split('').map(char => <span class="char">{char}</span>)}
+        </h1>
+        <p class="hero-tagline">
+          We don't just photograph events. <br/>
+          <em>We document the energy in the room.</em>
+        </p>
+      </div>
+
+      <div class="scroll-enter">
+        <div class="energy-lines">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="enter-lbl">ENTER THE GALLERY</div>
+      </div>
+    </section>
+
+    <!-- Act 1: Typographic Mosaic -->
+    <section class="mosaic-section" id="mosaicSection">
+      <div class="mosaic-grid-container">
+        <div class="mosaic-grid" id="mosaicGrid">
+          <!-- JS injected cells -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Act Transition -->
+    <div class="act-fade-spacer"></div>
+
+    <!-- Act 2: Shockwave Gallery -->
+    <section class="gallery-section">
+
+      <div class="shockwave-gallery" id="eventGallery">
+        {ALL_IMAGES.map((img, i) => (
+          <div 
+            class={`event-cell ${i % 5 === 0 ? 'col-tall' : ''}`} 
+            data-type={img.type}
+            data-src={img.src}
+            data-caption={img.cap}
+            data-index={i}
+          >
+            <img 
+              src={img.src} 
+              alt={img.cap} 
+              loading={i < 6 ? "eager" : "lazy"} 
+              fetchpriority={i < 6 ? "high" : "low"}
+            />
+            <div class="event-caption-pill">{img.cap}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="scroll-counter" id="scrollCounter">00 / {ALL_IMAGES.length}</div>
+    </section>
+
+    <!-- Final Message -->
+    <section class="closing-strip">
+       <h3 class="closing-msg">EVERY EVENT HAS A STORY WORTH TELLING</h3>
+       <a href="/booking" class="touch-btn">GET IN TOUCH →</a>
+    </section>
+
+    <!-- Event Lightbox -->
+    <div id="eventLightbox" class="event-lb" hidden>
+      <div class="port-lb-header">
+        <span class="port-lb-counter" id="lbCount"></span>
+        <button class="port-lb-close" id="lbClose">✕</button>
+      </div>
+      <div class="port-lb-stage">
+        <button class="port-lb-arrow prev" id="lbPrev">&#8592;</button>
+        <div class="port-lb-img-wrap">
+          <img id="lbImg" src="" alt="View" />
+          <div id="lbCap" class="port-lb-caption"></div>
+        </div>
+        <button class="port-lb-arrow next" id="lbNext">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  :root {
+    --bg-dark: #080706;
+    --bg-light: #fafaf8;
+    --gold: #b68b40;
+    --ink: #1a1410;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .events-page { background: var(--bg-light); overflow-x: hidden; }
+
+  /* Hero — Light */
+  .events-hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: var(--bg-light); }
+  .hero-center { text-align: center; z-index: 5; }
+  .events-stagger-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; color: var(--ink); letter-spacing: 0.5em; margin: 0; }
+  .events-stagger-title .char { display: inline-block; opacity: 0; transform: translateY(40px); }
+  .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2vw, 1.4rem); color: rgba(182,139,64,0.85); margin-top: 2rem; opacity: 0; }
+  .hero-tagline em { font-style: italic; }
+
+  .scroll-enter { position: absolute; bottom: 40px; text-align: center; }
+  .energy-lines { display: flex; justify-content: center; gap: 6px; margin-bottom: 1rem; }
+  .energy-lines span { width: 1px; height: 35px; background: var(--gold); transform: scaleY(0); }
+  .enter-lbl { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.45em; }
+
+  /* Mosaic — light bg cells */
+  .mosaic-section { height: 100vh; position: relative; background: var(--bg-light); }
+  .mosaic-grid-container { position: absolute; inset: 0; width: 100%; height: 100%; border-top: 1px solid rgba(182,139,64,0.1); }
+  .mosaic-grid { display: grid; width: 100%; height: 100%; }
+  
+  :global(.mosaic-cell) { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 14px; color: rgba(182,139,64,0.12); display: flex; align-items: center; justify-content: center; transition: all 0.45s ease; user-select: none; position: relative; }
+  :global(.mosaic-cell.zone-warm) { color: var(--gold); transform: scale(1.4); text-shadow: 0 0 12px rgba(181,139,64,0.3); }
+  :global(.mosaic-cell.zone-hot) { color: transparent !important; background-image: var(--img); background-size: cover; background-position: center; transform: scale(1.1); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10; }
+  :global(.mosaic-cell.dissolved) { color: transparent !important; background-image: var(--img); background-size: cover; background-position: center; filter: brightness(0.8) saturate(0.8); border-radius: 1px; }
+
+  /* Transition — paper to paper */
+  .act-fade-spacer { height: 20vh; background: var(--bg-light); }
+
+  /* Gallery */
+  .gallery-section { background: #ffffff; padding: 4rem 4vw 8rem; position: relative; color: #1a1410; }
+
+  .shockwave-gallery { display: grid; grid-template-columns: 1fr 2fr; gap: 6px; max-width: 1400px; margin: 0 auto; position: relative; }
+  .event-cell { position: relative; overflow: hidden; background: #e8e4de; aspect-ratio: 4/3; opacity: 0; }
+  .event-cell.col-tall { grid-row: span 2; aspect-ratio: auto; }
+  .event-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .event-cell:hover img { transform: scale(1.05); }
+
+  .event-caption-pill { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); background: rgba(8, 7, 6, 0.85); color: #f0ebe3; padding: 8px 18px; border-radius: 100px; font-family: 'Outfit', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transition: 0.4s; pointer-events: none; }
+  .event-cell:hover .event-caption-pill { opacity: 1; transform: translate(-50%, -50%); }
+
+  .scroll-counter { position: sticky; bottom: 30px; float: right; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.25em; z-index: 100; pointer-events: none; margin-right: 2vw; }
+
+  /* Closing — light */
+  .closing-strip { background: var(--bg-light); padding: 10rem 4vw; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); }
+  .closing-msg { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 3vw, 2.3rem); font-style: italic; color: var(--ink); margin-bottom: 3.5rem; }
+  .touch-btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(181,139,64,0.6); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-decoration: none; position: relative; overflow: hidden; }
+  .touch-btn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; z-index: -1; }
+  .touch-btn:hover { color: var(--bg-light); }
+  .touch-btn:hover::before { transform: scaleX(1); }
+
+  /* Light Lightbox - Shared with portfolio style for consistency */
+  .event-lb {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(245, 241, 235, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s var(--ease), visibility 0.4s;
+  }
+  .event-lb.open { opacity: 1; visibility: visible; }
+
+  .port-lb-header {
+    height: 64px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    flex-shrink: 0;
+  }
+  .port-lb-counter {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+  }
+  .port-lb-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    line-height: 1;
+    padding: 0.3rem 0.5rem;
+  }
+  .port-lb-close:hover { opacity: 1; }
+
+  .port-lb-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  .port-lb-img-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-width: 0;
+  }
+  .port-lb-img-wrap img {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .port-lb-caption {
+    margin-top: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  .port-lb-arrow {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: white;
+    color: var(--ink);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .port-lb-arrow:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
+    transform: scale(1.08);
+  }
+
+  @media (max-width: 640px) {
+    .port-lb-arrow { width: 40px; height: 40px; font-size: 1rem; }
+    .port-lb-stage { padding: 1rem 0.5rem; gap: 0.4rem; }
+  }
+
+  @media (max-width: 900px) {
+    .shockwave-gallery { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .shockwave-gallery { grid-template-columns: 1fr; }
+    .event-cell.col-tall { grid-row: auto; }
+  }
+</style>
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script is:inline define:vars={{ WORD_POOL, ALL_IMAGES }}>
+  document.addEventListener('astro:page-load', () => {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ── 1. ENTRY ANIMATION ──
+    gsap.to('.events-stagger-title .char', { opacity: 1, y: 0, stagger: 0.08, duration: 1.2, ease: "power4.out" });
+    gsap.to('.hero-tagline', { opacity: 1, duration: 1, delay: 1 });
+    gsap.to('.energy-lines span', { scaleY: 1, stagger: 0.1, duration: 0.8, repeat: -1, yoyo: true });
+
+    // ── 2. MOSAIC ENGINE ──
+    const grid = document.getElementById('mosaicGrid');
+    const cols = window.innerWidth > 900 ? 16 : 8;
+    const rows = 8;
+    const total = cols * rows;
+    grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+
+    const cells = [];
+    for (let i = 0; i < total; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'mosaic-cell';
+      const word = WORD_POOL[Math.floor(Math.random() * WORD_POOL.length)];
+      cell.textContent = word[Math.floor(Math.random() * word.length)];
+      const imgObj = ALL_IMAGES[i % ALL_IMAGES.length];
+      cell.style.setProperty('--img', `url('${imgObj.src}')`);
+      grid.appendChild(cell);
+      cells.push(cell);
+    }
+
+    // Mouse Proximity
+    document.addEventListener('mousemove', (e) => {
+      cells.forEach(cell => {
+        if (cell.classList.contains('dissolved')) return;
+        const r = cell.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dist = Math.hypot(cx - e.clientX, cy - e.clientY);
+        cell.classList.toggle('zone-hot', dist < 55);
+        cell.classList.toggle('zone-warm', dist >= 55 && dist < 120);
+      });
+    });
+
+    // Scroll Dissolve
+    const dissolveTl = gsap.to({}, {
+      scrollTrigger: {
+        trigger: '#mosaicSection',
+        pin: true,
+        start: 'top top',
+        end: '+=250%',
+        scrub: 1.5,
+        onUpdate: (self) => {
+          const prog = self.progress;
+          cells.forEach((cell, i) => {
+            const threshold = i / cells.length;
+            if (prog > threshold) cell.classList.add('dissolved');
+            else cell.classList.remove('dissolved');
+          });
+          // Flash at end
+          if (prog > 0.96 && !window.hasFlashed) {
+            triggerFlash();
+            window.hasFlashed = true;
+          } else if (prog < 0.9) window.hasFlashed = false;
+        }
+      }
+    });
+
+    function triggerFlash() {
+      const f = document.createElement('div');
+      f.style.cssText = "position:fixed;inset:0;z-index:99999;background:white;pointer-events:none;opacity:1";
+      document.body.appendChild(f);
+      gsap.to(f, { opacity: 0, duration: 1, onComplete: () => f.remove() });
+    }
+
+    // ── 3. SHOCKWAVE GALLERY ──
+    const gallery = document.getElementById('eventGallery');
+    const galCells = document.querySelectorAll('.event-cell');
+
+    gallery.addEventListener('click', (e) => {
+      const rect = gallery.getBoundingClientRect();
+      const ox = e.clientX - rect.left;
+      const oy = e.clientY - rect.top;
+
+      // Ripple Ring
+      const ring = document.createElement('div');
+      ring.style.cssText = `position:absolute;left:${ox}px;top:${oy}px;width:0;height:0;border-radius:50%;border:1.5px solid rgba(181,139,64,0.6);transform:translate(-50%,-50%);pointer-events:none;z-index:50;`;
+      gallery.appendChild(ring);
+      gsap.to(ring, { width: '150%', height: '150%', opacity: 0, duration: 1.5, ease: 'power2.out', onComplete: () => ring.remove() });
+
+      // Physical Burst
+      galCells.forEach(cell => {
+        const cRect = cell.getBoundingClientRect();
+        const cx = cRect.left - rect.left + cRect.width / 2;
+        const cy = cRect.top - rect.top + cRect.height / 2;
+        const dist = Math.hypot(cx - ox, cy - oy);
+        const delay = dist / 600;
+
+        gsap.to(cell, {
+          scale: 1.05, filter: 'brightness(1.5)', duration: 0.15, delay,
+          onComplete: () => gsap.to(cell, { scale: 1, filter: 'brightness(1)', duration: 0.7, ease: "elastic.out(1, 0.5)" })
+        });
+      });
+    });
+
+    // Gallery Reveal
+    galCells.forEach((c, i) => {
+      gsap.fromTo(c, { opacity: 0, scale: 1.1, filter: 'brightness(2.5)' }, {
+        opacity: 1, scale: 1, filter: 'brightness(1)', duration: 1, scrollTrigger: { trigger: c, start: 'top 90%' }, delay: (i % 4) * 0.1
+      });
+    });
+
+    // Sub-Lightbox Navigation
+    const lb = document.getElementById('eventLightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCap = document.getElementById('lbCap');
+    const lbCount = document.getElementById('lbCount');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    const lbClose = document.getElementById('lbClose');
+    let currentIdx = 0;
+
+    function updateLightbox(idx) {
+      currentIdx = idx;
+      const data = galCells[currentIdx].dataset;
+      lbImg.src = data.src;
+      lbCap.textContent = data.caption;
+      lbCount.textContent = `${currentIdx + 1} — ${galCells.length}`;
+      
+      // Animation transition
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        lbImg.style.opacity = '1';
+        lbImg.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    galCells.forEach((c, i) => {
+      c.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updateLightbox(i);
+        lb.classList.add('open');
+        lb.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeLightbox = () => {
+      lb.classList.remove('open');
+      setTimeout(() => { lb.setAttribute('hidden', ''); document.body.style.overflow = ''; }, 400);
+    };
+
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', (e) => { e.stopPropagation(); updateLightbox((currentIdx - 1 + galCells.length) % galCells.length); });
+    lbNext.addEventListener('click', (e) => { e.stopPropagation(); updateLightbox((currentIdx + 1) % galCells.length); });
+    
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb || e.target.classList.contains('port-lb-stage')) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') updateLightbox((currentIdx - 1 + galCells.length) % galCells.length);
+      if (e.key === 'ArrowRight') updateLightbox((currentIdx + 1) % galCells.length);
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Progress counter
+    const counter = document.getElementById('scrollCounter');
+    const observer = new IntersectionObserver((entries) => {
+      let count = 0;
+      galCells.forEach(c => { if(c.getBoundingClientRect().top < window.innerHeight) count++; });
+      counter.textContent = `${String(count).padStart(2,'0')} / ${String(galCells.length).padStart(2,'0')}`;
+    }, { threshold: 0.1 });
+    window.addEventListener('scroll', () => observer.observe(galCells[0]));
+  });
+</script>

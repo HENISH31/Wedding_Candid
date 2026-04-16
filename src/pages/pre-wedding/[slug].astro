@@ -1,0 +1,375 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const PRE_WEDDINGS = [
+    {
+      slug: 'aashvi-tej',
+      name1: 'Aashvi',
+      name2: 'Tej',
+      location: 'BEACHES OF GUJARAT',
+      cover: '/gallery/opt/198A1445.webp',
+      quote: "No maps. No destination. Just two people and the open road finding where the light lives.",
+      images: [
+        { src: '/gallery/opt/1M4A8828.webp', caption: "Stepping into the golden hour" },
+        { src: '/gallery/opt/WC_17354.webp', caption: "Just us and the wind" },
+        { src: '/gallery/opt/CB8A0155.webp', caption: "Mid-laugh memories" },
+        { src: '/gallery/opt/WC_19833.webp', caption: "Watching the tide change" },
+        { src: '/gallery/opt/SSP01330.webp', caption: "The long walk back" },
+        { src: '/gallery/opt/WC__8428.webp', caption: "Sunsets like these" },
+        { src: '/gallery/opt/MBJ_5953.webp', caption: "A quiet moment together" },
+        { src: '/gallery/opt/WC_13299.webp', caption: "Running towards the future" }
+      ]
+    },
+    {
+      slug: 'mayur-shivani',
+      name1: 'Mayur',
+      name2: 'Shivani',
+      location: 'HILLS OF PAVAGADH',
+      cover: '/gallery/opt/WC_17354.webp',
+      quote: "They did not look for love. They looked for the stars and found them in each other's eyes.",
+      images: [
+        { src: '/gallery/opt/198A1445.webp', caption: "Climbing higher" },
+        { src: '/gallery/opt/WC_19833.webp', caption: "The view from the top" },
+        { src: '/gallery/opt/WC__8428.webp', caption: "Cold hands, warm hearts" },
+        { src: '/gallery/opt/SSP01330.webp', caption: "Above the world" }
+      ]
+    },
+    {
+      slug: 'mansi-prit',
+      name1: 'Mansi',
+      name2: 'Prit',
+      location: 'STREETS OF MUMBAI',
+      cover: '/gallery/opt/1M4A8828.webp',
+      quote: "In a city of millions, they were the only two people who truly saw the same sunset.",
+      images: [
+        { src: '/gallery/opt/MBJ_5953.webp', caption: "City lights beginning to glow" },
+        { src: '/gallery/opt/WC_17407.webp', caption: "Traffic and quiet smiles" },
+        { src: '/gallery/opt/CB8A0325.webp', caption: "Finding peace in the chaos" },
+        { src: '/gallery/opt/198A1445.webp', caption: "A street to call our own" }
+      ]
+    },
+    {
+      slug: 'dhwani-parth',
+      name1: 'Dhwani',
+      name2: 'Parth',
+      location: 'SAND DUNES OF KUTCH',
+      cover: '/gallery/opt/WC_13299.webp',
+      quote: "Where the desert meets the soul. Two names written in the shifting sands, never to be erased.",
+      images: [
+        { src: '/gallery/opt/CB8A0325.webp', caption: "Into the white desert" },
+        { src: '/gallery/opt/WC_17354.webp', caption: "Footprints and futures" },
+        { src: '/gallery/opt/WC_19833.webp', caption: "The vastness of us" },
+        { src: '/gallery/opt/SSP01330.webp', caption: "Shadows at dusk" }
+      ]
+    },
+    {
+      slug: 'vishwa-vishu',
+      name1: 'Vishwa',
+      name2: 'Vishu',
+      location: 'ANCIENT TEMPLES',
+      cover: '/gallery/opt/SSP01330.webp',
+      quote: "Surrounded by stones that have stood for centuries, their love felt like the newest thing in the world.",
+      images: [
+        { src: '/gallery/opt/WC__8428.webp', caption: "Sacred moments" },
+        { src: '/gallery/opt/WC_13299.webp', caption: "Columns and carvings" },
+        { src: '/gallery/opt/CB8A0155.webp', caption: "The echoes of then" },
+        { src: '/gallery/opt/WC__7232.webp', caption: "Stone and spirit" }
+      ]
+    }
+  ];
+
+  return PRE_WEDDINGS.map(story => ({
+    params: { slug: story.slug },
+    props: { story }
+  }));
+}
+
+const { story } = Astro.props;
+---
+
+<Layout title={`${story.name1} & ${story.name2} | Pre-Wedding Story`} hideGlobalPreloader={true}>
+  <div class="pre-wedding-page">
+    
+    <!-- Hero Full Bleed -->
+    <section class="pre-hero" id="preHero">
+      <img src={story.cover} alt="Adventure Hero" class="hero-bg" />
+      <div class="hero-overlay"></div>
+      <div class="spotlight-flashlight" id="spotlight"></div>
+      
+      <div class="hero-content-candid">
+        <span class="story-tag">PRE — WEDDING</span>
+        <h1 class="candid-names">
+          {story.name1} <em>&</em> {story.name2}
+        </h1>
+        <div class="candid-location">{story.location}</div>
+        <div class="candid-line"></div>
+      </div>
+    </section>
+
+    <!-- Word-by-Word Quote -->
+    <section class="pre-quote-sec">
+      <div class="quote-box">
+        <div class="pre-gold-rule"></div>
+        <blockquote class="word-manifesto" id="wordQuote">
+          {story.quote.split(' ').map(word => (
+            <span class="reveal-word">{word} </span>
+          ))}
+        </blockquote>
+        <div class="pre-gold-rule"></div>
+      </div>
+    </section>
+
+    <!-- Story-Style Gallery -->
+    <section class="story-gallery-sec">
+      <div class="gallery-heading">
+        <span class="heading-label">THE JOURNEY STORY</span>
+        <div class="heading-rule"></div>
+      </div>
+
+      <div class="masonry-grid">
+        {story.images.map((img, i) => {
+          let ratio = '3/4';
+          if (i % 3 === 1) ratio = '4/3';
+          if (i % 3 === 2) ratio = '1/1';
+          return (
+            <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
+              <div class="gallery-item-inner">
+                <img src={img.src} alt={img.caption} loading={i < 4 ? 'eager' : 'lazy'} />
+                <div class="grain-overlay"></div>
+                <div class="item-hover-info">
+                  <span class="item-caption">{img.caption}</span>
+                  <span class="item-index">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Footer Action -->
+    <section class="pre-footer-nav">
+       <div class="footer-msg">EVERY LOVE STORY DESERVES ITS OWN FILM</div>
+       <a href="/contact" class="book-session-btn">BOOK YOUR SESSION →</a>
+    </section>
+
+    <!-- Scroll Progress -->
+    <div id="scrollProgress" class="fixed-progress">
+      <span id="currIdx">01</span> / <span id="totalIdx">{story.images.length}</span>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="storyLightbox" class="premium-lightbox" hidden>
+      <div class="lb-header">
+        <div class="lb-counter"></div>
+        <button class="lb-close">✕</button>
+      </div>
+      <div class="lb-stage">
+        <button class="lb-arrow prev">←</button>
+        <div class="lb-img-wrap"><img id="lbImg" src="" alt="View" /></div>
+        <button class="lb-arrow next">→</button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  :root {
+    --bg-paper: #f5f0e8;
+    --gold: #b68b40;
+    --ink: #1a1410;
+    --muted: #8a7e72;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .pre-wedding-page { background: var(--bg-paper); color: var(--ink); }
+
+  /* Hero — full-bleed photo, light text still works over image */
+  .pre-hero { height: 100vh; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 10vh 6vw; }
+  .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); transition: transform 0.5s ease; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(245,240,232,0.55) 0%, transparent 60%); }
+  .spotlight-flashlight { position: absolute; inset: 0; pointer-events: none; z-index: 5; mix-blend-mode: soft-light; }
+
+  .hero-content-candid { position: relative; z-index: 10; }
+  .story-tag { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.4em; }
+  .candid-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; margin: 1.5rem 0; line-height: 1; color: #fdf8f2; }
+  .candid-names em { font-style: italic; opacity: 0.7; }
+  .candid-location { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-bottom: 3rem; }
+  .candid-line { width: 80px; height: 1px; background: var(--gold); }
+
+  /* Quote — light background */
+  .pre-quote-sec { padding: 100px 20px; background: var(--bg-paper); text-align: center; }
+  .quote-box { max-width: 680px; margin: 0 auto; }
+  .pre-gold-rule { width: 60px; height: 1px; background: var(--gold); margin: 0 auto; opacity: 0.4; }
+  .word-manifesto { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3.5vw, 2.8rem); font-style: italic; color: var(--ink); line-height: 1.6; margin: 3rem 0; display: block; }
+  .reveal-word { display: inline-block; opacity: 0; transform: translateY(15px); }
+
+  /* ── Story Gallery (same as wedding story page) ── */
+  .story-gallery-sec { padding: 4rem 5vw 8rem; background: var(--bg-paper); color: #1a1410; }
+
+  .gallery-heading { margin-bottom: 3rem; }
+  .heading-label { font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.4em; color: var(--gold); }
+  .heading-rule { width: 60px; height: 1px; background: var(--gold); margin-top: 1rem; }
+
+  .masonry-grid { column-count: 3; column-gap: 1.5rem; }
+  @media (max-width: 1024px) { .masonry-grid { column-count: 2; } }
+  @media (max-width: 640px)  { .masonry-grid { column-count: 1; } }
+
+  .gallery-item { break-inside: avoid; margin-bottom: 1.5rem; overflow: hidden; background: #000; }
+  .gallery-item-inner { position: relative; width: 100%; height: 100%; cursor: zoom-in; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s var(--ease); }
+  .gallery-item:hover img { transform: scale(1.03); }
+
+  .grain-overlay {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stichTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  .item-hover-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    color: white; display: flex; justify-content: space-between;
+    opacity: 0; transition: 0.4s;
+  }
+  .gallery-item:hover .item-hover-info { opacity: 1; }
+  .item-caption { font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .item-index   { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: var(--gold); }
+
+  /* Footer — light */
+  .pre-footer-nav { background: var(--bg-paper); padding: 10rem 4vw; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); }
+  .footer-msg { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-style: italic; color: var(--ink); margin-bottom: 3rem; }
+  .book-session-btn { display: inline-block; padding: 16px 40px; border: 1px solid var(--gold); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-decoration: none; transition: 0.4s ease; }
+  .book-session-btn:hover { background: var(--gold); color: var(--bg-paper); }
+
+  /* Scroll Progress */
+  .fixed-progress { position: fixed; bottom: 30px; right: 30px; z-index: 1000; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.1em; opacity: 0; transition: 0.4s; }
+
+  /* Lightbox */
+  .premium-lightbox { position: fixed; inset: 0; z-index: 100000; background: rgba(245, 242, 237, 0.97); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: 0.4s var(--ease); }
+  .premium-lightbox.open { opacity: 1; visibility: visible; }
+  
+  .lb-header { height: 64px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .lb-counter { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.3em; }
+  .lb-close { background: none; border: none; color: var(--ink); font-size: 1.5rem; cursor: pointer; opacity: 0.5; transition: opacity 0.2s; padding: 0.3rem;}
+  .lb-close:hover { opacity: 1; }
+  
+  .lb-stage { flex: 1; display: flex; align-items: center; justify-content: space-between; padding: 20px 40px; gap: 1rem; min-height: 0; }
+  .lb-img-wrap { flex: 1; display: flex; align-items: center; justify-content: center; height: 100%; min-width: 0; transform: scale(0.92); transition: 0.55s var(--ease); }
+  .premium-lightbox.open .lb-img-wrap { transform: scale(1); }
+  .lb-img-wrap img { max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 2px; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+  
+  .lb-arrow {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.12);
+    color: var(--ink);
+    font-size: 1.3rem; 
+    cursor: pointer;
+    width: 52px; height: 52px; 
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .lb-arrow:hover { background: var(--gold); border-color: var(--gold); color: white; transform: scale(1.08); }
+  @media (max-width: 640px) { .lb-arrow { width: 40px; height: 40px; font-size: 1rem; } .lb-stage { padding: 15px; } .lb-header { padding: 0 20px; } }
+</style>
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Spotlight
+    const hero = document.getElementById('preHero');
+    const spotlight = document.getElementById('spotlight');
+    if (hero) {
+      hero.addEventListener('mousemove', e => {
+        const x = e.clientX, y = e.clientY;
+        spotlight.style.background = `radial-gradient(700px circle at ${x}px ${y}px, rgba(181,139,64,0.12), transparent 70%)`;
+      });
+    }
+
+    // Word Reveal Quote
+    const quoteWords = document.querySelectorAll('.reveal-word');
+    gsap.to(quoteWords, {
+      opacity: 1, y: 0, stagger: 0.05, duration: 0.8, ease: "power2.out",
+      scrollTrigger: { trigger: '#wordQuote', start: "top 80%" }
+    });
+
+    // ── Gallery items
+    const items = document.querySelectorAll('.gallery-item');
+
+    // Stagger reveal
+    gsap.fromTo(items,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, stagger: 0.08, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.masonry-grid', start: 'top 88%' } }
+    );
+
+    // ── Scroll progress
+    const progressText = document.getElementById('scrollProgress');
+    const currIdxSpan  = document.getElementById('currIdx');
+    ScrollTrigger.create({
+      trigger: '.story-gallery-sec', start: 'top 50%', end: 'bottom 50%',
+      onEnter:     () => gsap.to(progressText, { opacity: 1 }),
+      onLeave:     () => gsap.to(progressText, { opacity: 0 }),
+      onEnterBack: () => gsap.to(progressText, { opacity: 1 }),
+      onLeaveBack: () => gsap.to(progressText, { opacity: 0 })
+    });
+    const visObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) currIdxSpan.textContent = String(e.target.dataset.index).padStart(2, '0'); });
+    }, { threshold: 0.6 });
+    items.forEach(item => visObs.observe(item));
+
+    // ── Lightbox
+    const lightbox  = document.getElementById('storyLightbox');
+    const lbImg     = document.getElementById('lbImg');
+    const lbCounter = lightbox.querySelector('.lb-counter');
+    const closeLb   = lightbox.querySelector('.lb-close');
+    const prevBtn   = lightbox.querySelector('.lb-arrow.prev');
+    const nextBtn   = lightbox.querySelector('.lb-arrow.next');
+    const allImgs   = Array.from(items).map(it => it.querySelector('img').src);
+    const total     = allImgs.length;
+    let cIdx = 0;
+
+    function updateLb() {
+      lbImg.src = allImgs[cIdx];
+      lbCounter.textContent = String(cIdx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    }
+    function openLb(i) {
+      cIdx = i; updateLb();
+      lightbox.removeAttribute('hidden');
+      requestAnimationFrame(() => lightbox.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLbFn() {
+      lightbox.classList.remove('open');
+      setTimeout(() => { lightbox.setAttribute('hidden', ''); document.body.style.overflow = ''; }, 420);
+    }
+    function navigate(dir) {
+      cIdx = (cIdx + dir + total) % total;
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = 'scale(0.94)';
+      setTimeout(() => { updateLb(); lbImg.style.opacity = '1'; lbImg.style.transform = 'scale(1)'; }, 180);
+    }
+    lbImg.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+
+    items.forEach((item, i) => item.querySelector('.gallery-item-inner').addEventListener('click', () => openLb(i)));
+    closeLb.addEventListener('click', closeLbFn);
+    prevBtn.addEventListener('click', () => navigate(-1));
+    nextBtn.addEventListener('click', () => navigate(1));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLbFn(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'Escape')     closeLbFn();
+    });
+  });
+</script>

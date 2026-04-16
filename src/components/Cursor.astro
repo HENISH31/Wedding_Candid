@@ -4,9 +4,9 @@
  */
 ---
 <!-- Cursor Structure -->
-<div id="custom-cursor" class="pointer-events-none fixed top-0 left-0 z-[9999] opacity-0 transition-opacity duration-300 hidden md:block">
-  <div id="glass-lens" class="absolute left-0 top-0 w-8 h-8 rounded-full border border-white/40 shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex items-center justify-center font-sans text-[8px] font-medium tracking-widest text-white text-shadow-sm" style="will-change: transform; transform: translate3d(var(--x, 0px), var(--y, 0px), 0) translate(-50%, -50%); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;"></div>
-  <div id="cursor-dot" class="absolute left-0 top-0 w-1 h-1 bg-white rounded-full transition-opacity duration-300 shadow-[0_0_4px_rgba(255,255,255,0.8)]" style="will-change: transform; transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0) translate(-50%, -50%);"></div>
+<div id="custom-cursor" class="pointer-events-none fixed top-0 left-0 z-[9999] opacity-0 transition-opacity duration-300 hidden md:block mix-blend-difference">
+  <div id="glass-lens" class="absolute left-0 top-0 w-8 h-8 rounded-full border border-white flex items-center justify-center font-sans text-[8px] font-medium tracking-widest text-white backdrop-blur-none" style="will-change: transform; transform: translate3d(var(--x, 0px), var(--y, 0px), 0) translate(-50%, -50%); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), height 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, border-width 0.4s ease;"></div>
+  <div id="cursor-dot" class="absolute left-0 top-0 w-1.5 h-1.5 bg-white rounded-full transition-opacity duration-300" style="will-change: transform; transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0) translate(-50%, -50%);"></div>
 </div>
 
 <style>
@@ -79,8 +79,9 @@
           lens.style.height = '72px';
           lens.style.width = '72px';
           lens.style.height = '72px';
-          // Keep it fully transparent on hover, just glow the border
-          lens.style.borderColor = 'rgba(255,255,255,0.6)';
+          // Make border visually prominent on hover in difference mode
+          lens.style.borderColor = '#fff';
+          lens.style.borderWidth = '2px';
           lens.style.background = 'transparent';
           
           // Determine label based on element context
@@ -103,8 +104,9 @@
           lens.style.height = '32px';
           lens.style.width = '32px';
           lens.style.height = '32px';
-          // Ensure it stays transparent
-          lens.style.borderColor = 'rgba(255,255,255,0.3)';
+          // Ensure it stays visible returning from hover
+          lens.style.borderColor = '#fff';
+          lens.style.borderWidth = '1px';
           lens.style.background = 'transparent';
           lens.innerHTML = '';
         });

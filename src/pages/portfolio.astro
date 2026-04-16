@@ -1,467 +1,310 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Using high-quality optimized WEBP images from public/gallery/opt
-const WEDDING_IMAGES = [
+const IMAGES = [
   '/gallery/opt/198A1445.webp',
   '/gallery/opt/1M4A8828.webp',
   '/gallery/opt/CB8A0155.webp',
   '/gallery/opt/CB8A0325.webp',
   '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
-  '/gallery/opt/WC_13299.webp',
-];
-
-const PREWEDDING_IMAGES = [
   '/gallery/opt/IMG_4312.webp',
-  '/gallery/opt/WC__6391.webp',
-  '/gallery/opt/WC_19833.webp',
   '/gallery/opt/MBJ_5953.webp',
-  '/gallery/opt/1M4A8828.webp',
   '/gallery/opt/SSP01330.webp',
-];
-
-const TRAVEL_IMAGES = [
-  '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
   '/gallery/opt/WC_13299.webp',
-  '/gallery/opt/198A1445.webp',
-  '/gallery/opt/CB8A0155.webp',
+  '/gallery/opt/WC_17354.webp',
   '/gallery/opt/WC_17407.webp',
+  '/gallery/opt/WC_19833.webp',
+  '/gallery/opt/WC__5748.webp',
+  '/gallery/opt/WC__6391.webp',
+  '/gallery/opt/WC__7232.webp',
   '/gallery/opt/WC__8428.webp',
 ];
 ---
 
 <Layout hideGlobalPreloader={true}>
-  <div class="portfolio-page">
-    
-    <!-- Cinematic Hero Section -->
-    <header class="portfolio-hero">
-      <div class="hero-bg-slider">
-        <div class="hero-slide active" style="background-image: url('/gallery/opt/WC__8428.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/gallery/opt/1M4A8828.webp')"></div>
-        <div class="hero-slide" style="background-image: url('/gallery/opt/WC_17354.webp')"></div>
-        <div class="hero-overlay"></div>
-      </div>
-      <div class="hero-content">
-        <h1 class="hero-title">OUR WORK</h1>
-        <div class="hero-description">
-          <p>For a moment, time stands still—</p>
-          <p>a memory is captured, a look is immortalized,</p>
-          <p>and pure magic happens.</p>
-        </div>
-        <div class="hero-signature">
-          <svg width="60" height="30" viewBox="0 0 60 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 25C15 25 20 5 30 5C40 5 45 25 55 25" stroke="#e0d1b1" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
-      <div class="scroll-down">
-        <span>EXPLORE</span>
-        <div class="scroll-line"></div>
-      </div>
+  <article class="portfolio-exhibition">
+    <header class="portfolio-header">
+      <h1 class="portfolio-title">Portfolio <em>Exhibition</em></h1>
     </header>
 
-    <!-- WEDDING SECTION -->
-    <section class="gallery-section dark-charcoal">
-      <div class="section-header">
-        <span class="eyebrow">PHOTO GALLERY</span>
-        <h2 class="section-title">WEDDINGS & ENGAGEMENTS</h2>
-      </div>
-
-      <div class="gallery-grid interactive-grid symmetric">
-        {WEDDING_IMAGES.map((src, i) => (
-          <div class="gallery-item-tile" data-src={src}>
-            <div class="image-wrapper">
-              <img src={src} alt="Wedding Photo" loading="lazy" />
+    <section class="story-gallery-sec">
+      <div class="masonry-grid">
+        {IMAGES.map((src, i) => {
+          // Dynamic varied ratios to mimic the asymmetrical 5-column reference layout
+          const ratios = [
+            '1/1.2', '1/2', 
+            '1/1.7', '1/1.1', '1/1.4',
+            '1/1', '1/2.2', 
+            '1/1.8', '1/1',
+            '1/1.3', '1/2', '1/1.5',
+            '1/1.6', '1/1.1', '1/1.8', 
+            '1/1'
+          ];
+          const ratio = ratios[i % ratios.length];
+          return (
+            <div class="gallery-item" data-index={i} style={`aspect-ratio: ${ratio}`}>
+              <div class="gallery-item-inner">
+                <img src={src} alt={`Wedding Candid ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
 
-    <!-- PRE-WEDDING SECTION -->
-    <section class="gallery-section neutral-sand">
-      <div class="section-header">
-        <span class="eyebrow">FEATURED STORIES</span>
-        <h2 class="section-title">PRE-WEDDINGS & EDITORIAL</h2>
-      </div>
+    <footer class="portfolio-footer">
+      <span>— Wedding Candid Portfolio —</span>
+    </footer>
 
-      <div class="gallery-grid interactive-grid symmetric">
-        {PREWEDDING_IMAGES.map((src, i) => (
-          <div class="gallery-item-tile" data-src={src}>
-            <div class="image-wrapper">
-              <img src={src} alt="Pre-wedding Photo" loading="lazy" />
-            </div>
-          </div>
-        ))}
+    <!-- Light Lightbox -->
+    <div id="portfolioLightbox" class="port-lightbox" hidden>
+      <div class="port-lb-header">
+        <span class="port-lb-counter" id="portCounter"></span>
+        <button class="port-lb-close" id="portClose">✕</button>
       </div>
-    </section>
-
-    <!-- TRAVEL SECTION -->
-    <section class="gallery-section pure-white">
-      <div class="section-header">
-        <span class="eyebrow">WANDERLUST</span>
-        <h2 class="section-title">TRAVEL</h2>
-      </div>
-
-      <div class="gallery-grid interactive-grid masonry-like">
-        {TRAVEL_IMAGES.map((src, i) => (
-          <div class="gallery-item-tile" data-src={src}>
-            <div class="image-wrapper">
-              <img src={src} alt="Travel Photo" loading="lazy" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- INQUIRY CTA SECTION (As per reference) -->
-    <section class="cta-inquiry">
-      <div class="cta-bg">
-        <img src="/gallery/opt/IMG_4312.webp" alt="Inquiry Background" />
-        <div class="cta-overlay"></div>
-      </div>
-      <div class="cta-content">
-        <h2 class="cta-title">ONE-OF-A-KIND IMAGES,<br/>CAPTURED <i>with</i> SOUL.</h2>
-        <p class="cta-text">We'd love to hear more about your upcoming adventure. Let's create something beautiful together.</p>
-        <a href="/booking" class="cta-button">INQUIRE</a>
-      </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div class="lightbox" id="portfolio-lightbox">
-      <div class="lb-nav">
-        <span class="lb-title">WEDDING CANDID</span>
-        <button class="lb-close" id="lb-close">CLOSE ✕</button>
-      </div>
-      <div class="lb-main">
-        <img id="lb-image" src="" alt="" />
+      <div class="port-lb-stage">
+        <button class="port-lb-arrow prev" id="portPrev">&#8592;</button>
+        <div class="port-lb-img-wrap">
+          <img id="portLbImg" src="" alt="Portfolio View" />
+        </div>
+        <button class="port-lb-arrow next" id="portNext">&#8594;</button>
       </div>
     </div>
-
-  </div>
+  </article>
 </Layout>
 
 <style>
-  /* --- Base --- */
-  .portfolio-page {
-    background: #1a1814;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
+  :root {
+    --paper: #f5f1eb;
+    --ink: #1a1814;
+    --gold: #b68b40;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* --- Sections --- */
-  .gallery-section {
-    padding: 10vw 5vw;
+  .portfolio-exhibition {
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 100px 0 0;
   }
-  .dark-charcoal { background: #23221f; }
-  .neutral-sand { background: #fdfaf5; color: #1a1814; }
-  .neutral-sand .section-title { color: #1a1814; }
-  .pure-white { background: #fff; color: #1a1814; }
-  .pure-white .section-title { color: #1a1814; }
 
-  .section-header {
+  .portfolio-header {
     text-align: center;
-    margin-bottom: 6vw;
+    margin-bottom: 60px;
+    padding: 0 2rem;
   }
-  .eyebrow {
-    font-size: 0.65rem;
-    letter-spacing: 0.5em;
-    color: #c9a84c;
-    display: block;
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
-    letter-spacing: 0.1em;
+
+  .portfolio-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 300;
     text-transform: uppercase;
-    color: #f4f2ec;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
   }
+  .portfolio-title em { font-style: italic; color: var(--gold); }
 
-  /* Shared Grid Logic */
-  .gallery-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    gap: 3.5rem 2.5rem;
-  }
-  .symmetric { grid-template-columns: repeat(3, 1fr); }
+  /* ── Masonry Grid ── */
+  .story-gallery-sec { padding: 0 2vw 6rem; }
+  .masonry-grid { column-count: 5; column-gap: 0.8vw; margin-top: 1rem; }
+  @media (max-width: 1400px) { .masonry-grid { column-count: 4; } }
+  @media (max-width: 1024px) { .masonry-grid { column-count: 3; } }
+  @media (max-width: 768px)  { .masonry-grid { column-count: 2; column-gap: 1.5vw; } }
 
-  /* TRAVEL MASONRY (Asymmetric 2-column with offset) */
-  .masonry-like {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 900px; /* Slimmer for that high-end editorial feel */
-  }
-  .masonry-like .gallery-item-tile:nth-child(even) {
-    transform: translateY(100px); /* Creates the staggered effect from your reference */
-    margin-bottom: 100px;
-  }
-
-  .interactive-grid:hover .gallery-item-tile:not(:hover) {
-    opacity: 0.4;
-    filter: blur(1.5px) grayscale(60%);
-  }
-
-  .gallery-item-tile {
-    cursor: pointer;
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .image-wrapper {
-    aspect-ratio: 3.2 / 4; 
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 0.8vw;
     overflow: hidden;
-    background: #000;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    background: #e8e4de;
+    cursor: zoom-in;
   }
-  .gallery-item-tile img {
-    width: 100%;
+  .gallery-item-inner { position: relative; width: 100%; height: 100%; }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.8s var(--ease);
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .portfolio-footer {
+    text-align: center;
+    padding: 80px 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  /* ── Light Lightbox ── */
+  .port-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(245, 241, 235, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s var(--ease), visibility 0.4s;
+  }
+  .port-lightbox.open { opacity: 1; visibility: visible; }
+
+  /* Header row: counter left, close right */
+  .port-lb-header {
+    height: 64px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    flex-shrink: 0;
+  }
+  .port-lb-counter {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+  }
+  .port-lb-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    line-height: 1;
+    padding: 0.3rem 0.5rem;
+  }
+  .port-lb-close:hover { opacity: 1; }
+
+  /* Stage: arrow | image | arrow */
+  .port-lb-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  /* Image container */
+  .port-lb-img-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
-    object-fit: cover;
-    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    min-width: 0;
   }
-  .gallery-item-tile:hover img {
+  .port-lb-img-wrap img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 2px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  /* Arrow buttons */
+  .port-lb-arrow {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: white;
+    color: var(--ink);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .port-lb-arrow:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
     transform: scale(1.08);
   }
 
-  /* --- Hero Slider --- */
-  .portfolio-hero {
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-    color: #e0d1b1;
-  }
-  .hero-bg-slider {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out, transform 8s linear;
-    transform: scale(1.1); /* Slow zoom effect base */
-  }
-  .hero-slide.active {
-    opacity: 1;
-    transform: scale(1); /* Zooms out slowly while active */
-    z-index: 2;
-  }
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.3);
-    z-index: 3;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 5;
-    padding: 0 1.5rem;
-  }
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(4rem, 12vw, 9rem);
-    font-weight: 300;
-    letter-spacing: 0.15em;
-    line-height: 1;
-    margin-bottom: 2rem;
-    color: #e0d1b1;
-  }
-  .hero-description {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: clamp(1rem, 2.5vw, 1.35rem);
-    line-height: 1.8;
-    color: #e0d1b1;
-    opacity: 0.9;
-  }
-  .scroll-down {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
-    color: #e0d1b1;
-  }
-  .scroll-line { width: 1px; height: 60px; background: linear-gradient(#e0d1b1, transparent); }
-
-  /* --- Lightbox --- */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(10,10,10,0.99);
-    z-index: 5000;
-    display: none;
-    place-items: center;
-    backdrop-filter: blur(20px);
-  }
-  .lightbox.active { display: grid; }
-  .lb-nav {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    padding: 2.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #fff;
-  }
-  .lb-title { font-size: 0.75rem; letter-spacing: 0.3em; opacity: 0.6; }
-  .lb-close { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.8rem; letter-spacing: 0.2em; }
-  .lb-main { width: 90vw; height: 80vh; display: flex; align-items: center; justify-content: center; }
-  .lb-main img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    animation: lbReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-  @keyframes lbReveal {
-    from { opacity: 0; transform: translateY(30px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  /* --- CTA Section --- */
-  .cta-inquiry {
-    position: relative;
-    height: 70vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    overflow: hidden;
-    color: #fff;
-  }
-  .cta-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-  .cta-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.65) contrast(1.1);
-  }
-  .cta-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.3) 100%);
-  }
-  .cta-content {
-    position: relative;
-    z-index: 5;
-    padding: 0 1.5rem;
-    max-width: 900px;
-  }
-  .cta-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 6vw, 4rem);
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    line-height: 1.3;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-  }
-  .cta-title i {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    text-transform: none;
-    letter-spacing: 0;
-  }
-  .cta-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 3rem;
-    line-height: 1.8;
-  }
-  .cta-button {
-    display: inline-block;
-    padding: 1.2rem 3.5rem;
-    background: #f4f2ec;
-    color: #1a1814;
-    text-decoration: none;
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
-    font-weight: 500;
-    transition: all 0.4s ease;
-    border: 1px solid transparent;
-  }
-  .cta-button:hover {
-    background: transparent;
-    border-color: #f4f2ec;
-    color: #f4f2ec;
-    backdrop-filter: blur(10px);
-    transform: translateY(-5px);
-  }
-
-  @media (max-width: 900px) {
-    .symmetric { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    .masonry-like { grid-template-columns: 1fr; }
-    .masonry-like .gallery-item-tile:nth-child(even) { transform: none; margin-bottom: 0; }
-    .cta-title { font-size: 2.5rem; }
-    .cta-inquiry { height: 60vh; }
+  @media (max-width: 640px) {
+    .port-lb-arrow { width: 40px; height: 40px; font-size: 1rem; }
+    .port-lb-stage { padding: 1rem 0.5rem; gap: 0.4rem; }
   }
 </style>
 
-<script>
-  function initPortfolioGallery() {
-    // ── Hero Background Slider ───────────────────────
-    const slides = document.querySelectorAll('.hero-slide');
-    if (slides.length > 0) {
-      let currentSlide = 0;
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 5000);
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const lightbox  = document.getElementById('portfolioLightbox');
+    const lbImg     = document.getElementById('portLbImg');
+    const counter   = document.getElementById('portCounter');
+    const closeBtn  = document.getElementById('portClose');
+    const prevBtn   = document.getElementById('portPrev');
+    const nextBtn   = document.getElementById('portNext');
+    const items     = Array.from(document.querySelectorAll('.gallery-item'));
+    const srcs      = items.map(it => it.querySelector('img').src);
+    const total     = srcs.length;
+    let cIdx        = 0;
+
+    if (!lightbox || !items.length) return;
+
+    function updateLb() {
+      lbImg.src = srcs[cIdx];
+      counter.textContent = String(cIdx + 1).padStart(2, '0') + ' — ' + String(total).padStart(2, '0');
     }
 
-    const grids = document.querySelectorAll('.interactive-grid');
-    const lightbox = document.getElementById('portfolio-lightbox');
-    const lbImg = document.getElementById('lb-image');
-    const lbClose = document.getElementById('lb-close');
+    function openLb(i) {
+      cIdx = i;
+      updateLb();
+      lightbox.removeAttribute('hidden');
+      requestAnimationFrame(() => lightbox.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+    }
 
-    if (!grids || !lightbox) return;
+    function closeLb() {
+      lightbox.classList.remove('open');
+      setTimeout(() => {
+        lightbox.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+      }, 420);
+    }
 
-    grids.forEach(grid => {
-      grid.addEventListener('click', (e) => {
-        const item = e.target.closest('.gallery-item-tile');
-        if (!item) return;
-        const src = item.dataset.src;
-        lbImg.src = src;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
+    function navigate(dir) {
+      cIdx = (cIdx + dir + total) % total;
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        updateLb();
+        lbImg.style.opacity = '1';
+        lbImg.style.transform = 'scale(1)';
+      }, 180);
+    }
+
+    // Wire up clicks
+    items.forEach((item, i) => item.addEventListener('click', () => openLb(i)));
+    closeBtn.addEventListener('click', closeLb);
+    prevBtn.addEventListener('click', () => navigate(-1));
+    nextBtn.addEventListener('click', () => navigate(1));
+
+    // Click backdrop (not image) to close
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox || e.target.classList.contains('port-lb-stage')) closeLb();
     });
 
-    const closeLB = () => {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-      setTimeout(() => { if (!lightbox.classList.contains('active')) lbImg.src = ''; }, 400);
-    };
-
-    lbClose.addEventListener('click', closeLB);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLB(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLB(); });
-  }
-
-  document.addEventListener('astro:page-load', initPortfolioGallery);
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft')  navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'Escape')     closeLb();
+    });
+  });
 </script>
+

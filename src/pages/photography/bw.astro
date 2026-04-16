@@ -1,0 +1,373 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const BW_IMAGES = [
+  '/gallery/opt/198A1445.webp',
+  '/gallery/opt/1M4A8828.webp',
+  '/gallery/opt/CB8A0155.webp',
+  '/gallery/opt/CB8A0325.webp',
+  '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
+  '/gallery/opt/IMG_4312.webp',
+  '/gallery/opt/MBJ_5953.webp',
+  '/gallery/opt/SSP01330.webp',
+  '/gallery/opt/WC_13299.webp',
+  '/gallery/opt/WC_17354.webp',
+  '/gallery/opt/WC_17407.webp',
+  '/gallery/opt/WC_19833.webp',
+  '/gallery/opt/WC__5748.webp',
+  '/gallery/opt/WC__6391.webp',
+  '/gallery/opt/WC__7232.webp',
+  '/gallery/opt/WC__8428.webp',
+];
+---
+
+<Layout navTheme="light" hideGlobalPreloader={true}>
+  <article class="bw-exhibition">
+    <header class="bw-header">
+      <h1 class="bw-title">Noir <em>Stories</em></h1>
+      <p class="bw-subtitle">The depth of light & shadow</p>
+    </header>
+
+    <!-- Gallery — Masonry like story-gallery-sec -->
+    <section class="bw-gallery-sec">
+      <div class="gallery-heading">
+        <span class="heading-label">MONOCHROME ARCHIVE</span>
+        <div class="heading-rule animate-on-scroll"></div>
+      </div>
+
+      <div class="masonry-grid">
+        {BW_IMAGES.map((src, i) => {
+          let ratio = '3/4';
+          if (i % 3 === 1) ratio = '4/3';
+          if (i % 3 === 2) ratio = '1/1';
+          return (
+            <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
+              <div class="gallery-item-inner">
+                <img src={src} alt={`Noir Stories — ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} />
+                <div class="grain-overlay"></div>
+                <div class="item-hover-info">
+                  <span class="item-names">Noir Stories</span>
+                  <span class="item-index">{String(i + 1).padStart(2, '0')}</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <footer class="bw-footer">
+      <span>— Monochrome Archive —</span>
+    </footer>
+
+    <!-- Scroll Progress -->
+    <div id="scrollProgress" class="fixed-progress">
+      <span id="currIdx">01</span> / <span id="totalIdx">{BW_IMAGES.length}</span>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="premium-lightbox" hidden>
+      <div class="lb-header">
+        <div class="lb-counter"></div>
+        <button class="lb-close">✕</button>
+      </div>
+      <div class="lb-stage">
+        <button class="lb-arrow prev">&#8592;</button>
+        <div class="lb-img-wrap"><img id="lbImg" src="" alt="View" /></div>
+        <button class="lb-arrow next">&#8594;</button>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  :root {
+    --paper: #f5f1eb;
+    --ink:   #1a1814;
+    --gold:  #b68b40;
+    --muted: #8a7e72;
+    --ease:  cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .bw-exhibition {
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 120px 0 0;
+  }
+
+  /* ── Header ── */
+  .bw-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 0 5vw;
+  }
+  .bw-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  .bw-title em { font-style: italic; color: var(--gold); }
+  .bw-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  /* ── Gallery Section ── */
+  .bw-gallery-sec { padding: 4rem 5vw 6rem; }
+
+  .gallery-heading { margin-bottom: 3rem; }
+  .heading-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+  }
+  .heading-rule {
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    margin-top: 1rem;
+  }
+
+  /* ── Masonry Grid (same as story-gallery-sec) ── */
+  .masonry-grid {
+    column-count: 3;
+    column-gap: 1.5rem;
+  }
+  @media (max-width: 1024px) { .masonry-grid { column-count: 2; } }
+  @media (max-width: 640px)  { .masonry-grid { column-count: 1; } }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    background: #000;
+  }
+
+  .gallery-item-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: zoom-in;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Grayscale — the BW identity */
+    filter: grayscale(100%) contrast(1.1);
+    transition: transform 0.8s var(--ease), filter 0.6s;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.03);
+    filter: grayscale(80%) contrast(1.05);
+  }
+
+  /* Grain overlay — same as story-gallery-sec */
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stichTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+
+  /* Hover info — same as story-gallery-sec */
+  .item-hover-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0;
+    transition: 0.4s;
+  }
+  .gallery-item:hover .item-hover-info { opacity: 1; }
+  .item-names {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .item-index {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ── Footer ── */
+  .bw-footer {
+    text-align: center;
+    padding: 80px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.4em;
+    opacity: 0.3;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  /* ── Scroll Progress — same as story-gallery-sec ── */
+  .fixed-progress {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transition: 0.4s;
+  }
+
+  /* ── Lightbox — unified light theme ── */
+  .premium-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(245, 242, 237, 0.97);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s var(--ease);
+  }
+  .premium-lightbox.open { opacity: 1; visibility: visible; }
+
+  .lb-header {
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .lb-counter { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.3em; }
+  .lb-close {
+    background: none;
+    border: none;
+    color: var(--ink);
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.5; transition: opacity 0.2s; padding: 0.3rem;
+  }
+  .lb-close:hover { opacity: 1; }
+
+  .lb-stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    gap: 1rem; min-height: 0;
+  }
+  .lb-img-wrap {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center; height: 100%; min-width: 0; transform: scale(0.92); transition: 0.55s var(--ease);
+  }
+  .premium-lightbox.open .lb-img-wrap { transform: scale(1); }
+  .lb-img-wrap img {
+    max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 2px; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    /* Keep grayscale in lightbox too */
+    filter: grayscale(100%) contrast(1.1);
+  }
+  .lb-arrow {
+    background: white; border: 1px solid rgba(0,0,0,0.12); color: var(--ink); font-size: 1.3rem; cursor: pointer; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .lb-arrow:hover { background: var(--gold); border-color: var(--gold); color: white; transform: scale(1.08); }
+  @media (max-width: 640px) { .lb-arrow { width: 40px; height: 40px; font-size: 1rem; } .lb-stage { padding: 15px; } .lb-header { padding: 0 20px; } }
+</style>
+
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animate heading rule
+    ScrollTrigger.batch('.animate-on-scroll', {
+      onEnter: batch => gsap.to(batch, { width: '80px', duration: 1, stagger: 0.2, ease: 'power2.out' }),
+      start: 'top 85%'
+    });
+
+    // Scroll progress tracker
+    const items = document.querySelectorAll('.gallery-item');
+    const progressText = document.getElementById('scrollProgress');
+    const currIdxSpan = document.getElementById('currIdx');
+
+    ScrollTrigger.create({
+      trigger: '.bw-gallery-sec',
+      start: 'top 50%',
+      end: 'bottom 50%',
+      onEnter: () => gsap.to(progressText, { opacity: 1 }),
+      onLeave: () => gsap.to(progressText, { opacity: 0 }),
+      onEnterBack: () => gsap.to(progressText, { opacity: 1 }),
+      onLeaveBack: () => gsap.to(progressText, { opacity: 0 })
+    });
+
+    const visObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          currIdxSpan.textContent = String(entry.target.dataset.index).padStart(2, '0');
+        }
+      });
+    }, { threshold: 0.6 });
+    items.forEach(item => visObserver.observe(item));
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const closeLb = lightbox.querySelector('.lb-close');
+    const prevBtn = lightbox.querySelector('.lb-arrow.prev');
+    const nextBtn = lightbox.querySelector('.lb-arrow.next');
+    let cIdx = 0;
+    const allImgs = Array.from(items).map(i => i.querySelector('img').src);
+
+    function openLb(i) {
+      cIdx = i;
+      lbImg.src = allImgs[cIdx];
+      lightbox.classList.add('open');
+      lightbox.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLbFn() {
+      lightbox.classList.remove('open');
+      setTimeout(() => { lightbox.setAttribute('hidden', ''); document.body.style.overflow = ''; }, 400);
+    }
+    function navigate(dir) {
+      cIdx = (cIdx + dir + allImgs.length) % allImgs.length;
+      lbImg.src = allImgs[cIdx];
+    }
+
+    items.forEach((item, i) => item.addEventListener('click', () => openLb(i)));
+    closeLb.addEventListener('click', closeLbFn);
+    prevBtn.addEventListener('click', () => navigate(-1));
+    nextBtn.addEventListener('click', () => navigate(1));
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+      if (e.key === 'Escape') closeLbFn();
+    });
+  });
+</script>
