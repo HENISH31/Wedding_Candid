@@ -7,18 +7,17 @@ import Layout from '../../layouts/Layout.astro';
  */
 
 const PREWEDDING_COUPLES = [
-  { id: 'aashvi-tej', names: 'Aashvi & Tej', shortQuote: 'Moments In Light', cover: '/gallery/opt/198A1445.webp' },
-  { id: 'mayur-shivani', names: 'Mayur & Shivani', shortQuote: 'Whispers Of Us', cover: '/gallery/opt/WC_19833.webp' },
-  { id: 'mansi-prit', names: 'Mansi & Prit', shortQuote: 'Soul In Frame', cover: '/gallery/opt/MBJ_5953.webp' },
-  { id: 'dhwani-parth', names: 'Dhwani & Parth', shortQuote: 'Pure Love Story', cover: '/gallery/opt/WC_13299.webp' },
-  { id: 'vishwa-vishu', names: 'Vishwa & Vishu', shortQuote: 'Infinite Grace Found', cover: '/gallery/opt/SSP01330.webp' }
+  { id: 'dhruv-henisha', names: 'Dhruv & Henisha', shortQuote: 'Adventure Awaits', cover: '/gallery/dhruv-henisha/IMG_4312.jpg' },
+  { id: 'anjali-aditiya', names: 'Anjali & Aditiya', shortQuote: 'Golden Hour Glow', cover: '/gallery/anjali-aditiya/WC__2843-2.jpg' },
+  { id: 'malav-zeel', names: 'Malav & Zeel', shortQuote: 'Urban Romance', cover: '/gallery/malav-zeel/WC_13180.jpg' },
+  { id: 'neha-tarun', names: 'Neha & Tarun', shortQuote: 'Desert Dreams', cover: '/gallery/neha-tarun/WC__0370.jpg' },
+  { id: 'dhariya-kosha', names: 'Dhariya & Kosha', shortQuote: 'Legacy In Motion', cover: '/gallery/dhariya-kosha/WC_18800.JPG' }
 ];
 ---
 
 <Layout hideGlobalPreloader={true}>
   <div class="exhibition-page">
     <nav class="sub-nav">
-      <a href="/photography" class="back-link">← SECTIONS</a>
       <h1 class="page-title">PRE-WEDDING <em>ALBUMS</em></h1>
     </nav>
 
@@ -54,9 +53,9 @@ const PREWEDDING_COUPLES = [
 
   .exhibition-page { background: var(--paper); color: var(--ink); min-height: 100vh; }
   
-  .sub-nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem 5vw; border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; background: var(--paper); z-index: 100; }
-  .back-link { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); text-decoration: none; letter-spacing: 0.3em; }
-  .page-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; }
+  .sub-nav { display: flex; justify-content: center; align-items: center; padding: 6rem 5vw 2rem; border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; background: var(--paper); z-index: 100; }
+  .back-link { font-family: var(--font-sans); font-size: 0.7rem; color: var(--gold); text-decoration: none; letter-spacing: 0.3em; }
+  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 300; }
   .page-title em { font-style: italic; color: var(--gold); }
 
   .exhibition-content { padding: 6rem 5vw 10rem; }
@@ -69,11 +68,11 @@ const PREWEDDING_COUPLES = [
   .couple-card:hover img { transform: scale(1.05); }
   .couple-info { flex: 1; }
   .couple-card:nth-child(even) .couple-info { text-align: right; align-items: flex-end; }
-  .couple-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; margin: 1rem 0; line-height: 1; transition: 0.6s; }
+  .couple-name { font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; margin: 1rem 0; line-height: 1; transition: 0.6s; }
   .couple-card:hover .couple-name { letter-spacing: 0.05em; color: var(--gold); }
   .couple-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.4s; }
   .couple-card:hover .couple-overlay { opacity: 1; }
-  .couple-overlay span { color: white; font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; border-bottom: 1px solid white; }
+  .couple-overlay span { color: white; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.2em; border-bottom: 1px solid white; }
 </style>
 
 <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

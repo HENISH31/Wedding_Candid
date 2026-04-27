@@ -90,7 +90,7 @@ const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', '
     <div class="act-fade-spacer"></div>
 
     <!-- Act 2: Shockwave Gallery -->
-    <section class="gallery-section">
+    <section class="gallery-section" id="gallery-section">
 
       <div class="shockwave-gallery" id="eventGallery">
         {ALL_IMAGES.map((img, i) => (
@@ -153,22 +153,22 @@ const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', '
   /* Hero — Light */
   .events-hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: var(--bg-light); }
   .hero-center { text-align: center; z-index: 5; }
-  .events-stagger-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; color: var(--ink); letter-spacing: 0.5em; margin: 0; }
+  .events-stagger-title { font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 300; color: var(--ink); letter-spacing: 0.5em; margin: 0; }
   .events-stagger-title .char { display: inline-block; opacity: 0; transform: translateY(40px); }
-  .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2vw, 1.4rem); color: rgba(182,139,64,0.85); margin-top: 2rem; opacity: 0; }
+  .hero-tagline { font-family: var(--font-serif); font-size: clamp(1rem, 2vw, 1.4rem); color: rgba(182,139,64,0.85); margin-top: 2rem; opacity: 0; }
   .hero-tagline em { font-style: italic; }
 
   .scroll-enter { position: absolute; bottom: 40px; text-align: center; }
   .energy-lines { display: flex; justify-content: center; gap: 6px; margin-bottom: 1rem; }
   .energy-lines span { width: 1px; height: 35px; background: var(--gold); transform: scaleY(0); }
-  .enter-lbl { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.45em; }
+  .enter-lbl { font-family: var(--font-sans); font-size: 0.65rem; color: var(--gold); letter-spacing: 0.45em; }
 
   /* Mosaic — light bg cells */
   .mosaic-section { height: 100vh; position: relative; background: var(--bg-light); }
   .mosaic-grid-container { position: absolute; inset: 0; width: 100%; height: 100%; border-top: 1px solid rgba(182,139,64,0.1); }
   .mosaic-grid { display: grid; width: 100%; height: 100%; }
   
-  :global(.mosaic-cell) { font-family: 'Outfit', sans-serif; font-weight: 300; font-size: 14px; color: rgba(182,139,64,0.12); display: flex; align-items: center; justify-content: center; transition: all 0.45s ease; user-select: none; position: relative; }
+  :global(.mosaic-cell) { font-family: var(--font-sans); font-weight: 300; font-size: 14px; color: rgba(182,139,64,0.12); display: flex; align-items: center; justify-content: center; transition: all 0.45s ease; user-select: none; position: relative; }
   :global(.mosaic-cell.zone-warm) { color: var(--gold); transform: scale(1.4); text-shadow: 0 0 12px rgba(181,139,64,0.3); }
   :global(.mosaic-cell.zone-hot) { color: transparent !important; background-image: var(--img); background-size: cover; background-position: center; transform: scale(1.1); border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10; }
   :global(.mosaic-cell.dissolved) { color: transparent !important; background-image: var(--img); background-size: cover; background-position: center; filter: brightness(0.8) saturate(0.8); border-radius: 1px; }
@@ -185,15 +185,15 @@ const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', '
   .event-cell img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
   .event-cell:hover img { transform: scale(1.05); }
 
-  .event-caption-pill { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); background: rgba(8, 7, 6, 0.85); color: #f0ebe3; padding: 8px 18px; border-radius: 100px; font-family: 'Outfit', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transition: 0.4s; pointer-events: none; }
+  .event-caption-pill { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); background: rgba(8, 7, 6, 0.85); color: #f0ebe3; padding: 8px 18px; border-radius: 100px; font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transition: 0.4s; pointer-events: none; }
   .event-cell:hover .event-caption-pill { opacity: 1; transform: translate(-50%, -50%); }
 
-  .scroll-counter { position: sticky; bottom: 30px; float: right; font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.25em; z-index: 100; pointer-events: none; margin-right: 2vw; }
+  .scroll-counter { position: sticky; bottom: 30px; float: right; font-family: var(--font-sans); font-size: 0.7rem; color: var(--gold); letter-spacing: 0.25em; z-index: 100; pointer-events: none; margin-right: 2vw; }
 
   /* Closing — light */
   .closing-strip { background: var(--bg-light); padding: 10rem 4vw; text-align: center; border-top: 1px solid rgba(0,0,0,0.06); }
-  .closing-msg { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 3vw, 2.3rem); font-style: italic; color: var(--ink); margin-bottom: 3.5rem; }
-  .touch-btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(181,139,64,0.6); color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-decoration: none; position: relative; overflow: hidden; }
+  .closing-msg { font-family: var(--font-serif); font-size: clamp(1.4rem, 3vw, 2.3rem); font-style: italic; color: var(--ink); margin-bottom: 3.5rem; }
+  .touch-btn { display: inline-block; padding: 14px 35px; border: 1px solid rgba(181,139,64,0.6); color: var(--gold); font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.3em; text-decoration: none; position: relative; overflow: hidden; }
   .touch-btn::before { content: ''; position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; z-index: -1; }
   .touch-btn:hover { color: var(--bg-light); }
   .touch-btn:hover::before { transform: scaleX(1); }
@@ -224,7 +224,7 @@ const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', '
     flex-shrink: 0;
   }
   .port-lb-counter {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.3em;
     color: var(--gold);
@@ -272,7 +272,7 @@ const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', '
   }
   .port-lb-caption {
     margin-top: 1.5rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     letter-spacing: 0.2em;
     color: var(--ink);

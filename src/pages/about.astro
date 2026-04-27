@@ -4,9 +4,7 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout hideGlobalPreloader={true}>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Fonts handled globally via style.css -->
 
   <div class="about-page">
 
@@ -43,13 +41,13 @@ import Layout from '../layouts/Layout.astro';
               </p>
               <div class="bio-divider"></div>
               <div class="bio-body">
-                <p style="font-style: italic;">
+                <p style="font-style: italic; font-family: var(--font-serif);">
                   "As an artist whose medium of bringing the art to the world is an intent of compartmentalising the moments, I am all about things which are not seen by the naked eye but a soul which feels what cannot be said through any other medium."
                 </p>
-                <p>
+                <p style="font-family: var(--font-sans);">
                   With a passion for capturing life's most cherished moments, he has carved a niche for himself in the world of photography over the last 9 years. As the founder of WEDDING CANDID, he has elevated the art of Wedding photography, transforming emotional moments into timeless treasures.
                 </p>
-                <p>
+                <p style="font-family: var(--font-sans);">
                   He has redefined the essence of Wedding photography. His distinctive eye for grabbing the ongoing moment results in stunning visual narratives that resonate deeply with his clients. Each wedding captured by him enables the client to cherish every event even years after its passing, weaving a rich tapestry of emotions, relationships, and memories.
                 </p>
               </div>
@@ -320,7 +318,7 @@ import Layout from '../layouts/Layout.astro';
     margin-bottom: 8rem;
   }
   .section-tag {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.5em;
     text-transform: uppercase;
@@ -328,14 +326,14 @@ import Layout from '../layouts/Layout.astro';
     margin-bottom: 1.5rem;
   }
   .director-name {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(4rem, 10vw, 8rem);
     font-weight: 300;
     line-height: 1;
   }
   .director-name em { font-style: italic; color: var(--gold); }
   .director-titles {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.8rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
@@ -362,7 +360,7 @@ import Layout from '../layouts/Layout.astro';
     text-align: left;
   }
   .manifesto-quote {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(1.1rem, 1.8vw, 1.35rem);
     font-weight: 300;
     line-height: 1.4;
@@ -374,7 +372,7 @@ import Layout from '../layouts/Layout.astro';
   }
   .manifesto-quote em { color: var(--gold); }
   .founder-tag-inline {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.70rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -394,7 +392,7 @@ import Layout from '../layouts/Layout.astro';
     background: var(--gold);
     color: white;
     padding: 2rem 1.5rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     border-radius: 2px;
@@ -407,7 +405,7 @@ import Layout from '../layouts/Layout.astro';
     gap: 1.5rem;
   }
   .bio-intro {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 1.8rem;
     line-height: 1.6;
     font-weight: 300;
@@ -419,7 +417,7 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.1rem;
     line-height: 2;
     color: rgba(0,0,0,0.6);
@@ -441,7 +439,7 @@ import Layout from '../layouts/Layout.astro';
     align-items: start;
   }
   .intro__pull p {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(1.6rem, 2.8vw, 2.2rem);
     font-weight: 300;
     line-height: 1.5;
@@ -459,7 +457,7 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.9;
     color: var(--ink-mid);
     font-weight: 300;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .intro__body strong { color: var(--gold); font-weight: 500; }
 
@@ -494,7 +492,7 @@ import Layout from '../layouts/Layout.astro';
     color: var(--gold);
     line-height: 1.7;
     font-weight: 500;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .turning__line {
     width: 1px;
@@ -502,7 +500,7 @@ import Layout from '../layouts/Layout.astro';
     background: linear-gradient(to bottom, var(--gold), transparent);
   }
   .turning__headline {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2.4rem, 4.5vw, 4rem);
     font-weight: 300;
     line-height: 1.15;
@@ -520,7 +518,7 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.95;
     color: var(--ink-mid);
     font-weight: 300;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .turning__copy em { color: var(--gold); font-style: italic; }
   .turning__stat {
@@ -532,7 +530,7 @@ import Layout from '../layouts/Layout.astro';
     border-top: 1px solid var(--gold-pale);
   }
   .stat-num {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 5rem;
     font-weight: 300;
     color: var(--gold);
@@ -546,7 +544,7 @@ import Layout from '../layouts/Layout.astro';
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-weight: 400;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
 
   /* ══════════════════════════════
@@ -568,10 +566,10 @@ import Layout from '../layouts/Layout.astro';
     color: var(--gold);
     margin-bottom: 2.5rem;
     font-weight: 400;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .approach__headline {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2rem, 4vw, 3.5rem);
     font-weight: 300;
     line-height: 1.25;
@@ -596,14 +594,14 @@ import Layout from '../layouts/Layout.astro';
   }
   .pillar:hover { background: var(--bg-soft); }
   .pillar__num {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 1rem;
     font-style: italic;
     color: var(--gold);
     font-weight: 300;
   }
   .pillar h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--ink);
@@ -614,7 +612,7 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.85;
     color: var(--ink-mid);
     font-weight: 300;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
 
   /* ══════════════════════════════
@@ -663,7 +661,7 @@ import Layout from '../layouts/Layout.astro';
     text-transform: uppercase;
     color: var(--gold);
     font-weight: 500;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     z-index: 5;
   }
   .journey__eyebrow {
@@ -673,10 +671,10 @@ import Layout from '../layouts/Layout.astro';
     color: var(--gold);
     margin-bottom: 2rem;
     font-weight: 400;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .journey__headline {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2.2rem, 4vw, 3.5rem);
     font-weight: 300;
     line-height: 1.2;
@@ -693,7 +691,7 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.95;
     color: var(--ink-mid);
     font-weight: 300;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
 
   /* ══════════════════════════════
@@ -722,12 +720,12 @@ import Layout from '../layouts/Layout.astro';
     text-transform: uppercase;
     color: var(--gold);
     font-weight: 400;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     grid-column: 1 / -1;
     margin-bottom: -2rem;
   }
   .goals__headline {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2.2rem, 4vw, 3.5rem);
     font-weight: 300;
     line-height: 1.2;
@@ -753,7 +751,7 @@ import Layout from '../layouts/Layout.astro';
   .goal:nth-child(3),
   .goal:nth-child(4) { border-bottom: none; }
   .goal__n {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 2.5rem;
     font-weight: 300;
     color: var(--gold-pale);
@@ -767,7 +765,7 @@ import Layout from '../layouts/Layout.astro';
     color: var(--ink-mid);
     padding-top: 0.3rem;
     font-weight: 300;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
 
   /* ══════════════════════════════
@@ -790,7 +788,7 @@ import Layout from '../layouts/Layout.astro';
     text-transform: uppercase;
     color: var(--gold);
     font-weight: 400;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .letter__body {
     display: flex;
@@ -798,7 +796,7 @@ import Layout from '../layouts/Layout.astro';
     gap: 1.8rem;
   }
   .letter__body p {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(1.2rem, 2vw, 1.55rem);
     font-weight: 300;
     line-height: 1.7;
@@ -812,13 +810,13 @@ import Layout from '../layouts/Layout.astro';
     border-top: 1px solid var(--gold-pale);
   }
   .letter__dash {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 1.8rem;
     color: var(--gold);
     line-height: 1;
   }
   .letter__name {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 2rem;
     font-style: italic;
     font-weight: 400;
@@ -831,14 +829,14 @@ import Layout from '../layouts/Layout.astro';
     text-transform: uppercase;
     color: var(--ink-light);
     font-weight: 400;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
 
   /* ══════════════════════════════
      CTA
   ══════════════════════════════ */
   .cta {
-    padding: 12rem 6vw;
+    padding: 12rem 6vw 4rem;
     text-align: center;
     background: var(--bg);
   }
@@ -851,7 +849,7 @@ import Layout from '../layouts/Layout.astro';
     gap: 2rem;
   }
   .cta__headline {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2.8rem, 6vw, 5rem);
     font-weight: 300;
     line-height: 1.15;
@@ -862,7 +860,7 @@ import Layout from '../layouts/Layout.astro';
     color: var(--ink-light);
     letter-spacing: 0.1em;
     font-weight: 300;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
   }
   .cta__btn {
     display: inline-block;
@@ -875,7 +873,7 @@ import Layout from '../layouts/Layout.astro';
     letter-spacing: 0.4em;
     text-transform: uppercase;
     border-radius: 100px;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 500;
     transition: background 0.3s, transform 0.3s var(--ease), letter-spacing 0.3s;
   }

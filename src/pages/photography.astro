@@ -11,7 +11,7 @@ const SECTIONS = [
     id: 'wedding',
     title: 'WEDDINGS',
     subtitle: 'THE INTIMATE ARCHIVE',
-    image: '/gallery/opt/CB8A0325.webp',
+    image: '/gallery/quick-portfolio/WC__8428.jpg',
     link: '/photography/wedding',
     description: 'Formal, vertical, emotional storytelling.'
   },
@@ -19,7 +19,7 @@ const SECTIONS = [
     id: 'pre-wedding',
     title: 'PRE-WEDDINGS',
     subtitle: 'THE CINEMATIC JOURNEY',
-    image: '/gallery/opt/198A1445.webp',
+    image: '/gallery/quick-portfolio/IMG_4312.jpg',
     link: '/photography/pre-wedding',
     description: 'Adventurous, horizontal, film-reel memories.'
   },
@@ -27,7 +27,7 @@ const SECTIONS = [
     id: 'bw',
     title: 'B/W NOIR',
     subtitle: 'THE NOIR ARCHIVE',
-    image: '/gallery/opt/WC__6391.webp',
+    image: '/gallery/quick-portfolio/WC_11751.JPG',
     link: '/photography/bw',
     description: 'The depth of light, shadow, and timeless elegance.'
   },
@@ -35,7 +35,7 @@ const SECTIONS = [
     id: 'event',
     title: 'EVENTS',
     subtitle: 'MOMENTS IN MOTION',
-    image: '/gallery/opt/MBJ_5953.webp',
+    image: '/gallery/quick-portfolio/WC_13299.jpg',
     link: '/photography/events',
     description: 'Corporate, life, and the energy of now.'
   }
@@ -91,14 +91,14 @@ const SECTIONS = [
   .panel-content { position: relative; z-index: 5; text-align: center; color: var(--dark); padding: 2rem; transition: transform 0.6s var(--ease); }
   .hub-panel:hover .panel-content { transform: translateY(-20px); }
 
-  .panel-tag { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.4em; display: block; margin-bottom: 2.5rem; }
-  .panel-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; letter-spacing: 0.1em; transition: 0.6s; color: var(--dark); }
+  .panel-tag { font-family: var(--font-sans); font-size: 0.65rem; color: var(--gold); letter-spacing: 0.4em; display: block; margin-bottom: 2.5rem; }
+  .panel-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 300; letter-spacing: 0.1em; transition: 0.6s; color: var(--dark); }
   .hub-panel:hover .panel-title { color: var(--gold); letter-spacing: 0.15em; }
   
-  .panel-desc { font-family: 'Outfit', sans-serif; font-size: 0.75rem; color: rgba(0,0,0,0.5); margin-top: 1.5rem; opacity: 0; transform: translateY(10px); transition: 0.6s 0.2s var(--ease); }
+  .panel-desc { font-family: var(--font-sans); font-size: 0.75rem; color: rgba(0,0,0,0.5); margin-top: 1.5rem; opacity: 0; transform: translateY(10px); transition: 0.6s 0.2s var(--ease); }
   .hub-panel:hover .panel-desc { opacity: 1; transform: translateY(0); }
 
-  .explore-hint { font-family: 'Outfit', sans-serif; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.2em; margin-top: 3.5rem; opacity: 0; transition: 0.6s 0.3s; }
+  .explore-hint { font-family: var(--font-sans); font-size: 0.65rem; color: var(--gold); letter-spacing: 0.2em; margin-top: 3.5rem; opacity: 0; transition: 0.6s 0.3s; }
   .hub-panel:hover {
     .explore-hint { opacity: 1; }
   }
@@ -112,5 +112,4 @@ const SECTIONS = [
     .hub-panel:hover { flex: 1.2; }
     .panel-overlay { background: linear-gradient(to right, rgba(245,241,235, 0.9), transparent); }
   }
-</style>
 </style>

@@ -125,7 +125,7 @@ import Layout from '../layouts/Layout.astro';
     margin: 0 auto;
   }
   .instruction-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: clamp(1.5rem, 4vw, 2.2rem);
     line-height: 1.4;
     color: var(--ink);
@@ -168,7 +168,7 @@ import Layout from '../layouts/Layout.astro';
   .input-group.full { grid-column: span 1; }
 
   label {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -176,7 +176,7 @@ import Layout from '../layouts/Layout.astro';
     font-weight: 500;
   }
   .input-hint {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     opacity: 0.4;
     margin-top: -0.4rem;
@@ -187,7 +187,7 @@ import Layout from '../layouts/Layout.astro';
     border: none;
     border-bottom: 1px solid rgba(0,0,0,0.1);
     padding: 0.8rem 0;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 1.1rem;
     color: var(--ink);
     transition: border-color 0.3s ease;
@@ -204,7 +204,7 @@ import Layout from '../layouts/Layout.astro';
     gap: 1rem;
   }
   .service-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     opacity: 0.8;
@@ -222,7 +222,7 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     color: rgba(0,0,0,0.5);
@@ -257,7 +257,7 @@ import Layout from '../layouts/Layout.astro';
     padding: 1rem 3.5rem;
     border: none;
     border-radius: 100px;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.75rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
@@ -268,7 +268,7 @@ import Layout from '../layouts/Layout.astro';
   .submit-btn:hover { transform: translateY(-4px); }
   
   .spam-note {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.1rem;
     line-height: 1.8;
     color: rgba(0,0,0,0.5);
@@ -294,13 +294,13 @@ import Layout from '../layouts/Layout.astro';
     max-width: 500px;
   }
   .success-title {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-size: 4rem;
     font-weight: 300;
     margin-bottom: 2rem;
   }
   .success-title em { font-style: italic; color: var(--gold); }
-  .success-p { font-family: 'Outfit', sans-serif; margin-bottom: 3rem; opacity: 0.6; }
+  .success-p { font-family: var(--font-sans); margin-bottom: 3rem; opacity: 0.6; }
   .back-link {
     display: inline-block;
     padding: 1rem 3rem;

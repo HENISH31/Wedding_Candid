@@ -1,24 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import IconsSection from '../components/IconsSection.astro';
 import DynamicHeroText from '../components/DynamicHeroText.astro';
 import Marquee from '../components/Marquee.astro';
-
-
 ---
 
 <Layout hideGlobalPreloader={true}>
   <Hero />
 
-
-
-
   <!-- Elegant Marquee Divider -->
   <Marquee />
 
+  <IconsSection />
+
   <!-- Categories Section -->
   <section id="portfolio-categories" class="section categories-section stagger-reveal">
-    <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+    <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
       <p style="letter-spacing: 0.3rem; margin-bottom: 1rem;">DISCOVER</p>
       <h2 style="font-size: 3.5rem;">Portfolio Collections</h2>
     </div>
@@ -50,24 +48,6 @@ import Marquee from '../components/Marquee.astro';
     </div>
   </section>
 
-  <section class="section testimonials-section stagger-reveal">
-    <div id="testimonial-slider" class="testimonial-container">
-      <div class="testimonial-slide active">
-        <div class="client-img"><img src="/avatar_1.png" alt="Client"></div>
-        <p class="client-quote">"Also Deep, we wanted to thank you for all the hardwork that you and your team did for us throughout the wedding. Our memories are going to be created through you guys. Thanks for being so easy going and enjoying it with us. You and your team were amazing and keep up with this work."</p>
-        <p class="client-name">— AASHVI & TEJ</p>
-      </div>
-      <div class="testimonial-slide">
-        <div class="client-img"><img src="/avatar_2.png" alt="Client"></div>
-        <p class="client-quote">"Best decision we made in terms of selecting your team out of many others we scouted in Vadodara. Team was friendly and captured our best moments as we needed. Our family loved all the candid videos and photos. Thanks for all your hardwork making our wedding memorable."</p>
-        <p class="client-name">— MAYUR & SHIVANI</p>
-      </div>
-    </div>
-    <div class="slider-dots">
-      <span class="dot active" data-index="0"></span>
-      <span class="dot" data-index="1"></span>
-    </div>
-  </section>
 </Layout>
 
 <script>

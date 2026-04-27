@@ -2,22 +2,36 @@
 import Layout from '../../layouts/Layout.astro';
 
 const BW_IMAGES = [
-  '/gallery/opt/198A1445.webp',
-  '/gallery/opt/1M4A8828.webp',
-  '/homepage/DJI_0639.jpg',
-  '/gallery/opt/CB8A0325.webp',
-  '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
-  '/homepage/WC_11751.JPG',
-  '/gallery/opt/MBJ_5953.webp',
-  '/gallery/opt/SSP01330.webp',
-  '/gallery/opt/WC_13299.webp',
-  '/gallery/opt/WC_17354.webp',
-  '/gallery/opt/WC_17407.webp',
-  '/gallery/opt/WC_19833.webp',
-  '/gallery/opt/WC__5748.webp',
-  '/gallery/opt/WC__6391.webp',
-  '/gallery/opt/WC__7232.webp',
-  '/gallery/opt/WC__8428.webp',
+  '/gallery/bw/083A4644.jpg',
+  '/gallery/bw/0Z7A9267.jpg',
+  '/gallery/bw/1M0A1615.jpg',
+  '/gallery/bw/1M0A1620.jpg',
+  '/gallery/bw/1M0A1626.jpg',
+  '/gallery/bw/1M0A1711.jpg',
+  '/gallery/bw/1M0A2869.jpg',
+  '/gallery/bw/4W0A9414.jpg',
+  '/gallery/bw/DJI_0685.jpg',
+  '/gallery/bw/DJI_20241209184936_0125_D_FLYCAPTURE.jpg',
+  '/gallery/bw/IMG_3125.jpg',
+  '/gallery/bw/IMG_4351.jpg',
+  '/gallery/bw/IMG_4585.jpg',
+  '/gallery/bw/SAM_0133.jpg',
+  '/gallery/bw/SAM_2957.jpg',
+  '/gallery/bw/SDPH1884.jpg',
+  '/gallery/bw/SDPH2160-2.jpg',
+  '/gallery/bw/SDPH3641.jpg',
+  '/gallery/bw/WC_13261.jpg',
+  '/gallery/bw/WC_18568.JPG',
+  '/gallery/bw/WC__1280.jpg',
+  '/gallery/bw/WC__2447.jpg',
+  '/gallery/bw/WC__2582-2.jpg',
+  '/gallery/bw/WC__4332.jpg',
+  '/gallery/bw/WC__5051.jpg',
+  '/gallery/bw/WC__5899.jpg',
+  '/gallery/bw/WC__6266.jpg',
+  '/gallery/bw/WC__7145.jpg',
+  '/gallery/bw/WC__7520-2.jpg',
+  '/gallery/bw/WC__9683.jpg'
 ];
 ---
 
@@ -29,7 +43,7 @@ const BW_IMAGES = [
     </header>
 
     <!-- Gallery — Masonry like story-gallery-sec -->
-    <section class="bw-gallery-sec">
+    <section class="bw-gallery-sec" id="gallery-section">
       <div class="gallery-heading">
         <span class="heading-label">MONOCHROME ARCHIVE</span>
         <div class="heading-rule animate-on-scroll"></div>
@@ -73,7 +87,10 @@ const BW_IMAGES = [
       </div>
       <div class="lb-stage">
         <button class="lb-arrow prev">&#8592;</button>
-        <div class="lb-img-wrap"><img id="lbImg" src="" alt="View" /></div>
+        <div class="lb-img-wrap">
+          <img id="lbBg" class="lb-bg" src="" alt="" aria-hidden="true" />
+          <img id="lbImg" src="" alt="View" />
+        </div>
         <button class="lb-arrow next">&#8594;</button>
       </div>
     </div>
@@ -103,7 +120,7 @@ const BW_IMAGES = [
     padding: 0 5vw;
   }
   .bw-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: clamp(3rem, 8vw, 5rem);
     font-weight: 300;
     text-transform: uppercase;
@@ -113,7 +130,7 @@ const BW_IMAGES = [
   }
   .bw-title em { font-style: italic; color: var(--gold); }
   .bw-subtitle {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 0.9rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
@@ -125,7 +142,7 @@ const BW_IMAGES = [
 
   .gallery-heading { margin-bottom: 3rem; }
   .heading-label {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.4em;
     color: var(--gold);
@@ -198,13 +215,13 @@ const BW_IMAGES = [
   }
   .gallery-item:hover .item-hover-info { opacity: 1; }
   .item-names {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
   }
   .item-index {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 1.1rem;
     font-style: italic;
     color: var(--gold);
@@ -214,7 +231,7 @@ const BW_IMAGES = [
   .bw-footer {
     text-align: center;
     padding: 80px 20px;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     letter-spacing: 0.4em;
     opacity: 0.3;
     text-transform: uppercase;
@@ -227,7 +244,7 @@ const BW_IMAGES = [
     bottom: 30px;
     right: 30px;
     z-index: 1000;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     color: var(--gold);
     letter-spacing: 0.1em;
@@ -259,7 +276,7 @@ const BW_IMAGES = [
     justify-content: space-between;
     border-bottom: 1px solid rgba(0,0,0,0.06);
   }
-  .lb-counter { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); letter-spacing: 0.3em; }
+  .lb-counter { font-family: var(--font-sans); font-size: 0.7rem; color: var(--gold); letter-spacing: 0.3em; }
   .lb-close {
     background: none;
     border: none;
@@ -270,23 +287,50 @@ const BW_IMAGES = [
   }
   .lb-close:hover { opacity: 1; }
 
-  .lb-stage {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 40px;
-    gap: 1rem; min-height: 0;
-  }
-  .lb-img-wrap {
-    flex: 1;
-    display: flex; align-items: center; justify-content: center; height: 100%; min-width: 0; transform: scale(0.92); transition: 0.55s var(--ease);
-  }
+  .lb-stage { flex: 1; display: flex; align-items: center; justify-content: space-between; padding: 0; gap: 0; min-height: 0; position: relative; }
+  .lb-img-wrap { flex: 1; display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; position: relative; overflow: hidden; transform: scale(1); transition: 0.55s var(--ease); }
   .premium-lightbox.open .lb-img-wrap { transform: scale(1); }
-  .lb-img-wrap img {
+
+  .lb-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(80px) brightness(0.4) grayscale(100%);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease);
+    z-index: 1;
+    transform: scale(1.1);
+  }
+  
+  .lb-img-wrap img#lbImg { 
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.3s ease, transform 0.5s var(--ease);
     max-width: 100%; max-height: 80vh; object-fit: contain; border-radius: 2px; display: block; box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    /* Keep grayscale in lightbox too */
     filter: grayscale(100%) contrast(1.1);
+  }
+
+  /* Orientation Logic */
+  .premium-lightbox.is-landscape #lbImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 100vh;
+  }
+  .premium-lightbox.is-landscape .lb-bg {
+    opacity: 0;
+  }
+
+  .premium-lightbox.is-portrait #lbImg {
+    width: auto;
+    height: 100vh;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .premium-lightbox.is-portrait .lb-bg {
+    opacity: 1;
   }
   .lb-arrow {
     background: white; border: 1px solid rgba(0,0,0,0.12); color: var(--ink); font-size: 1.3rem; cursor: pointer; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
@@ -335,16 +379,37 @@ const BW_IMAGES = [
 
     // Lightbox
     const lightbox = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lbImg');
-    const closeLb = lightbox.querySelector('.lb-close');
-    const prevBtn = lightbox.querySelector('.lb-arrow.prev');
-    const nextBtn = lightbox.querySelector('.lb-arrow.next');
+    const lbImg    = document.getElementById('lbImg');
+    const lbBg     = document.getElementById('lbBg');
+    const lbCounter = lightbox.querySelector('.lb-counter');
+    const closeLb  = lightbox.querySelector('.lb-close');
+    const prevBtn  = lightbox.querySelector('.lb-arrow.prev');
+    const nextBtn  = lightbox.querySelector('.lb-arrow.next');
     let cIdx = 0;
     const allImgs = Array.from(items).map(i => i.querySelector('img').src);
 
+    function updateLb() {
+      const src = allImgs[cIdx];
+      lbImg.src = src;
+      lbBg.src  = src;
+      if (lbCounter) lbCounter.textContent = String(cIdx + 1).padStart(2, '0') + ' / ' + String(allImgs.length).padStart(2, '0');
+
+      // Detect orientation
+      const tempImg = new Image();
+      tempImg.src = src;
+      tempImg.onload = () => {
+        lightbox.classList.remove('is-landscape', 'is-portrait');
+        if (tempImg.naturalWidth > tempImg.naturalHeight) {
+          lightbox.classList.add('is-landscape');
+        } else {
+          lightbox.classList.add('is-portrait');
+        }
+      };
+    }
+
     function openLb(i) {
       cIdx = i;
-      lbImg.src = allImgs[cIdx];
+      updateLb();
       lightbox.classList.add('open');
       lightbox.removeAttribute('hidden');
       document.body.style.overflow = 'hidden';
@@ -355,7 +420,7 @@ const BW_IMAGES = [
     }
     function navigate(dir) {
       cIdx = (cIdx + dir + allImgs.length) % allImgs.length;
-      lbImg.src = allImgs[cIdx];
+      updateLb();
     }
 
     items.forEach((item, i) => item.addEventListener('click', () => openLb(i)));

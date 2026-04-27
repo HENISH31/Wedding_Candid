@@ -1,0 +1,69 @@
+---
+/**
+ * IconsSection.astro
+ * A minimalist row of brand icons/logos to build trust and credibility.
+ */
+const ICONS = [
+  { src: '/icons/logo.png', alt: 'Brand Logo 1' },
+  { src: '/icons/ODF.png', alt: 'Brand Logo 2' },
+  { src: '/icons/1709638878773.jpeg', alt: 'Brand Logo 3' },
+  { src: '/icons/photo_2026-04-27_13-44-28.jpg', alt: 'Brand Logo 4' }
+];
+---
+
+<section class="icons-section stagger-reveal">
+  <div class="icons-container">
+    {ICONS.map((icon) => (
+      <div class="icon-item">
+        <img src={icon.src} alt={icon.alt} loading="lazy" />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .icons-section {
+    padding: 4rem 5vw;
+    background: #f8f6f2; /* Match the layout theme */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .icon-item {
+    flex: 0 1 120px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    .icons-section {
+      padding: 3rem 5vw;
+    }
+    .icons-container {
+      gap: 2.5rem;
+    }
+    .icon-item {
+      flex: 0 1 80px;
+      height: 40px;
+    }
+  }
+</style>

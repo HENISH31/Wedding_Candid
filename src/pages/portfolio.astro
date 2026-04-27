@@ -2,22 +2,26 @@
 import Layout from '../layouts/Layout.astro';
 
 const IMAGES = [
-  '/gallery/opt/198A1445.webp',
-  '/gallery/opt/1M4A8828.webp',
-  '/homepage/DJI_0639.jpg',
-  '/gallery/opt/CB8A0325.webp',
-  '/gallery/opt/DJI_20241209172706_0093_D_FLYCAPTURE.webp',
-  '/homepage/WC_11751.JPG',
-  '/gallery/opt/MBJ_5953.webp',
-  '/gallery/opt/SSP01330.webp',
-  '/gallery/opt/WC_13299.webp',
-  '/gallery/opt/WC_17354.webp',
-  '/gallery/opt/WC_17407.webp',
-  '/gallery/opt/WC_19833.webp',
-  '/gallery/opt/WC__5748.webp',
-  '/gallery/opt/WC__6391.webp',
-  '/gallery/opt/WC__7232.webp',
-  '/gallery/opt/WC__8428.webp',
+  '/gallery/quick-portfolio/083A8242.jpg',
+  '/gallery/quick-portfolio/1M4A8828.jpg',
+  '/gallery/quick-portfolio/DJI_0639.jpg',
+  '/gallery/quick-portfolio/HR6_0303.JPG',
+  '/gallery/quick-portfolio/IMG_2653.JPG',
+  '/gallery/quick-portfolio/MBJ_0152.jpg',
+  '/gallery/quick-portfolio/SAM_0359.jpg',
+  '/gallery/quick-portfolio/SDPH1468.jpg',
+  '/gallery/quick-portfolio/SSP01330.JPG',
+  '/gallery/quick-portfolio/WC_11751.JPG',
+  '/gallery/quick-portfolio/WC_13299.jpg',
+  '/gallery/quick-portfolio/WC_17104.JPG',
+  '/gallery/quick-portfolio/WC__0146.JPG',
+  '/gallery/quick-portfolio/WC__0334.jpg',
+  '/gallery/quick-portfolio/WC__2107.jpg',
+  '/gallery/quick-portfolio/WC__3127.JPG',
+  '/gallery/quick-portfolio/WC__5748.jpg',
+  '/gallery/quick-portfolio/WC__6391.jpg',
+  '/gallery/quick-portfolio/WC__7232.jpg',
+  '/gallery/quick-portfolio/WC__8428.jpg'
 ];
 ---
 
@@ -27,28 +31,19 @@ const IMAGES = [
       <h1 class="portfolio-title">Portfolio <em>Exhibition</em></h1>
     </header>
 
-    <section class="story-gallery-sec">
+    <section class="story-gallery-sec" id="gallery-section">
       <div class="masonry-grid">
-        {IMAGES.map((src, i) => {
-          // Dynamic varied ratios to mimic the asymmetrical 5-column reference layout
-          const ratios = [
-            '1/1.2', '1/2', 
-            '1/1.7', '1/1.1', '1/1.4',
-            '1/1', '1/2.2', 
-            '1/1.8', '1/1',
-            '1/1.3', '1/2', '1/1.5',
-            '1/1.6', '1/1.1', '1/1.8', 
-            '1/1'
-          ];
-          const ratio = ratios[i % ratios.length];
-          return (
-            <div class="gallery-item" data-index={i} style={`aspect-ratio: ${ratio}`}>
-              <div class="gallery-item-inner">
-                <img src={src} alt={`Wedding Candid ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} />
-              </div>
+        {IMAGES.map((src, i) => (
+          <div class="gallery-item" data-index={i}>
+            <div class="gallery-item-inner">
+              <img
+                src={src}
+                alt={`Wedding Candid ${i + 1}`}
+                loading={i < 4 ? 'eager' : 'lazy'}
+              />
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
 
@@ -65,6 +60,7 @@ const IMAGES = [
       <div class="port-lb-stage">
         <button class="port-lb-arrow prev" id="portPrev">&#8592;</button>
         <div class="port-lb-img-wrap">
+          <img id="portLbBg" class="port-lb-bg" src="" alt="" aria-hidden="true" />
           <img id="portLbImg" src="" alt="Portfolio View" />
         </div>
         <button class="port-lb-arrow next" id="portNext">&#8594;</button>
@@ -95,7 +91,7 @@ const IMAGES = [
   }
 
   .portfolio-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 300;
     text-transform: uppercase;
@@ -105,27 +101,22 @@ const IMAGES = [
   .portfolio-title em { font-style: italic; color: var(--gold); }
 
   /* ── Masonry Grid ── */
-  .story-gallery-sec { 
+  .story-gallery-sec {
     --grid-gap: 0.8vw;
-    padding: 0 2vw 6rem; 
+    padding: 0 2vw 6rem;
   }
-  .masonry-grid { 
-    column-count: 5; 
-    column-gap: var(--grid-gap); 
-    margin-top: 1rem; 
+  .masonry-grid {
+    column-count: 3;
+    column-gap: var(--grid-gap);
+    margin-top: 1rem;
   }
-  
-  @media (max-width: 1400px) { .masonry-grid { column-count: 4; } }
-  @media (max-width: 1024px) { 
-    .masonry-grid { column-count: 3; } 
-    .story-gallery-sec { --grid-gap: 1.5vw; }
-  }
-  @media (max-width: 768px)  { 
-    .masonry-grid { column-count: 2; } 
+
+  @media (max-width: 768px) {
+    .masonry-grid { column-count: 2; }
     .story-gallery-sec { --grid-gap: 2vw; padding: 0 4vw 4rem; }
   }
-  @media (max-width: 480px)  { 
-    .masonry-grid { column-count: 1; }  /* Single column for very small screens for better photo visibility */
+  @media (max-width: 480px) {
+    .masonry-grid { column-count: 1; }
     .story-gallery-sec { --grid-gap: 4vw; padding: 0 5vw 3rem; }
   }
 
@@ -135,6 +126,7 @@ const IMAGES = [
     overflow: hidden;
     background: #e8e4de;
     cursor: zoom-in;
+    min-height: 80px;
   }
   .gallery-item-inner { position: relative; width: 100%; height: 100%; }
   .gallery-item img {
@@ -146,136 +138,216 @@ const IMAGES = [
   .portfolio-footer {
     text-align: center;
     padding: 80px 2rem;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 0.85rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     opacity: 0.5;
   }
 
-  /* ── Light Lightbox ── */
+  /* ── Immersive Lightbox ── */
   .port-lightbox {
     position: fixed;
     inset: 0;
     z-index: 100000;
-    background: rgba(245, 241, 235, 0.97);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #000;
     display: flex;
     flex-direction: column;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.4s var(--ease), visibility 0.4s;
+    overflow: hidden;
   }
   .port-lightbox.open { opacity: 1; visibility: visible; }
 
-  /* Header row: counter left, close right */
   .port-lb-header {
-    height: 64px;
-    padding: 0 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    padding: 0 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    flex-shrink: 0;
+    z-index: 20;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+    pointer-events: none;
   }
   .port-lb-counter {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.3em;
-    color: var(--gold);
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
   .port-lb-close {
     background: none;
     border: none;
-    font-size: 1.5rem;
-    color: var(--ink);
+    font-size: 1.8rem;
+    color: #fff;
     cursor: pointer;
-    opacity: 0.5;
-    transition: opacity 0.2s;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
     line-height: 1;
-    padding: 0.3rem 0.5rem;
+    padding: 1rem;
+    pointer-events: auto;
   }
-  .port-lb-close:hover { opacity: 1; }
+  .port-lb-close:hover { opacity: 1; transform: scale(1.1); }
 
-  /* Stage: arrow | image | arrow */
   .port-lb-stage {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem 2rem;
-    gap: 1rem;
-    min-height: 0;
-  }
-
-  /* Image container */
-  .port-lb-img-wrap {
+    position: relative;
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    min-width: 0;
-  }
-  .port-lb-img-wrap img {
-    max-width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    display: block;
-    border-radius: 2px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
   }
 
-  /* Arrow buttons */
+  .port-lb-img-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .port-lb-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(80px) brightness(0.4);
+    opacity: 0;
+    transition: opacity 0.8s var(--ease);
+    z-index: 1;
+    transform: scale(1.1);
+  }
+
+  #portLbImg {
+    display: block;
+    transition: opacity 0.3s ease, transform 0.5s var(--ease);
+    will-change: transform, opacity;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Orientation Logic */
+  .port-lightbox.is-landscape #portLbImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .port-lightbox.is-landscape .port-lb-bg {
+    opacity: 0;
+  }
+
+  .port-lightbox.is-portrait #portLbImg {
+    width: auto;
+    height: 100vh;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  .port-lightbox.is-portrait .port-lb-bg {
+    opacity: 1;
+  }
+
   .port-lb-arrow {
-    width: 52px;
-    height: 52px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    border: 1px solid rgba(0,0,0,0.12);
-    background: white;
-    color: var(--ink);
-    font-size: 1.3rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.25s, border-color 0.25s, transform 0.2s, color 0.25s;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    transition: all 0.3s var(--ease);
   }
   .port-lb-arrow:hover {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: white;
-    transform: scale(1.08);
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    transform: translateY(-50%) scale(1.1);
   }
 
-  @media (max-width: 640px) {
-    .port-lb-arrow { width: 40px; height: 40px; font-size: 1rem; }
-    .port-lb-stage { padding: 1rem 0.5rem; gap: 0.4rem; }
+  .port-lb-arrow.prev { left: 3rem; }
+  .port-lb-arrow.next { right: 3rem; }
+
+  @media (max-width: 768px) {
+    .port-lb-header { padding: 0 1.5rem; height: 60px; }
+    .port-lb-arrow { width: 45px; height: 45px; font-size: 1.1rem; }
+    .port-lb-arrow.prev { left: 1rem; }
+    .port-lb-arrow.next { right: 1rem; }
   }
 </style>
 
 <script is:inline>
   document.addEventListener('astro:page-load', () => {
-    const lightbox  = document.getElementById('portfolioLightbox');
-    const lbImg     = document.getElementById('portLbImg');
-    const counter   = document.getElementById('portCounter');
-    const closeBtn  = document.getElementById('portClose');
-    const prevBtn   = document.getElementById('portPrev');
-    const nextBtn   = document.getElementById('portNext');
-    const items     = Array.from(document.querySelectorAll('.gallery-item'));
-    const srcs      = items.map(it => it.querySelector('img').src);
-    const total     = srcs.length;
-    let cIdx        = 0;
+    const lightbox = document.getElementById('portfolioLightbox');
+    const lbImg    = document.getElementById('portLbImg');
+    const lbBg     = document.getElementById('portLbBg');
+    const counter  = document.getElementById('portCounter');
+    const closeBtn = document.getElementById('portClose');
+    const prevBtn  = document.getElementById('portPrev');
+    const nextBtn  = document.getElementById('portNext');
+    const items    = Array.from(document.querySelectorAll('.gallery-item'));
+    const srcs     = items.map(it => it.querySelector('img').src);
+    const total    = srcs.length;
+    let cIdx       = 0;
 
     if (!lightbox || !items.length) return;
 
+    // ── Apply real aspect ratio from each image's natural dimensions ──
+    items.forEach(item => {
+      const img = item.querySelector('img');
+
+      const applyRatio = () => {
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        if (w && h) {
+          item.style.aspectRatio = `${w} / ${h}`;
+        }
+      };
+
+      if (img.complete && img.naturalWidth) {
+        applyRatio();
+      } else {
+        img.addEventListener('load', applyRatio, { once: true });
+      }
+    });
+
+    // ── Lightbox ──
     function updateLb() {
-      lbImg.src = srcs[cIdx];
+      const src = srcs[cIdx];
+      lbImg.src = src;
+      lbBg.src  = src;
       counter.textContent = String(cIdx + 1).padStart(2, '0') + ' — ' + String(total).padStart(2, '0');
+
+      // Detect orientation
+      const tempImg = new Image();
+      tempImg.src = src;
+      tempImg.onload = () => {
+        lightbox.classList.remove('is-landscape', 'is-portrait');
+        if (tempImg.naturalWidth > tempImg.naturalHeight) {
+          lightbox.classList.add('is-landscape');
+        } else {
+          lightbox.classList.add('is-portrait');
+        }
+      };
     }
 
     function openLb(i) {
@@ -297,7 +369,7 @@ const IMAGES = [
     function navigate(dir) {
       cIdx = (cIdx + dir + total) % total;
       lbImg.style.opacity = '0';
-      lbImg.style.transform = 'scale(0.95)';
+      lbImg.style.transform = 'scale(1.05)';
       setTimeout(() => {
         updateLb();
         lbImg.style.opacity = '1';
@@ -305,18 +377,15 @@ const IMAGES = [
       }, 180);
     }
 
-    // Wire up clicks
     items.forEach((item, i) => item.addEventListener('click', () => openLb(i)));
     closeBtn.addEventListener('click', closeLb);
     prevBtn.addEventListener('click', () => navigate(-1));
     nextBtn.addEventListener('click', () => navigate(1));
 
-    // Click backdrop (not image) to close
     lightbox.addEventListener('click', e => {
       if (e.target === lightbox || e.target.classList.contains('port-lb-stage')) closeLb();
     });
 
-    // Keyboard
     document.addEventListener('keydown', e => {
       if (!lightbox.classList.contains('open')) return;
       if (e.key === 'ArrowLeft')  navigate(-1);
@@ -325,4 +394,3 @@ const IMAGES = [
     });
   });
 </script>
-

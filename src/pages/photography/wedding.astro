@@ -7,18 +7,19 @@ import Layout from '../../layouts/Layout.astro';
  */
 
 const WEDDING_COUPLES = [
-  { id: 'aashvi-tej', names: 'Aashvi & Tej', shortQuote: 'Moments In Light', cover: '/gallery/opt/CB8A0325.webp' },
-  { id: 'mayur-shivani', names: 'Mayur & Shivani', shortQuote: 'Whispers Of Us', cover: '/gallery/opt/WC_19833.webp' },
-  { id: 'mansi-prit', names: 'Mansi & Prit', shortQuote: 'Soul In Frame', cover: '/gallery/opt/MBJ_5953.webp' },
-  { id: 'dhwani-parth', names: 'Dhwani & Parth', shortQuote: 'Pure Love Story', cover: '/gallery/opt/WC_13299.webp' },
-  { id: 'vishwa-vishu', names: 'Vishwa & Vishu', shortQuote: 'Infinite Grace Found', cover: '/gallery/opt/SSP01330.webp' }
+  { id: 'aashvi-tej', names: 'Aashvi & Tej', shortQuote: 'Moments In Light', cover: '/gallery/aashvi-tej/WC__8251.jpg' },
+  { id: 'mit-kinjal', names: 'Mit & Kinjal', shortQuote: 'Eternal Bonds', cover: '/gallery/mit-kinjal/WC__8428.jpg' },
+  { id: 'vishwa-vishu', names: 'Vishwa & Vishu', shortQuote: 'Infinite Grace Found', cover: '/gallery/vishwa-vishu/WC__0652.jpg' },
+  { id: 'parth-shivani', names: 'Parth & Shivani', shortQuote: 'Two Souls, One Path', cover: '/gallery/parth-shivani/MBJ_8834.jpg' },
+  { id: 'riya-hardik', names: 'Riya & Hardik', shortQuote: 'Soulful Connection', cover: '/gallery/riya-hardik/WC__5748.jpg' },
+  { id: 'hemant-devanshi', names: 'Hemant & Devanshi', shortQuote: 'Pure Love Story', cover: '/gallery/hemant-devanshi/AAV_4290.jpg' },
+  { id: 'mayur-shivani', names: 'Mayur & Shivani', shortQuote: 'Whispers Of Us', cover: '/gallery/mayur-shivani/WC__7466.jpg' }
 ];
 ---
 
 <Layout hideGlobalPreloader={true}>
   <div class="exhibition-page">
     <nav class="sub-nav">
-      <a href="/photography" class="back-link">← SECTIONS</a>
       <h1 class="page-title">WEDDING <em>ALBUMS</em></h1>
     </nav>
 
@@ -54,9 +55,9 @@ const WEDDING_COUPLES = [
 
   .exhibition-page { background: var(--paper); color: var(--ink); min-height: 100vh; }
   
-  .sub-nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem 5vw; border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; background: var(--paper); z-index: 100; }
-  .back-link { font-family: 'Outfit', sans-serif; font-size: 0.7rem; color: var(--gold); text-decoration: none; letter-spacing: 0.3em; }
-  .page-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; }
+  .sub-nav { display: flex; justify-content: center; align-items: center; padding: 6rem 5vw 2rem; border-bottom: 1px solid rgba(0,0,0,0.05); position: sticky; top: 0; background: var(--paper); z-index: 100; }
+  .back-link { font-family: var(--font-sans); font-size: 0.7rem; color: var(--gold); text-decoration: none; letter-spacing: 0.3em; }
+  .page-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 300; }
   .page-title em { font-style: italic; color: var(--gold); }
 
   .exhibition-content { padding: 6rem 5vw 10rem; }
@@ -69,11 +70,11 @@ const WEDDING_COUPLES = [
   .couple-card:hover img { transform: scale(1.05); }
   .couple-info { flex: 1; }
   .couple-card:nth-child(even) .couple-info { text-align: right; align-items: flex-end; }
-  .couple-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; margin: 1rem 0; line-height: 1; transition: 0.6s; }
+  .couple-name { font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; margin: 1rem 0; line-height: 1; transition: 0.6s; }
   .couple-card:hover .couple-name { letter-spacing: 0.05em; color: var(--gold); }
   .couple-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.4s; }
   .couple-card:hover .couple-overlay { opacity: 1; }
-  .couple-overlay span { color: white; font-family: 'Outfit', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; border-bottom: 1px solid white; }
+  .couple-overlay span { color: white; font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.2em; border-bottom: 1px solid white; }
 </style>
 
 <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

@@ -85,14 +85,15 @@
 </nav>
 
 <a href="/" class="nav-logo-floating" aria-label="Wedding Candid – Home">
-  <img src="/wc logo-3.png" alt="WC Logo" class="nav-logo-img" />
-  <span class="nav-logo-text">Wedding Candid</span>
+  <img src="/03.png" alt="WC Logo" class="nav-logo-img" />
 </a>
 
 <!-- Mobile Overlay Menu -->
 <div id="wc-mobile-menu" class="mobile-menu" aria-hidden="true" role="dialog" aria-label="Mobile Navigation">
   <div class="mobile-menu-inner">
-    <a href="/" class="mobile-logo" aria-label="Home">Wedding Candid</a>
+    <a href="/" class="mobile-logo" aria-label="Home">
+      <img src="/03.png" alt="WC Logo" style="height: 60px; width: auto; object-fit: contain;" />
+    </a>
 
     <ul class="mobile-links">
       <li><a href="/#home" class="mobile-link">Home</a></li>
@@ -208,7 +209,7 @@
     transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .nav-logo-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 500;
     color: var(--ink);
@@ -217,7 +218,7 @@
     white-space: nowrap;
   }
   #wc-navbar.nav-dark + .nav-logo-floating .nav-logo-text { color: white; }
-  #wc-navbar.scrolled + .nav-logo-floating { backdrop-filter: blur(10px); background: rgba(255,255,255,0.05); padding: 5px 15px; border-radius: 50px; }
+  #wc-navbar.scrolled + .nav-logo-floating { backdrop-filter: none; background: transparent; padding: 0; border-radius: 0; }
   /* Logo shrinks a bit when scrolled */
   #wc-navbar.scrolled + .nav-logo-floating .nav-logo-img { height: 60px; }
   #wc-navbar.scrolled + .nav-logo-floating .nav-logo-text { font-size: 1.1rem; }
@@ -232,9 +233,9 @@
   }
 
   .nav-link {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-bold);
     font-size: 0.72rem;
-    font-weight: 400;
+    font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: rgba(26, 24, 20, 0.7);
@@ -310,8 +311,9 @@
   .nav-dropdown-item.open .dropdown-arrow { transform: rotate(180deg); }
 
   .dropdown-link {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-bold);
     font-size: 0.7rem;
+    font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--muted);
@@ -337,9 +339,9 @@
 
   /* ── CTA button ───────────────────────── */
   .nav-cta {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-bold);
     font-size: 0.68rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--cream);
@@ -407,7 +409,7 @@
   }
 
   .mobile-logo {
-    font-family: 'Bodoni Moda', serif;
+    font-family: var(--font-serif);
     font-size: 1.4rem;
     color: var(--ink);
     letter-spacing: 0.04em;
@@ -418,9 +420,9 @@
   .mobile-links { display: flex; flex-direction: column; gap: 0; }
 
   .mobile-link {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-bold);
     font-size: 1.6rem;
-    font-weight: 300;
+    font-weight: 700;
     color: var(--ink);
     padding: 0.85rem 0;
     border-bottom: 1px solid rgba(26, 24, 20, 0.07);
@@ -454,7 +456,7 @@
   .mobile-sub[hidden] { display: flex !important; max-height: 0; } /* override hidden for animation */
 
   .mobile-sub-link {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--muted);
     padding: 0.65rem 0 0.65rem 1.2rem;
@@ -470,7 +472,7 @@
     display: inline-block;
     margin-top: 2.5rem;
     align-self: flex-start;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.78rem;
     font-weight: 500;
     letter-spacing: 0.25em;

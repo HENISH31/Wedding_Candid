@@ -15,6 +15,7 @@ export default {
 			fontFamily: {
 				serif: ['"Playfair Display"', 'serif'],
 				sans: ['Inter', 'sans-serif'],
+				acumin: ['"Acumin Variable Concept"', 'sans-serif'],
 			},
 			transitionTimingFunction: {
 				'luxury': 'cubic-bezier(0.16, 1, 0.3, 1)',

@@ -2,39 +2,26 @@
 import { ViewTransitions } from "astro:transitions";
 import Cursor from "../components/Cursor.astro";
 import Navbar from "../components/Navbar.astro";
+import Preloader from "../components/Preloader.astro";
+import StickyCopyright from "../components/StickyCopyright.astro";
 const { hideGlobalPreloader = false, navTheme = "light" } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/camera-logo.png" />
+  <link rel="icon" type="image/png" href="/03.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wedding Candid | Editorial & Wedding Portfolio</title>
   <meta name="description" content="Modern, premium photography portfolio specializing in emotional storytelling and timeless imagery.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <!-- Fonts are globally handled via style.css -->
   <link rel="stylesheet" href="/style.css">
   <ViewTransitions />
 </head>
 
 <body class={hideGlobalPreloader ? "" : "preloader-active"} data-nav-theme={navTheme}>
   <!-- Preloader -->
-  { !hideGlobalPreloader && (
-    <div id="preloader">
-      <div class="preloader-content flex flex-col items-center">
-        <!-- New Camera Logo Reveal -->
-        <div class="logo-container mb-8 relative">
-          <img src="/camera-logo.png" alt="Photography Logo" class="preloader-logo-img w-24 md:w-32 h-auto" />
-        </div>
-        
-        <svg width="400" height="60" viewBox="0 0 400 60" class="preloader-drawn-text">
-          <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="'Outfit', sans-serif" font-size="0.8rem" letter-spacing="0.6em">WEDDING CANDID</text>
-        </svg>
-      </div>
-    </div>
-  )}
+  { !hideGlobalPreloader && <Preloader /> }
 
   <div id="app">
     <!-- Navbar -->
@@ -66,10 +53,20 @@ const { hideGlobalPreloader = false, navTheme = "light" } = Astro.props;
     <footer class="stagger-reveal">
       <div class="footer-grid">
         <div class="footer-logo-box">
-          <img src="/wc logo-3.png" alt="WC Footer Logo" style="height: 180px; width: auto; object-fit: contain; margin-bottom: 2rem;">
+          <img src="/03.png" alt="WC Footer Logo" style="height: 120px; width: auto; object-fit: contain; margin-bottom: 2rem;">
           <p class="footer-tagline">
             Dedicated to the quiet moments, the unspoken glances, and the light that defines us. Minimalist luxury photography for those who value authenticity.
           </p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/wedding_candid?igsh=MTI4bjlnMDlzZjk0Mg==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              <span>Instagram</span>
+            </a>
+            <a href="https://youtube.com/@weddingcandiddeepmistry7777?si=zQwSc1Y0IJbYHID8" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.11 1 12 1 12s0 3.89.46 5.58a2.78 2.78 0 0 0 1.94 2c1.72.42 8.6.42 8.6.42s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.89 23 12 23 12s0-3.89-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+              <span>YouTube</span>
+            </a>
+          </div>
         </div>
         <div class="footer-col">
           <h4>Photography</h4>
@@ -98,6 +95,7 @@ const { hideGlobalPreloader = false, navTheme = "light" } = Astro.props;
     
     <!-- Custom Interactive Cursor -->
     <Cursor />
+    <StickyCopyright />
   </div>
   <style is:global>
     :root {

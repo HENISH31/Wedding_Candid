@@ -19,7 +19,7 @@
     </div>
     <div class="relative z-10 flex flex-col items-center">
       <div class="camera-logo w-24 md:w-32 mb-8 overflow-hidden">
-        <img src="/camera-logo.png" alt="Photography Logo" class="w-full h-auto opacity-0 scale-50 blur-sm" id="preloader-logo" />
+        <img src="/03.png" alt="Photography Logo" class="w-full h-auto opacity-0 scale-50 blur-sm" id="preloader-logo" />
       </div>
       <div class="w-24 h-1 bg-gradient-to-r from-accent/30 to-accent rounded-full overflow-hidden">
         <div class="h-full bg-gradient-to-r from-accent to-accent/70 w-0 shutter-progress" id="shutter-bar"></div>
@@ -30,7 +30,7 @@
   <!-- Mode 2: Particle Burst -->
   <div class="preloader-content particle-mode absolute inset-0 opacity-0 flex items-center justify-center" id="particle-mode">
     <div class="particles-container w-64 h-64 relative">
-      <img src="/camera-logo.png" alt="Photography Logo" class="absolute inset-0 w-full h-full opacity-0 scale-0" id="particle-logo" />
+      <img src="/03.png" alt="Photography Logo" class="absolute inset-0 w-full h-full opacity-0 scale-0" id="particle-logo" />
     </div>
   </div>
 
@@ -38,7 +38,7 @@
   <div class="preloader-content film-mode absolute inset-0 opacity-0 flex flex-col items-center justify-center" id="film-mode">
     <div class="film-strip relative w-48 h-48">
       <div class="film-perforations"></div>
-      <img src="/camera-logo.png" alt="Photography Logo" class="absolute inset-0 w-full h-full opacity-0" id="film-logo" />
+      <img src="/03.png" alt="Photography Logo" class="absolute inset-0 w-full h-full opacity-0" id="film-logo" />
     </div>
   </div>
 
@@ -46,7 +46,7 @@
   <div class="preloader-content lens-mode absolute inset-0 opacity-0 flex items-center justify-center" id="lens-mode">
     <div class="lens-container relative w-32 h-32">
       <div class="lens-flare absolute inset-0 bg-gradient-radial opacity-0"></div>
-      <img src="/camera-logo.png" alt="Photography Logo" class="absolute inset-0 w-full h-full opacity-0 scale-110" id="lens-logo" />
+      <img src="/03.png" alt="Photography Logo" class="absolute inset-0 w-full h-full opacity-0 scale-110" id="lens-logo" />
     </div>
   </div>
 
@@ -56,7 +56,7 @@
       <div class="polaroid polaroid-1"></div>
       <div class="polaroid polaroid-2"></div>
       <div class="polaroid polaroid-3"></div>
-      <img src="/camera-logo.png" alt="Photography Logo" class="absolute -inset-2 w-full h-full opacity-0 scale-90" id="polaroid-logo" />
+      <img src="/03.png" alt="Photography Logo" class="absolute -inset-2 w-full h-full opacity-0 scale-90" id="polaroid-logo" />
     </div>
   </div>
 </div>
@@ -74,11 +74,11 @@
   .blade-1 { @apply rotate-0 w-1/2 h-1/2 top-0 left-0; }
   .blade-2 { @apply rotate-45 w-1/2 h-1/2 top-1/4 left-1/4; }
   .blade-3 { @apply rotate-90 w-1/2 h-1/2 top-1/2 left-1/2; }
-  .blade-4 { @apply rotate-135 w-1/2 h-1/2 top-3/4 left-3/4; }
+  .blade-4 { @apply rotate-[135deg] w-1/2 h-1/2 top-3/4 left-3/4; }
   .blade-5 { @apply rotate-180 w-1/2 h-1/2 top-full left-full; }
-  .blade-6 { @apply rotate-225 w-1/2 h-1/2 bottom-1/4 right-1/4; }
-  .blade-7 { @apply rotate-270 w-1/2 h-1/2 bottom-1/2 right-1/2; }
-  .blade-8 { @apply rotate-315 w-1/2 h-1/2 bottom-3/4 right-3/4; }
+  .blade-6 { @apply rotate-[225deg] w-1/2 h-1/2 bottom-1/4 right-1/4; }
+  .blade-7 { @apply rotate-[270deg] w-1/2 h-1/2 bottom-1/2 right-1/2; }
+  .blade-8 { @apply rotate-[315deg] w-1/2 h-1/2 bottom-3/4 right-3/4; }
 
   /* Particle Mode */
   .particles-container::before,
@@ -96,7 +96,8 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
   .film-perforations {
-    @apply absolute inset-0 bg-[url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 20"><rect x="1" y="0" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="4" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="8" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="12" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="16" width="2" height="2" rx="1" fill="%23000"/></svg>')] opacity-0;
+    @apply absolute inset-0 opacity-0;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 20"><rect x="1" y="0" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="4" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="8" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="12" width="2" height="2" rx="1" fill="%23000"/><rect x="1" y="16" width="2" height="2" rx="1" fill="%23000"/></svg>');
   }
 
   /* Lens Flare */
