@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import OptimizedImage from '../components/OptimizedImage.astro';
+import StickyCopyright from '../components/StickyCopyright.astro';
 
 // Dynamically fetch images for the quick portfolio
 const globImages = import.meta.glob<{ default: ImageMetadata }>('/public/gallery/quick-portfolio/**/*.{jpeg,jpg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}');
@@ -46,7 +47,8 @@ const validImages = loadedImages.filter(img => img !== null);
     </section>
 
     <footer class="portfolio-footer">
-      <span>— Wedding Candid Portfolio —</span>
+      <span class="brand-text">— Wedding Candid Portfolio —</span>
+      <span class="copyright-text">© 2026 Wedding Candid — All images & videos are copyrighted</span>
     </footer>
 
     <!-- Light Lightbox -->
@@ -64,6 +66,7 @@ const validImages = loadedImages.filter(img => img !== null);
         <button class="port-lb-arrow next" id="portNext">&#8594;</button>
       </div>
     </div>
+    
   </article>
 </Layout>
 
@@ -136,11 +139,24 @@ const validImages = loadedImages.filter(img => img !== null);
   .portfolio-footer {
     text-align: center;
     padding: 80px 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    opacity: 0.8;
+  }
+  .brand-text {
     font-family: var(--font-serif);
     font-size: 0.85rem;
     letter-spacing: 0.4em;
     text-transform: uppercase;
-    opacity: 0.5;
+    opacity: 0.6;
+  }
+  .copyright-text {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
   }
 
   /* ── Immersive Lightbox ── */
