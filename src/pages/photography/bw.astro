@@ -3,36 +3,36 @@ import Layout from '../../layouts/Layout.astro';
 import OptimizedImage from '../../components/OptimizedImage.astro';
 
 const BW_IMAGES = [
-  '/gallery/bw/083A4644.jpg',
-  '/gallery/bw/0Z7A9267.jpg',
-  '/gallery/bw/1M0A1615.jpg',
-  '/gallery/bw/1M0A1620.jpg',
-  '/gallery/bw/1M0A1626.jpg',
-  '/gallery/bw/1M0A1711.jpg',
-  '/gallery/bw/1M0A2869.jpg',
-  '/gallery/bw/4W0A9414.jpg',
-  '/gallery/bw/DJI_0685.jpg',
-  '/gallery/bw/DJI_20241209184936_0125_D_FLYCAPTURE.jpg',
-  '/gallery/bw/IMG_3125.jpg',
-  '/gallery/bw/IMG_4351.jpg',
-  '/gallery/bw/IMG_4585.jpg',
-  '/gallery/bw/SAM_0133.jpg',
-  '/gallery/bw/SAM_2957.jpg',
-  '/gallery/bw/SDPH1884.jpg',
-  '/gallery/bw/SDPH2160-2.jpg',
-  '/gallery/bw/SDPH3641.jpg',
-  '/gallery/bw/WC_13261.jpg',
-  '/gallery/bw/WC_18568.JPG',
-  '/gallery/bw/WC__1280.jpg',
-  '/gallery/bw/WC__2447.jpg',
-  '/gallery/bw/WC__2582-2.jpg',
-  '/gallery/bw/WC__4332.jpg',
-  '/gallery/bw/WC__5051.jpg',
-  '/gallery/bw/WC__5899.jpg',
-  '/gallery/bw/WC__6266.jpg',
-  '/gallery/bw/WC__7145.jpg',
-  '/gallery/bw/WC__7520-2.jpg',
-  '/gallery/bw/WC__9683.jpg'
+  '/images/gallery/bw/083A4644.jpg',
+  '/images/gallery/bw/0Z7A9267.jpg',
+  '/images/gallery/bw/1M0A1615.jpg',
+  '/images/gallery/bw/1M0A1620.jpg',
+  '/images/gallery/bw/1M0A1626.jpg',
+  '/images/gallery/bw/1M0A1711.jpg',
+  '/images/gallery/bw/1M0A2869.jpg',
+  '/images/gallery/bw/4W0A9414.jpg',
+  '/images/gallery/bw/DJI_0685.jpg',
+  '/images/gallery/bw/DJI_20241209184936_0125_D_FLYCAPTURE.jpg',
+  '/images/gallery/bw/IMG_3125.jpg',
+  '/images/gallery/bw/IMG_4351.jpg',
+  '/images/gallery/bw/IMG_4585.jpg',
+  '/images/gallery/bw/SAM_0133.jpg',
+  '/images/gallery/bw/SAM_2957.jpg',
+  '/images/gallery/bw/SDPH1884.jpg',
+  '/images/gallery/bw/SDPH2160-2.jpg',
+  '/images/gallery/bw/SDPH3641.jpg',
+  '/images/gallery/bw/WC_13261.jpg',
+  '/images/gallery/bw/WC_18568.JPG',
+  '/images/gallery/bw/WC__1280.jpg',
+  '/images/gallery/bw/WC__2447.jpg',
+  '/images/gallery/bw/WC__2582-2.jpg',
+  '/images/gallery/bw/WC__4332.jpg',
+  '/images/gallery/bw/WC__5051.jpg',
+  '/images/gallery/bw/WC__5899.jpg',
+  '/images/gallery/bw/WC__6266.jpg',
+  '/images/gallery/bw/WC__7145.jpg',
+  '/images/gallery/bw/WC__7520-2.jpg',
+  '/images/gallery/bw/WC__9683.jpg'
 ];
 ---
 
@@ -58,7 +58,7 @@ const BW_IMAGES = [
           return (
             <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
               <div class="gallery-item-inner">
-                <OptimizedImage src={src} alt={`Noir Stories — ${i + 1}`} loading={i < 4 ? 'eager' : 'lazy'} class="w-full h-full object-cover" />
+                <img src={src} alt={`Noir Stories — ${i + 1}`} loading="lazy" class="w-full h-full object-cover" />
                 <div class="grain-overlay"></div>
                 <div class="item-hover-info">
                   <span class="item-names">Noir Stories</span>

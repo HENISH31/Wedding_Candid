@@ -4,7 +4,7 @@ import OptimizedImage from '../components/OptimizedImage.astro';
 import StickyCopyright from '../components/StickyCopyright.astro';
 
 // Dynamically fetch images for the quick portfolio
-const globImages = import.meta.glob<{ default: ImageMetadata }>('/public/gallery/quick-portfolio/**/*.{jpeg,jpg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}');
+const globImages = import.meta.glob<{ default: ImageMetadata }>('/public/images/gallery/quick-portfolio/**/*.{jpeg,jpg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}');
 const myImagesKeys = Object.keys(globImages);
 
 const loadedImages = await Promise.all(myImagesKeys.map(async key => {
@@ -34,10 +34,11 @@ const validImages = loadedImages.filter(img => img !== null);
           return (
             <div class="gallery-item" data-index={i} style={`aspect-ratio: ${ratio}`}>
               <div class="gallery-item-inner">
-                <OptimizedImage
+                <img
                   src={img.src}
                   alt={`Wedding Candid ${i + 1}`}
-                  loading={i < 4 ? 'eager' : 'lazy'}
+                  loading="lazy"
+                  class="w-full h-full object-cover"
                 />
               </div>
             </div>

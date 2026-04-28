@@ -17,8 +17,8 @@ const { src, alt, class: className, loading = 'lazy' } = Astro.props;
 // This creates a lazy map, so it doesn't hurt performance unless the image is actually used.
 const images = import.meta.glob<{ default: ImageMetadata }>('/public/**/*.{jpeg,jpg,png,gif,webp,JPEG,JPG,PNG,GIF,WEBP}');
 
-// The src prop is expected to be an absolute path starting with '/', e.g., '/gallery/opt/image.webp'
-// We map it to the glob key which is '/public/gallery/opt/image.webp'
+// The src prop is expected to be an absolute path starting with '/', e.g., '/images/gallery/opt/image.webp'
+// We map it to the glob key which is '/public/images/gallery/opt/image.webp'
 const globKey = `/public${src}`;
 
 let imageMetadata: ImageMetadata | undefined;
