@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import OptimizedImage from '../components/OptimizedImage.astro';
 ---
 
 <Layout hideGlobalPreloader={true}>
@@ -29,7 +30,7 @@ import Layout from '../layouts/Layout.astro';
               <p class="founder-tag-inline">Founder of : <strong>WEDDING CANDID</strong></p>
             </div>
             <div class="profile-image-inner">
-              <img src="/about/IMG_8611.jpg" alt="Deep Mistry" />
+              <OptimizedImage src="/about/IMG_8611.jpg" alt="Deep Mistry" />
             </div>
             <div class="profile-badge">EST. 2015</div>
           </div>
@@ -162,8 +163,8 @@ import Layout from '../layouts/Layout.astro';
     <section class="journey" data-reveal>
       <div class="journey__inner">
         <div class="journey__img-stack reveal-child">
-          <img src="/about/IMG_4490.jpg" class="jstack-1" alt="Wedding moment" />
-          <img src="/about/b4fc1a98-15f2-49ad-abf0-20a0ad3614c2.jpg" class="jstack-2" alt="Wedding moment" />
+          <OptimizedImage src="/about/IMG_4490.jpg" class="jstack-1" alt="Wedding moment" />
+          <OptimizedImage src="/about/b4fc1a98-15f2-49ad-abf0-20a0ad3614c2.jpg" class="jstack-2" alt="Wedding moment" />
           <div class="journey__year-badge">2015 → Now</div>
         </div>
         <div class="journey__text">

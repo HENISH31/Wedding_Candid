@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import OptimizedImage from '../../components/OptimizedImage.astro';
 
 /**
  * photography/events.astro — The Event Exhibition
@@ -101,11 +102,11 @@ const WORD_POOL = ['W', 'E', 'D', 'D', 'I', 'N', 'G', 'C', 'A', 'N', 'D', 'I', '
             data-caption={img.cap}
             data-index={i}
           >
-            <img 
+            <OptimizedImage 
               src={img.src} 
               alt={img.cap} 
               loading={i < 6 ? "eager" : "lazy"} 
-              fetchpriority={i < 6 ? "high" : "low"}
+              class="w-full h-full object-cover"
             />
             <div class="event-caption-pill">{img.cap}</div>
           </div>

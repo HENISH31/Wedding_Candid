@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import OptimizedImage from '../../components/OptimizedImage.astro';
 
 /**
  * photography/wedding.astro — Dedicated Wedding Archive
@@ -28,7 +29,7 @@ const WEDDING_COUPLES = [
         {WEDDING_COUPLES.map((couple, i) => (
           <a href={`/wedding/${couple.id}`} class="couple-card">
             <div class="couple-img-wrap">
-              <img src={couple.cover} alt={couple.names} loading={i < 2 ? 'eager' : 'lazy'} />
+              <OptimizedImage src={couple.cover} alt={couple.names} loading={i < 2 ? 'eager' : 'lazy'} class="w-full h-full object-cover" />
               <div class="couple-overlay"><span>Explore Story →</span></div>
             </div>
             <div class="couple-info">

@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import OptimizedImage from '../../components/OptimizedImage.astro';
 
 export async function getStaticPaths() {
   const WEDDINGS = [
@@ -169,7 +170,7 @@ const { wedding } = Astro.props;
           return (
             <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
               <div class="gallery-item-inner">
-                <img src={src} alt="Shot" loading={i < 4 ? "eager" : "lazy"} />
+                <OptimizedImage src={src} alt="Shot" loading={i < 4 ? "eager" : "lazy"} class="w-full h-full object-cover" />
                 <div class="grain-overlay"></div>
                 <div class="item-hover-info">
                   <span class="item-names">{wedding.name1} & {wedding.name2}</span>
