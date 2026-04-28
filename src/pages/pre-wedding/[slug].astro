@@ -113,6 +113,22 @@ export async function getStaticPaths() {
 }
 
 const { story } = Astro.props;
+
+// Dynamically fetch images for this specific pre-wedding shoot
+const globImages = import.meta.glob<{ default: ImageMetadata }>('/public/gallery/**/*.{jpeg,jpg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}');
+const myImagesKeys = Object.keys(globImages).filter(path => path.includes(`/gallery/${story.slug}/`));
+
+const loadedImages = await Promise.all(myImagesKeys.map(async key => {
+  try {
+    const mod = await globImages[key]();
+    return {
+      src: key.replace('/public', ''),
+      metadata: mod.default
+    };
+  } catch(e) { return null; }
+}));
+
+const validImages = loadedImages.filter(img => img !== null);
 ---
 
 <Layout title={`${story.name1} & ${story.name2} | Pre-Wedding Story`} hideGlobalPreloader={true}>
@@ -120,7 +136,7 @@ const { story } = Astro.props;
     
     <!-- Hero Full Bleed -->
     <section class="pre-hero" id="preHero">
-      <img src={story.cover} alt="Adventure Hero" class="hero-bg" />
+      <OptimizedImage src={story.cover} alt="Adventure Hero" class="hero-bg" loading="eager" />
       <div class="hero-overlay"></div>
       <div class="spotlight-flashlight" id="spotlight"></div>
       
@@ -155,17 +171,16 @@ const { story } = Astro.props;
       </div>
 
       <div class="masonry-grid">
-        {story.images.map((img, i) => {
-          let ratio = '3/4';
-          if (i % 3 === 1) ratio = '4/3';
-          if (i % 3 === 2) ratio = '1/1';
+        {validImages.map((img, i) => {
+          // Calculate exact aspect ratio
+          const ratio = img.metadata ? `${img.metadata.width}/${img.metadata.height}` : '3/4';
           return (
             <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
               <div class="gallery-item-inner">
-                <OptimizedImage src={img.src} alt={img.caption} loading={i < 4 ? 'eager' : 'lazy'} class="w-full h-full object-cover" />
+                <OptimizedImage src={img.src} alt="Pre-wedding Moment" loading={i < 4 ? 'eager' : 'lazy'} class="w-full h-full object-cover" />
                 <div class="grain-overlay"></div>
                 <div class="item-hover-info">
-                  <span class="item-caption">{img.caption}</span>
+                  <span class="item-caption">{story.name1} & {story.name2}</span>
                   <span class="item-index">{String(i + 1).padStart(2, '0')}</span>
                 </div>
               </div>
@@ -183,7 +198,7 @@ const { story } = Astro.props;
 
     <!-- Scroll Progress -->
     <div id="scrollProgress" class="fixed-progress">
-      <span id="currIdx">01</span> / <span id="totalIdx">{story.images.length}</span>
+      <span id="currIdx">01</span> / <span id="totalIdx">{validImages.length}</span>
     </div>
 
     <!-- Lightbox -->

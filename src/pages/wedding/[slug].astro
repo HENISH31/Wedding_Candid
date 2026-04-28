@@ -116,6 +116,22 @@ export async function getStaticPaths() {
 }
 
 const { wedding } = Astro.props;
+
+// Fetch all images for this specific wedding
+const globImages = import.meta.glob<{ default: ImageMetadata }>('/public/gallery/**/*.{jpeg,jpg,png,gif,webp,JPG,JPEG,PNG,GIF,WEBP}');
+const myImagesKeys = Object.keys(globImages).filter(path => path.includes(`/gallery/${wedding.slug}/`));
+
+const loadedImages = await Promise.all(myImagesKeys.map(async key => {
+  try {
+    const mod = await globImages[key]();
+    return {
+      src: key.replace('/public', ''),
+      metadata: mod.default
+    };
+  } catch(e) { return null; }
+}));
+
+const validImages = loadedImages.filter(img => img !== null);
 ---
 
 <Layout title={`${wedding.name1} & ${wedding.name2} | Wedding Story`} hideGlobalPreloader={true}>
@@ -125,7 +141,7 @@ const { wedding } = Astro.props;
     <!-- Section 1 — Full-Bleed Hero -->
     <section class="story-hero">
       <div class="hero-bg-wrap">
-        <img src={wedding.cover} alt="Cover" class="hero-cover-img" />
+        <OptimizedImage src={wedding.cover} alt="Cover" class="hero-cover-img" loading="eager" />
         <div class="hero-bg-overlay"></div>
       </div>
       <div class="hero-content-overlay">
@@ -163,14 +179,13 @@ const { wedding } = Astro.props;
       </div>
 
       <div class="masonry-grid">
-        {wedding.images.map((src, i) => {
-          let ratio = '3/4'; 
-          if (i % 3 === 1) ratio = '4/3'; 
-          if (i % 3 === 2) ratio = '1/1'; 
+        {validImages.map((img, i) => {
+          // Calculate exact aspect ratio instead of hardcoding
+          const ratio = img.metadata ? `${img.metadata.width}/${img.metadata.height}` : '3/4';
           return (
             <div class="gallery-item" data-index={i + 1} style={`aspect-ratio: ${ratio}`}>
               <div class="gallery-item-inner">
-                <OptimizedImage src={src} alt="Shot" loading={i < 4 ? "eager" : "lazy"} class="w-full h-full object-cover" />
+                <OptimizedImage src={img.src} alt="Shot" loading={i < 4 ? "eager" : "lazy"} class="w-full h-full object-cover" />
                 <div class="grain-overlay"></div>
                 <div class="item-hover-info">
                   <span class="item-names">{wedding.name1} & {wedding.name2}</span>
@@ -194,7 +209,7 @@ const { wedding } = Astro.props;
 
     <!-- UI Elements -->
     <div id="scrollProgress" class="fixed-progress">
-      <span id="currIdx">01</span> / <span id="totalIdx">{wedding.images.length}</span>
+      <span id="currIdx">01</span> / <span id="totalIdx">{validImages.length}</span>
     </div>
 
     <!-- Lightbox -->
