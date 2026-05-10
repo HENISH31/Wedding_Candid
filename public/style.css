@@ -1228,16 +1228,7 @@ footer {
 }
 .social-link:hover { color: var(--accent); }
 
-.footer-bottom {
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(0,0,0,0.03);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  letter-spacing: 0.2rem;
-  text-transform: uppercase;
-}
+
 
 /* Animations */
 @keyframes fadeInUp {

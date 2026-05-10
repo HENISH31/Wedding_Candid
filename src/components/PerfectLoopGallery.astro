@@ -451,7 +451,7 @@ class PerfectLoopGalleryHandler {
 }
 
 // Attach gracefully via Astro's standard event listener hook
-// This ensures compatibility even if you are using Astro ViewTransitions!
+// This ensures compatibility even if you are using Astro ClientRouter!
 document.addEventListener('astro:page-load', () => {
   document.querySelectorAll('.perfect-loop-gallery').forEach(el => new PerfectLoopGalleryHandler(el));
 });
