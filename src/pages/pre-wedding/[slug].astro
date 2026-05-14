@@ -134,32 +134,36 @@ const validImages = loadedImages.filter(img => img !== null);
 <Layout title={`${story.name1} & ${story.name2} | Pre-Wedding Story`} hideGlobalPreloader={true}>
   <div class="pre-wedding-page">
     
-    <!-- Hero Full Bleed -->
-    <section class="pre-hero" id="preHero">
-      <OptimizedImage src={story.cover} alt="Adventure Hero" class="hero-bg" loading="eager" />
-      <div class="hero-overlay"></div>
-      <div class="spotlight-flashlight" id="spotlight"></div>
-      
-      <div class="hero-content-candid">
-        <span class="story-tag">PRE — WEDDING</span>
-        <h1 class="candid-names">
-          {story.name1} <em>&</em> {story.name2}
+    <!-- Section 1 — Full-Bleed Hero -->
+    <section class="story-hero">
+      <div class="hero-bg-wrap">
+        <OptimizedImage src={story.cover} alt="Cover" class="hero-cover-img" loading="eager" />
+        <div class="hero-bg-overlay"></div>
+      </div>
+      <div class="hero-content-overlay">
+        <p class="story-of-tag">THE STORY OF</p>
+        <h1 class="couple-display-title">
+          {story.name1} <span class="amp">&</span> {story.name2}
         </h1>
-        <div class="candid-location">{story.location}</div>
-        <div class="candid-line"></div>
+        <p class="story-subtitle">{story.location}</p>
+      </div>
+      <div class="hero-scroll-hint">
+        <span class="scroll-hint-line"></span>
+        <span class="scroll-hint-text">SCROLL</span>
       </div>
     </section>
 
-    <!-- Word-by-Word Quote -->
-    <section class="pre-quote-sec">
-      <div class="quote-box">
-        <div class="pre-gold-rule"></div>
-        <blockquote class="word-manifesto" id="wordQuote">
-          {story.quote.split(' ').map(word => (
-            <span class="reveal-word">{word} </span>
-          ))}
-        </blockquote>
-        <div class="pre-gold-rule"></div>
+    <!-- Section 2 — Quote -->
+    <section class="story-quote-block">
+      <div class="quote-container">
+        <div class="gold-rule animate-on-scroll"></div>
+        <div class="quote-inner">
+          <blockquote class="soul-manifesto animate-on-scroll">
+            {story.quote}
+          </blockquote>
+          <p class="quote-author-sig animate-on-scroll">{story.name1} & {story.name2}</p>
+        </div>
+        <div class="gold-rule animate-on-scroll"></div>
       </div>
     </section>
 
@@ -221,34 +225,166 @@ const validImages = loadedImages.filter(img => img !== null);
 
 <style>
   :root {
-    --bg-paper: #f5f0e8;
-    --gold: #b68b40;
+    --paper: #f5f2ed;
     --ink: #1a1410;
+    --gold: #b68b40;
     --muted: #8a7e72;
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .pre-wedding-page { background: var(--bg-paper); color: var(--ink); }
+  .pre-wedding-page { background: var(--paper); color: var(--ink); overflow-x: hidden; }
 
-  /* Hero — full-bleed photo, light text still works over image */
-  .pre-hero { height: 100vh; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 10vh 6vw; }
-  .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75); transition: transform 0.5s ease; }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(245,240,232,0.55) 0%, transparent 60%); }
-  .spotlight-flashlight { position: absolute; inset: 0; pointer-events: none; z-index: 5; mix-blend-mode: soft-light; }
+  /* ── Full-Bleed Hero ── */
+  .story-hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
 
-  .hero-content-candid { position: relative; z-index: 10; }
-  .story-tag { font-family: var(--font-sans); font-size: 0.7rem; color: var(--gold); letter-spacing: 0.4em; }
-  .candid-names { font-family: var(--font-serif); font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; margin: 1.5rem 0; line-height: 1; color: #fdf8f2; }
-  .candid-names em { font-style: italic; opacity: 0.7; }
-  .candid-location { font-family: var(--font-sans); font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-bottom: 3rem; }
-  .candid-line { width: 80px; height: 1px; background: var(--gold); }
+  .hero-bg-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .hero-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    animation: heroScale 14s ease-in-out infinite alternate;
+  }
+  @keyframes heroScale {
+    from { transform: scale(1); }
+    to   { transform: scale(1.06); }
+  }
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(10, 8, 5, 0.15) 0%,
+      rgba(10, 8, 5, 0.55) 100%
+    );
+  }
 
-  /* Quote — light background */
-  .pre-quote-sec { padding: 100px 20px; background: var(--bg-paper); text-align: center; }
-  .quote-box { max-width: 680px; margin: 0 auto; }
-  .pre-gold-rule { width: 60px; height: 1px; background: var(--gold); margin: 0 auto; opacity: 0.4; }
-  .word-manifesto { font-family: var(--font-serif); font-size: clamp(1.5rem, 3.5vw, 2.8rem); font-style: italic; color: var(--ink); line-height: 1.6; margin: 3rem 0; display: block; }
-  .reveal-word { display: inline-block; opacity: 0; transform: translateY(15px); }
+  .hero-content-overlay {
+    position: relative;
+    z-index: 10;
+    max-width: 85vw;
+    text-align: center;
+  }
+  .story-of-tag {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.5em;
+    color: rgba(182,139,64,0.9);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    display: block;
+    text-transform: uppercase;
+  }
+  .couple-display-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3.2rem, 8.5vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    margin: 0 0 1.2rem;
+    color: #fdf8f2;
+    opacity: 0;
+    transform: translateY(24px);
+    letter-spacing: 0.01em;
+  }
+  .amp { font-style: italic; color: var(--gold); margin: 0 0.6rem; }
+  .story-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    opacity: 0;
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    opacity: 0;
+  }
+  .scroll-hint-text {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.4);
+  }
+  .scroll-hint-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.35; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1.12); }
+  }
+
+  /* Quote — Horizontal layout */
+  .story-quote-block { padding: 6rem 5vw; background: var(--paper); }
+  .quote-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+  }
+  .gold-rule {
+    width: 1px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .quote-inner {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .soul-manifesto {
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-style: italic;
+    color: #1a1410;
+    line-height: 1.7;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .quote-author-sig {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0;
+  }
+  @media (max-width: 640px) {
+    .quote-container { flex-direction: column; gap: 2rem; }
+    .gold-rule { width: 60px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  }
 
   /* ── Story Gallery (same as wedding story page) ── */
   .story-gallery-sec { padding: 4rem 5vw 8rem; background: var(--bg-paper); color: #1a1410; }
@@ -368,21 +504,16 @@ const validImages = loadedImages.filter(img => img !== null);
     if (typeof gsap === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero Spotlight
-    const hero = document.getElementById('preHero');
-    const spotlight = document.getElementById('spotlight');
-    if (hero) {
-      hero.addEventListener('mousemove', e => {
-        const x = e.clientX, y = e.clientY;
-        spotlight.style.background = `radial-gradient(700px circle at ${x}px ${y}px, rgba(181,139,64,0.12), transparent 70%)`;
-      });
-    }
+    // Hero entrance sequence
+    gsap.to('.story-of-tag',        { opacity: 1,   duration: 0.8, delay: 0.5, ease: "power2.out" });
+    gsap.to('.couple-display-title',{ opacity: 1, y: 0, duration: 1.2, delay: 0.7, ease: "power3.out" });
+    gsap.to('.story-subtitle',      { opacity: 1,   duration: 0.8, delay: 1.1, ease: "power2.out" });
+    gsap.to('.hero-scroll-hint',    { opacity: 1,   duration: 0.8, delay: 1.5, ease: "power2.out" });
 
-    // Word Reveal Quote
-    const quoteWords = document.querySelectorAll('.reveal-word');
-    gsap.to(quoteWords, {
-      opacity: 1, y: 0, stagger: 0.05, duration: 0.8, ease: "power2.out",
-      scrollTrigger: { trigger: '#wordQuote', start: "top 80%" }
+    // Quote Animation
+    ScrollTrigger.batch(".animate-on-scroll", {
+      onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power2.out" }),
+      start: "top 85%"
     });
 
     // ── Gallery items
